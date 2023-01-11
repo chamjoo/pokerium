@@ -8,5 +8,7 @@ public interface MemberService {
 	
 	int insertMember(MemberInfo m);
 
+	int updateLastlogin(MemberInfo member);
+
 	
 }

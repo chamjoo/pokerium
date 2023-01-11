@@ -22,11 +22,20 @@ public class MemberDAO {
 		
 	}
 	
+	public int updateLastlogin(MemberInfo member) {
+		
+		return sqlSession.update("member.updateLastlogin", member);
+		
+	}
+	
 	
 	public int insertMember(MemberInfo m) {
 		
 		return sqlSession.insert("member.insertMember", m);
 	}
+
+
+	
 
 
 

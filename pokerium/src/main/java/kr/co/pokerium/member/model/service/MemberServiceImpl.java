@@ -15,15 +15,17 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public MemberInfo selectLoginMember(MemberInfo member) {
-
-		
-		System.out.println("[MemberService] - selectLoginMember 메소드 호출");
 		
 		MemberInfo m = mDAO.selectLoginMember(member);
-		
-		
+
 		return m;
+	
+	}
+	
+	@Override
+	public int updateLastlogin(MemberInfo member) {
 		
+		return mDAO.updateLastlogin(member);
 		
 	}
 	
@@ -34,6 +36,8 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 		
 	}
+
+	
 	
 	
 }

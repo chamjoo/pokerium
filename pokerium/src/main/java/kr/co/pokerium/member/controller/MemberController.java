@@ -31,9 +31,10 @@ public class MemberController {
 	{
 		
 		MemberInfo m = mService.selectLoginMember(member);
+		int result = mService.updateLastlogin(member);
 		
 		
-		if(m!=null) {
+		if(m!=null && result>0) {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", m);
 			return "redirect:/";
