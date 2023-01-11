@@ -8,11 +8,7 @@
 </head>
 <body>
 <script>
-	function onlyNum(obj){
-	//특정 컨트롤에 숫자만 입력되도록 하는 함수로 숫자가 아닌 값이 입력될 경우 값을 모두 삭제시킴
-		if (isNaN(obj.value)){
-			obj.value = "";
-	} 
+ 
 	
 	
 		function chkValue(frm){
@@ -26,6 +22,7 @@
 		    var miPhone2 = frm.miPhone2.value;      
 		    var miPhone3 = frm.miPhone3.value;
 		    
+		    console.log(miId);
 		    if (miId == ""){
 		       	alert("아이디를 입력해주세요.");               frm.miId.focus();   return false;
 		    }
@@ -63,7 +60,11 @@
 	 
 		    return true;
 		}
-		
+		function onlyNum(obj){
+			//특정 컨트롤에 숫자만 입력되도록 하는 함수로 숫자가 아닌 값이 입력될 경우 값을 모두 삭제시킴
+				if (isNaN(obj.value)){
+					obj.value = "";
+			}
 }
 
 </script>
