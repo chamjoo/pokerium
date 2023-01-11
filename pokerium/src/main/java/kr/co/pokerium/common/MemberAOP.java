@@ -36,5 +36,23 @@ public class MemberAOP {
 		
 	}
 	
+	// 로그인 할때 작성한 비밀번호 암호화 처리 로직
+	
+		@Pointcut("execution(kr.co.pokerium.member.model.vo.MemberInfo kr.co.pokerium.member.model.service.MemberServiceImpl.selectLoginMember(..))")
+		public void selectLoginPointCut() {}
+		
+		@Before("selectLoginPointCut()")
+		public void loginPasswordEncrypt(JoinPoint jp) throws Exception {
+			
+			MemberInfo m = (MemberInfo)jp.getArgs()[0];
+			
+			String miId = m.getMiId();
+			String miPwd = m.getMiPwd();
+			
+			String encryptData = enc.encryptionData(miPwd, miId);
+			
+			
+			m.setMiPwd(encryptData);
+		}
 	
 }

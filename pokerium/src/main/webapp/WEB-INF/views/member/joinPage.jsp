@@ -8,9 +8,7 @@
 </head>
 <body>
 <script>
- 
-	
-	
+
 		function chkValue(frm){
 		    var miId = frm.miId.value;      
 		    var miPwd = frm.miPwd.value;      
@@ -112,6 +110,9 @@
 	 		</div>
 		</form>
 	</div>
+	
+	<br>
+	
 	<a href="/"> 메인페이지로 이동</a><br>
 	
 

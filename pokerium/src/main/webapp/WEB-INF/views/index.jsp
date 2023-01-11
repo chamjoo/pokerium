@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<a href="/member/loginPage.do">로그인</a><br>
 	
-	<a href="/member/joinPage.do">회원가입</a><br>
 
 </body>
 </html>

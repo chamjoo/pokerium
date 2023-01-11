@@ -16,10 +16,21 @@ public class MemberDAO {
 	
 	
 	
+	public MemberInfo selectLoginMember(MemberInfo member) {
+		
+		return sqlSession.selectOne("member.selectLoginMember", member);
+		
+	}
+	
+	
 	public int insertMember(MemberInfo m) {
 		
 		return sqlSession.insert("member.insertMember", m);
 	}
+
+
+
+
 
 	
 }

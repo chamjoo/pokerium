@@ -1,6 +1,7 @@
 package kr.co.pokerium.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,33 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService mService;
+	
+	
+	@RequestMapping(value="/member/loginPage.do", method = RequestMethod.GET)
+	public String loginPage() {
+		return "member/loginPage";
+		
+	}
+	
+	@RequestMapping(value="/member/login.do", method = RequestMethod.POST)
+	public String login(HttpServletRequest request,
+					MemberInfo member) 
+	{
+		
+		MemberInfo m = mService.selectLoginMember(member);
+		
+		
+		if(m!=null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("member", m);
+			return "redirect:/";
+			
+		} else {
+			return "/member/loginFail"; 
+		}
+		
+	}
+	
 	
 	@RequestMapping(value="/member/joinPage.do", method = RequestMethod.GET)
 	public String joinPage() {
@@ -39,10 +67,10 @@ public class MemberController {
 		int result = mService.insertMember(m);
 		
 		if(result>0) {
-			mav.addObject("msg", "회원 가입 성공!! - (환영합니다)");
+			mav.addObject("msg", "회원 가입이 완료되었습니다.");
 			mav.addObject("location", "/");
 		} else {
-			mav.addObject("msg", "회원 가입 실패!! - 지속적인 문제 발생 시 관리자에게 문의");
+			mav.addObject("msg", "회원 가입 실패하였습니다. 지속적인 문제 발생 시 관리자에게 문의해주세요.");
 			mav.addObject("location", "/member/joinPage.do");
 		}
 		
