@@ -35,11 +35,7 @@ public class MemberController {
 		
 		String miPhone = miPhone1+"-"+miPhone2+"-"+miPhone3;
 		m.setMiPhone(miPhone);
-		
-		System.out.println(miPhone1);
-		System.out.println(miPhone2);
-		System.out.println(miPhone3);
-		System.out.println(miPhone);
+
 		int result = mService.insertMember(m);
 		
 		if(result>0) {
