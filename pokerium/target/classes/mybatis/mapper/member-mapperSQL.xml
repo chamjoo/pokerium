@@ -30,6 +30,17 @@
 
 	</select>
   	
+  	<update id="updateLastlogin" parameterType="member">
+  	
+  		UPDATE
+  			T_MEMBER_INFO
+  		SET
+  			MI_LASTLOGIN = now()
+  		WHERE
+  			MI_ID = #{miId} AND MI_PWD = #{miPwd}
+  	
+  	</update>
+  	
   	<insert id="insertMember" parameterType="member">
   		INSERT INTO 
   			T_MEMBER_INFO	
