@@ -11,7 +11,8 @@
 	<%@include file ="/WEB-INF/views/common/header.jsp" %>
 	
 	
-	<h1>메인</h1>
+	
+
 	
 	
 	

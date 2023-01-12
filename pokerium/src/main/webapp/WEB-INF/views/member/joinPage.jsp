@@ -74,7 +74,7 @@
 		}
 	</style>
 	<div>
-		<form action="/member/memberJoin.do" method="post" id="joinForm" onsubmit="return chkValue(this);">
+		<form action="/member/memberJoin" method="post" id="joinForm" onsubmit="return chkValue(this);">
 			<div>	
 			
 				<H1>회원가입</H1>
@@ -116,6 +116,6 @@
 	
 	<a href="/"> 메인페이지로 이동</a><br>
 	
-
+	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

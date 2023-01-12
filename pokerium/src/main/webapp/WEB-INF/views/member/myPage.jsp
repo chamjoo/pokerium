@@ -41,7 +41,7 @@ function chkValue(frm){
 
 	function isDrop() {
 		if(confirm("정말 회원 탈퇴 하시겠습니까?\n탈퇴하면 영구적으로 되돌릴수 없습니다.")){
-			location.href="/member/memberDrop.do";
+			location.href="/member/memberDrop";
 		}
 	}
 	
@@ -49,9 +49,9 @@ function chkValue(frm){
 	
 </script>
 
-	<form id="myForm" action="/member/memberUpdate.do" method="post" onsubmit="return chkValue(this);">
+	<form id="myForm" action="/member/memberUpdate" method="post" onsubmit="return chkValue(this);">
 		
-			<div><H1 style="display:inline;">마이페이지</H1><a href="/member/myQnAPage.do"><button type="button">내 문의</button></a></div>
+			<div><H1 style="display:inline;">마이페이지</H1><a href="/member/myQnAPage"><button type="button">내 문의</button></a></div>
 			
 			
 			<div class="div">아이디</div>  <div class="div">${sessionScope.member.miId }</div><br>
@@ -71,6 +71,7 @@ function chkValue(frm){
 			<input type="submit" value="수정" /> 
 	
 	</form><br>
-
+	
+	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

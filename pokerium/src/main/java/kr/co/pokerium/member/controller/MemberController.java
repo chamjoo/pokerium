@@ -24,13 +24,13 @@ public class MemberController {
 	private MemberService mService;
 	
 	
-	@RequestMapping(value="/member/loginPage.do", method = RequestMethod.GET)
+	@RequestMapping(value="/member/loginPage", method = RequestMethod.GET)
 	public String loginPage() {
 		return "member/loginPage";
 		
 	}
 	
-	@RequestMapping(value="/member/login.do", method = RequestMethod.POST)
+	@RequestMapping(value="/member/login", method = RequestMethod.POST)
 	public String login(HttpServletRequest request,
 						MemberInfo member, 
 						Model model ) 
@@ -54,13 +54,13 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping(value="/member/joinPage.do", method = RequestMethod.GET)
+	@RequestMapping(value="/member/joinPage", method = RequestMethod.GET)
 	public String joinPage() {
 		return "member/joinPage";
 		
 	}
 	
-	@RequestMapping(value="/member/memberJoin.do", method = RequestMethod.POST)
+	@RequestMapping(value="/member/memberJoin", method = RequestMethod.POST)
 	public ModelAndView memberJoinus(
 							MemberInfo m,
 							HttpServletRequest request,
@@ -80,7 +80,7 @@ public class MemberController {
 			mav.addObject("location", "/");
 		} else {
 			mav.addObject("msg", "회원 가입 실패하였습니다. 지속적인 문제 발생 시 관리자에게 문의해주세요.");
-			mav.addObject("location", "/member/joinPage.do");
+			mav.addObject("location", "/member/joinPage");
 		}
 		
 		mav.setViewName("common/msg");
@@ -88,7 +88,7 @@ public class MemberController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/logout.do", method = RequestMethod.GET)
+	@RequestMapping(value="/member/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, @SessionAttribute MemberInfo member) {
 
 		session.invalidate();
@@ -97,7 +97,7 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping(value="/member/myPage.do")
+	@RequestMapping(value="/member/myPage")
 	public String myPagePassCheck(
 				@SessionAttribute MemberInfo member,
 				HttpSession session
@@ -116,7 +116,7 @@ public class MemberController {
 			}
 	}
 	
-	@RequestMapping(value="/member/memberDrop.do")
+	@RequestMapping(value="/member/memberDrop")
 	public String updateMemberDrop(
 						HttpServletRequest request,
 						Model model,
@@ -138,7 +138,7 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping(value="/member/memberUpdate.do", method = RequestMethod.POST)
+	@RequestMapping(value="/member/memberUpdate", method = RequestMethod.POST)
 	public String memberUpdate(
 							@RequestParam String miEmail,
 							@RequestParam String miPwd,
@@ -175,7 +175,7 @@ public class MemberController {
 		} else {
 			
 			model.addAttribute("msg", "기존 비밀번호를 다르게 입력하셨습니다. 확인해주세요.");
-			model.addAttribute("location", "/member/myPage.do");
+			model.addAttribute("location", "/member/myPage");
 		}
 	
 	

@@ -8,14 +8,25 @@
 </head>
 <body>
 <%@include file ="/WEB-INF/views/common/header.jsp" %>
-	<form name="loginForm" action="/member/login.do" method="post">
-		<input type="text" name="miId" placeholder="아이디"/><br>
-		<input type="password" name="miPwd" placeholder="비밀번호"/><br>
-		<br>
-		<input type="submit" value="로그인" />
-	</form>
-	<br>
-	<a href="/member/joinPage.do">아직 회원이 아니신가요?</a><br>
+<c:choose>
+		<c:when test="${sessionScope.member != null }">
+			<c:redirect url="/"></c:redirect>
+		</c:when>
+		
+		<c:otherwise>
+			<form name="loginForm" action="/member/login" method="post">
+				<input type="text" name="miId" placeholder="아이디"/><br>
+				<input type="password" name="miPwd" placeholder="비밀번호"/><br>
+				<br>
+				<input type="submit" value="로그인" />
+			</form>
+			<br>
+			<a href="/member/joinPage">아직 회원이 아니신가요?</a><br>
+		</c:otherwise>
+	</c:choose>
 
+
+
+	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
