@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>포케토리</title>
+<title>포케리움</title>
 </head>
 <body>
 	<a href="/"><img src="/resources/img/icon/logo.png" alt="로고" /></a>
