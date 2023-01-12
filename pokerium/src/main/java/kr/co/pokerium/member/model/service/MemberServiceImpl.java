@@ -1,5 +1,7 @@
 package kr.co.pokerium.member.model.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +33,23 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int insertMember(MemberInfo m) {
-		int result = mDAO.insertMember(m);
 		
-		return result;
+		return mDAO.insertMember(m);
+		
+		
+	}
+
+	@Override
+	public int updateMemberDrop(MemberInfo member) {
+
+		return mDAO.updateMemberDrop(member);
+		
+
+	}
+
+	@Override
+	public int updateMember(HashMap<String, Object> map) {
+		return mDAO.updateMember(map);
 		
 	}
 

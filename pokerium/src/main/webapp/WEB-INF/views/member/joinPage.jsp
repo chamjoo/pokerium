@@ -80,7 +80,7 @@
 				<input type="text" name="miId" placeholder="아이디를 입력해주세요." /><br>
 				<input type="password" name="miPwd" placeholder="비밀번호" /><br>
 				* 영문, 숫자 특수문자를 혼합하여 8~20자의 비밀번호를 입력해주세요.<br>
-				<input type="text" name="miPwd_re" placeholder="위에 입력한 비밀번호와 동일한 비밀번호를 입력해주세요." /><br>
+				<input type="password" name="miPwd_re" placeholder="위에 입력한 비밀번호와 동일한 비밀번호를 입력해주세요." /><br>
 				
 				<input type="email" name="miEmail" placeholder="이메일 주소를 입력해주세요." /> 
 		

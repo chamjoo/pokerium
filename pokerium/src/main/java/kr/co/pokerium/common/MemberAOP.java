@@ -1,5 +1,7 @@
 package kr.co.pokerium.common;
 
+import java.util.HashMap;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -54,5 +56,31 @@ public class MemberAOP {
 			
 			m.setMiPwd(encryptData);
 		}
+		
+		// 비밀번호 변경 시 암호화 처리 AOP 로직
+		
+		@Pointcut("execution(int kr.co.pokerium.member.model.service.MemberServiceImpl.updateMember(..))")
+		public void updatePasswordPointCut() {}
+		
+		@Before("updatePasswordPointCut()")
+		public void passwordEncrytion(JoinPoint jp) throws Exception {
+			
+			HashMap<String, Object> map = (HashMap<String,Object>)jp.getArgs()[0];
+			
+			String miId = map.get("miId").toString();
+			String miPwd = map.get("miPwd").toString();
+			String new_miPwd = map.get("new_miPwd").toString();
+			
+			
+			// 새로운 비밀번호 암호화 처리
+			String data = enc.encryptionData(new_miPwd, miId);
+			map.put("new_miPwd", data);
+			
+			// 기존 비밀번호 암호화 처리
+			data = enc.encryptionData(miPwd, miId);
+			map.put("miPwd", data);
+		}
+		
+		
 	
 }

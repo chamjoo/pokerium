@@ -1,12 +1,17 @@
 package kr.co.pokerium.member.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.pokerium.member.model.service.MemberService;
@@ -27,7 +32,8 @@ public class MemberController {
 	
 	@RequestMapping(value="/member/login.do", method = RequestMethod.POST)
 	public String login(HttpServletRequest request,
-					MemberInfo member) 
+						MemberInfo member, 
+						Model model ) 
 	{
 		
 		MemberInfo m = mService.selectLoginMember(member);
@@ -40,7 +46,9 @@ public class MemberController {
 			return "redirect:/";
 			
 		} else {
-			return "/member/loginFail"; 
+			model.addAttribute("msg", "로그인에 실패하였습니다. 아이디와 패스워드를 확인해주세요.");
+			model.addAttribute("location", "/member/loginPage.do");
+			return "common/msg"; 
 		}
 		
 	}
@@ -78,6 +86,101 @@ public class MemberController {
 		mav.setViewName("common/msg");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="/member/logout.do", method = RequestMethod.GET)
+	public String logout(HttpSession session, @SessionAttribute MemberInfo member) {
+
+		session.invalidate();
+		
+		return "redirect:/";
+		
+	}
+	
+	@RequestMapping(value="/member/myPage.do")
+	public String myPagePassCheck(
+				@SessionAttribute MemberInfo member,
+				HttpSession session
+			) {
+
+			if(member!=null) {
+				
+				session.setAttribute("member", member);
+				
+				return "member/myPage";
+				
+			} else {
+				
+				return "member/myPageLoadFail";
+				
+			}
+	}
+	
+	@RequestMapping(value="/member/memberDrop.do")
+	public String updateMemberDrop(
+						HttpServletRequest request,
+						Model model,
+						@SessionAttribute MemberInfo member,
+						HttpSession session
+						) {
+	
+		
+		int result = mService.updateMemberDrop(member);
+		if(result>0) {
+			session.invalidate();
+			model.addAttribute("msg", "정상적으로 탈퇴되었습니다.");
+			model.addAttribute("location", "/");
+		} else {
+			model.addAttribute("msg", "회원 탈퇴에 실패하였습니다. 지속적인 문제 발생시 관리자에게 문의해주세요.");
+			model.addAttribute("location", "member/myPage");
+		}
+		return "common/msg";
+		
+	}
+	
+	@RequestMapping(value="/member/memberUpdate.do", method = RequestMethod.POST)
+	public String memberUpdate(
+							@RequestParam String miEmail,
+							@RequestParam String miPwd,
+							@RequestParam String new_miPwd,
+							@SessionAttribute MemberInfo member,
+							HttpSession session,
+							Model model
+			)  {
+
+		
+		int result=0;
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("miId", member.getMiId());
+		map.put("miEmail", miEmail);
+		map.put("miPwd", miPwd);
+		
+		
+		if(new_miPwd == null || new_miPwd == "" || new_miPwd.equals("") ) {
+			map.put("new_miPwd", miPwd);
+			
+			result = mService.updateMember(map);
+		} else {
+			map.put("new_miPwd", new_miPwd);
+			result = mService.updateMember(map);
+			
+		}
+
+		if(result>0) {
+			session.invalidate();
+			model.addAttribute("msg", "회원정보 수정 성공. 다시 로그인해주세요.");
+			model.addAttribute("location", "/");
+			
+		} else {
+			
+			model.addAttribute("msg", "기존 비밀번호를 다르게 입력하셨습니다. 확인해주세요.");
+			model.addAttribute("location", "/member/myPage.do");
+		}
+	
+	
+	return "common/msg";
+	
 	}
 	
 }

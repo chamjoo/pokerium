@@ -1,6 +1,7 @@
 package kr.co.pokerium.member.model.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MemberInfo {
 	private int    miNo; 
@@ -17,9 +18,9 @@ public class MemberInfo {
 	private String miIsactive;
 	private String miRebank; 
 	private String miAccount;
-	private Date miRegtime;
-	private Date miDroptime; 
-	private Date miLastlogin;
+	private Timestamp miRegtime;
+	private Timestamp miDroptime; 
+	private Timestamp miLastlogin;
 	public int getMiNo() {
 		return miNo;
 	}
@@ -104,27 +105,27 @@ public class MemberInfo {
 	public void setMiAccount(String miAccount) {
 		this.miAccount = miAccount;
 	}
-	public Date getMiRegtime() {
+	public Timestamp getMiRegtime() {
 		return miRegtime;
 	}
-	public void setMiRegtime(Date miRegtime) {
+	public void setMiRegtime(Timestamp miRegtime) {
 		this.miRegtime = miRegtime;
 	}
-	public Date getMiDroptime() {
+	public Timestamp getMiDroptime() {
 		return miDroptime;
 	}
-	public void setMiDroptime(Date miDroptime) {
+	public void setMiDroptime(Timestamp miDroptime) {
 		this.miDroptime = miDroptime;
 	}
-	public Date getMiLastlogin() {
+	public Timestamp getMiLastlogin() {
 		return miLastlogin;
 	}
-	public void setMiLastlogin(Date miLastlogin) {
+	public void setMiLastlogin(Timestamp miLastlogin) {
 		this.miLastlogin = miLastlogin;
 	}
 	public MemberInfo(int miNo, String miId, String miPwd, String miName, String miBirth, String miGender,
 			String miEmail, String miIsmail, String miPhone, String miIssns, String miTel, String miIsactive,
-			String miRebank, String miAccount, Date miRegtime, Date miDroptime, Date miLastlogin) {
+			String miRebank, String miAccount, Timestamp miRegtime, Timestamp miDroptime, Timestamp miLastlogin) {
 		super();
 		this.miNo = miNo;
 		this.miId = miId;
@@ -156,6 +157,7 @@ public class MemberInfo {
 				+ miRebank + ", miAccount=" + miAccount + ", miRegtime=" + miRegtime + ", miDroptime=" + miDroptime
 				+ ", miLastlogin=" + miLastlogin + "]";
 	}
+	
 	
 	
 	

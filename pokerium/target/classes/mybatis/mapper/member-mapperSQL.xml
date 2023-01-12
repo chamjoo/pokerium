@@ -57,5 +57,26 @@
   	
   	</insert>
   	
- 
+ 	<update id="updateMemberDrop" parameterType="member">
+  	
+  		UPDATE
+  			T_MEMBER_INFO
+  		SET
+  			MI_ISACTIVE = 'N',
+  			MI_DROPTIME = now()
+  		WHERE
+  			MI_ID = #{miId} AND MI_PWD = #{miPwd}
+  	
+  	</update>
+  	
+  	<update id="updateMember" parameterType="hashmap">
+  		UPDATE 
+  			T_MEMBER_INFO 
+  		SET 
+  			MI_EMAIL=#{miEmail}, 
+  			MI_PWD=#{new_miPwd} 
+  		WHERE 
+  			MI_ID=#{miId} AND MI_PWD=#{miPwd}
+  	</update>
+  	
 </mapper>
