@@ -8,22 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-	<a href="/member/myPage.do"><img src="resources/img/icon/icon_ball_c.png"  /><span>포켓몬 도감</span></a> 
-	<c:choose>
-		<c:when test="${sessionScope.member != null }">
-			<a href="/member/myPage.do"><img src="resources/img/icon/icon_mypage.png"  />마이 페이지</a>   
-			<a href="/member/logout.do"><img src="resources/img/icon/icon_logout.png"  />로그아웃</a> <br>
-		</c:when>
-		
-		<c:otherwise>
-			<a href="/member/loginPage.do"><img src="resources/img/icon/icon_mypage.png" />로그인</a><br>
-		</c:otherwise>
+	<%@include file ="/WEB-INF/views/common/header.jsp" %>
 	
 	
-	</c:choose>
-
+	<h1>메인</h1>
 	
-
 </body>
 </html>

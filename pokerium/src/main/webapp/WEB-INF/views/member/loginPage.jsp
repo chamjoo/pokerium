@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@include file ="/WEB-INF/views/common/header.jsp" %>
 	<form name="loginForm" action="/member/login.do" method="post">
 		<input type="text" name="miId" placeholder="아이디"/><br>
 		<input type="password" name="miPwd" placeholder="비밀번호"/><br>
