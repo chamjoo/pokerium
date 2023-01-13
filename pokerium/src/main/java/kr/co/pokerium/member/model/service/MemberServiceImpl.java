@@ -53,6 +53,13 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public int selectIdcheck(String miId) {
+			int result = mDAO.selectIdCheck(miId);
+		
+		return result;
+	}
+
 	
 	
 	

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -163,6 +165,7 @@ cursor:pointer;
 	width:130px !important;
 	height:60px;
 	margin:10px;
+	cursor:point;
 }
 
 #checkIdDiv {
@@ -175,7 +178,6 @@ cursor:pointer;
 </head>
 <body>
 <%@include file ="/WEB-INF/views/common/header.jsp" %>
-
 	<section>
 	<div id="joinDiv">
 		<H1 style="float:left;font-size:36px;">회원가입</H1>
@@ -183,7 +185,7 @@ cursor:pointer;
 			
 			<div>	
 				<div id="checkIdDiv">
-				<input type="text" name="miId" placeholder="아이디를 입력해주세요." style="width:330px;"/><a href="" ><img src="/resources/img/icon/checkId.png" id="checkId" /></a><br></div>
+				<input type="text" name="miId" placeholder="아이디를 입력해주세요." style="width:330px;"/><img src="/resources/img/icon/checkId.png" id="checkId" /><br></div>
 				<input type="password" name="miPwd" placeholder="비밀번호" /><br>
 				<H5 style="margin:0;padding:0;">* 영문, 숫자 특수문자를 혼합하여 8~20자의 비밀번호를 입력해주세요.</H5>
 				<input type="password" name="miPwd_re" placeholder="위에 입력한 비밀번호와 동일한 비밀번호를 입력해주세요." /><br>
@@ -224,5 +226,31 @@ cursor:pointer;
 
 	</section>
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
+	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script>
+	$('#checkId').click(function(){
+
+		var miId = $('input[name=miId]').val();
+		
+		$.ajax({
+			url : "/member/memberIdCheck",
+			data : {"miId":miId},
+			type : "get",
+			success : function(result){
+				if(result=="true") {
+					alert('[' + miId + ']는 사용 불가능한 ID 입니다.');
+					$('input[name=miId]').focus();
+				} else {
+					alert('[' + miId + ']는 사용 가능한 ID 입니다.');
+					$('input[name=miId]').focus();
+				}
+			},
+			error : function(){
+				console.log("ajax 통신 실패");
+			}
+		});
+	});
+	</script>
 </body>
 </html>

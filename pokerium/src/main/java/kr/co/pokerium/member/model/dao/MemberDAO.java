@@ -48,6 +48,12 @@ public class MemberDAO {
 		
 	}
 
+	public int selectIdCheck(String miId) {
+		
+		return sqlSession.selectOne("member.selectIdCheck", miId) != null ? 1 : 0;
+		
+	}
+
 
 	
 

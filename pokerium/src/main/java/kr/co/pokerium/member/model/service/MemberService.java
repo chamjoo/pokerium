@@ -16,5 +16,7 @@ public interface MemberService {
 
 	int updateMember(HashMap<String, Object> map);
 
+	int selectIdcheck(String miId);
+
 	
 }

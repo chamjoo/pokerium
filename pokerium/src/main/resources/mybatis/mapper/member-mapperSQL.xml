@@ -79,4 +79,30 @@
   			MI_ID=#{miId} AND MI_PWD=#{miPwd}
   	</update>
   	
+  	<select id="selectIdCheck" resultType="member">
+		SELECT
+			MI_NO as miNo,
+		    MI_ID as miId,
+		    MI_PWD as miPwd,
+		    MI_NAME as miName,
+		    MI_BIRTH as miBirth,
+		    MI_GENDER as miGender,
+		    MI_EMAIL as miEmail,
+		    MI_ISMAIL as miIsmail,
+		    MI_PHONE as miPhone,
+		    MI_ISSNS as miIssns,
+		    MI_TEL as miTel,
+		    MI_ISACTIVE as miIsactive,
+		    MI_REBANK as miRebank,
+		    MI_ACCOUNT as miAccount,
+		    MI_REGTIME as miRegtime,
+		    MI_DROPTIME as miDroptime,
+		    MI_LASTLOGIN as miLastlogin
+		FROM 
+			T_MEMBER_INFO
+		WHERE
+			MI_ID = #{_parameter}
+  	</select>
+  	
+  	
 </mapper>

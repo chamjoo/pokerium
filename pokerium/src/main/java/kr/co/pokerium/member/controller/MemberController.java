@@ -1,8 +1,10 @@
 package kr.co.pokerium.member.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,6 +183,21 @@ public class MemberController {
 	
 	return "common/msg";
 	
+	}
+	
+	@RequestMapping(value="/member/memberIdCheck", method = RequestMethod.GET)
+	public void memberIdCheckAjax(
+									@RequestParam String miId,
+									HttpServletResponse response
+				) throws IOException {
+		int result = mService.selectIdcheck(miId);
+						
+		if(result>0) {
+			response.getWriter().print(true); 
+		} else {
+			response.getWriter().print(false);
+		}
+		
 	}
 	
 }
