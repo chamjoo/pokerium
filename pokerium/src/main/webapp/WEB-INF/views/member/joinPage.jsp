@@ -57,15 +57,27 @@
 		    if (miPhone3 == "" || miPhone3.length < 4){
 		       	alert("휴대폰 번호를 확인해주세요.");				frm.miPhone3.focus();     return false;
 		    }
-	 
+	 		
+		    if (miId.length < 4){
+		       	alert("아이디는 4자이상 입력해주세요.");               frm.miId.focus();   return false;
+		    }
 		    return true;
 		}
+		
 		function onlyNum(obj){
 			//특정 컨트롤에 숫자만 입력되도록 하는 함수로 숫자가 아닌 값이 입력될 경우 값을 모두 삭제시킴
 				if (isNaN(obj.value)){
 					obj.value = "";
 			}
-}
+		}
+		function chkCharCode(event) {
+			  const regExp = /[^0-9a-zA-Z]/g;
+			  const ele = event.target;
+			  if (regExp.test(ele.value)) {
+			    ele.value = "";
+			    alert('영어,숫자를 조합해 4자이상 입력하세요.');
+			  }
+		};
 
 </script>
 
@@ -84,7 +96,7 @@ section {
 	margin:0 auto;
 	width:520px;
 	height:900px;
-	padding:100px 100px 100px 100px;
+	padding:50px 100px 100px 100px;
 	line-height:30px;
 	background-color:#ffffff;
 
@@ -191,7 +203,8 @@ cursor:pointer;
 			
 			<div>	
 				<div id="checkIdDiv">
-				<input type="text" name="miId" placeholder="아이디를 입력해주세요." style="width:330px;"/><img src="/resources/img/icon/checkId.png" id="checkId" /><br></div>
+				<input type="text" name="miId" placeholder="아이디를 입력해주세요." onkeyup="chkCharCode(event)" style="width:330px;"/><img src="/resources/img/icon/checkId.png" id="checkId" /><br></div>
+				<H5 style="margin:0;padding:0;">* 영어,숫자를 조합하여 4자이상 입력해주세요.</H5>
 				<input type="password" name="miPwd" placeholder="비밀번호" /><br>
 				<H5 style="margin:0;padding:0;">* 영문, 숫자 특수문자를 혼합하여 8~20자의 비밀번호를 입력해주세요.</H5>
 				<input type="password" name="miPwd_re" placeholder="위에 입력한 비밀번호와 동일한 비밀번호를 입력해주세요." /><br>

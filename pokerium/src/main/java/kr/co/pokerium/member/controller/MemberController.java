@@ -190,8 +190,10 @@ public class MemberController {
 									@RequestParam String miId,
 									HttpServletResponse response
 				) throws IOException {
-		int result = mService.selectIdcheck(miId);
-						
+		int result = 1;
+		if(miId.length() >= 4) {
+			result = mService.selectIdcheck(miId);
+		}
 		if(result>0) {
 			response.getWriter().print(true); 
 		} else {
