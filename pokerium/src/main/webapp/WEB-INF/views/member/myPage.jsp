@@ -13,6 +13,10 @@
 	.div {
 		display:inline-block;
 	}
+	#myPageDiv {
+		width:1220px;
+		margin: 0 auto;
+	}
 </style>
 	
 <script>
@@ -48,7 +52,7 @@ function chkValue(frm){
 	
 	
 </script>
-
+	<div id="myPageDiv">
 	<form id="myForm" action="/member/memberUpdate" method="post" onsubmit="return chkValue(this);">
 		
 			<div><H1 style="display:inline;">마이페이지</H1><a href="/member/myQnAPage"><button type="button">내 문의</button></a></div>
@@ -69,9 +73,9 @@ function chkValue(frm){
 			
 			<button type="button" onclick="isDrop()">회원 탈퇴</button>       
 			<input type="submit" value="수정" /> 
-	
+		
 	</form><br>
-	
+	</div>
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>

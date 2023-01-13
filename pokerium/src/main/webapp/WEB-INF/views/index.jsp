@@ -6,14 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+
+
 </head>
 <body>
 	<%@include file ="/WEB-INF/views/common/header.jsp" %>
 	
+	<section>
+		<h1>메인</h1>
 	
-	<h1>메인</h1>
-	
-	
+	</section>
 	
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 </body>

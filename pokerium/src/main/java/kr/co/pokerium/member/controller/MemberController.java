@@ -47,7 +47,7 @@ public class MemberController {
 			
 		} else {
 			model.addAttribute("msg", "로그인에 실패하였습니다. 아이디와 패스워드를 확인해주세요.");
-			model.addAttribute("location", "/member/loginPage.do");
+			model.addAttribute("location", "/member/loginPage");
 			return "common/msg"; 
 		}
 		

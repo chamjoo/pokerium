@@ -5,9 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
-<%@include file ="/WEB-INF/views/common/header.jsp" %>
+
+
 <script>
 
 		function chkValue(frm){
@@ -69,53 +68,161 @@
 </script>
 
 	<style>
-		#joinForm{
-			width : 500px;
-		}
-	</style>
-	<div>
+section {
+	background-color:#f7f7f7;
+	padding:80px;
+}
+
+#joinForm{
+	width : 500px;
+}
+
+#joinDiv {
+	display:block;
+	margin:0 auto;
+	width:520px;
+	height:900px;
+	padding:100px 100px 100px 100px;
+	line-height:30px;
+	background-color:#ffffff;
+
+}
+
+#joinDiv input[type=text], #joinDiv input[type=password],#joinDiv input[type=email] {
+	width:470px;
+	height:60px;
+	margin:10px;
+	border:1px solid #bbb;
+	border-radius:0;
+	font-size:16px;
+	padding-left:30px;
+	font-weight: bold;                         
+	font-family: "Trebuchet MS", Dotum, Arial;
+}
+::placeholder { 
+	color:#bbb;
+}
+#miBirth {
+	width:300px;
+	height:60px;
+	margin:10px;
+	border:1px solid #bbb;
+	border-radius:0;
+	font-size:30px;
+	padding-left:30px;                       
+	font-family: "Trebuchet MS", Dotum, Arial;
+	text-align:center;
+}
+#miGender {
+	
+	width:170px;
+	height:60px;
+	margin:10px;
+	border:1px solid #bbb;
+	border-radius:0;
+	font-weight: bold;
+	font-size:16px;                  
+	font-family: "Trebuchet MS", Dotum, Arial;
+	text-align:center;
+
+}
+#birthGender {
+	width:524px;
+	display: flex; justify-content:center;
+	
+}
+
+.miPhone {
+	width:130px !important;
+	height:60px;
+	margin:10px;
+	border:1px solid #bbb;
+	border-radius:0;
+	font-size:16px;
+	font-weight: bold;                         
+	font-family: "Trebuchet MS", Dotum, Arial;
+	text-align:center;
+	padding-right:30px;
+}
+#miPhoneDiv { 
+	width:524px;
+	display: flex; justify-content:center;
+	align-items: center;
+}
+
+#submitBtn {
+background:url(/resources/img/icon/joinSubmit.png);
+background-repeat : no-repeat;
+width:500px;
+height:80px;
+border:0;
+cursor:pointer;
+}
+
+#checkId {
+	width:130px !important;
+	height:60px;
+	margin:10px;
+}
+
+#checkIdDiv {
+	width:524px;
+	display: flex; justify-content:center;
+	align-items: center;
+}
+</style>
+
+</head>
+<body>
+<%@include file ="/WEB-INF/views/common/header.jsp" %>
+
+	<section>
+	<div id="joinDiv">
+		<H1 style="float:left;font-size:36px;">회원가입</H1>
 		<form action="/member/memberJoin" method="post" id="joinForm" onsubmit="return chkValue(this);">
-			<div>	
 			
-				<H1>회원가입</H1>
-				<input type="text" name="miId" placeholder="아이디를 입력해주세요." /><br>
+			<div>	
+				<div id="checkIdDiv">
+				<input type="text" name="miId" placeholder="아이디를 입력해주세요." style="width:330px;"/><a href="" ><img src="/resources/img/icon/checkId.png" id="checkId" /></a><br></div>
 				<input type="password" name="miPwd" placeholder="비밀번호" /><br>
-				* 영문, 숫자 특수문자를 혼합하여 8~20자의 비밀번호를 입력해주세요.<br>
+				<H5 style="margin:0;padding:0;">* 영문, 숫자 특수문자를 혼합하여 8~20자의 비밀번호를 입력해주세요.</H5>
 				<input type="password" name="miPwd_re" placeholder="위에 입력한 비밀번호와 동일한 비밀번호를 입력해주세요." /><br>
 				
-				<input type="email" name="miEmail" placeholder="이메일 주소를 입력해주세요." /> 
-		
-			
+				<input type="email" name="miEmail" placeholder="이메일 주소를 입력해주세요.      ex) user@pokerium.co.kr" /> 
 				<br>
 				<br>
-				<hr>
+				<hr style="width:520px;">
 				<br>	
-				<input type="text" name="miName" placeholder="이름을 입력해주세요."/><br>
-				<input type="date" name="miBirth" value="2000-01-01" min="1900-01-01" max="2099-12-31" />
-				<select name="miGender">
-					<option value="" selected disabled>성별</option>
-					<option value="M" >남자</option>
-					<option value="F" >여자</option>
-				</select><br>
-				<select id="miPhone1" name="miPhone1">
-				<option value="" selected disabled>- 선 택 -</option>
-				<option value="010">010</option>
-				<option value="011">011</option>
-				<option value="016">016</option>
-				<option value="019">019</option>
-			</select>-
-			<input type="text" maxlength="4" size="4" id="miPhone2" name="miPhone2" onkeyup="onlyNum(this);"/>-
-			<input type="text" maxlength="4" size="4" id="miPhone3" name="miPhone3" onkeyup="onlyNum(this);"/>
-			<br><br>
-				<input type="submit" value="회원가입" />
+				<input type="text" name="miName" placeholder="이름을 입력해주세요."/>
+				<div id="birthGender">
+					<input type="date" id="miBirth" name="miBirth" value="2000-01-01" min="1900-01-01" max="2099-12-31" />
+					<select name="miGender" id="miGender">
+						<option value="" selected disabled>성별</option>
+						<option value="M" >남자</option>
+						<option value="F" >여자</option>
+					</select>
+				</div>
+				<div id="miPhoneDiv">
+				<select class="miPhone" id="miPhone1" name="miPhone1" style="padding:0;">
+					<option value="" selected disabled>- 선 택 -</option>
+					<option value="010">010</option>
+					<option value="011">011</option>
+					<option value="016">016</option>
+					<option value="019">019</option>
+				</select>-
+				<input class="miPhone" type="text" maxlength="4" size="4" id="miPhone2" name="miPhone2" onkeyup="onlyNum(this);"/>-
+				<input class="miPhone" type="text" maxlength="4" size="4" id="miPhone3" name="miPhone3" onkeyup="onlyNum(this);"/>
+				</div>
+				<br><br>
+				<input type="submit" id="submitBtn" value=""/>
+				
 	 		</div>
 		</form>
 	</div>
 	
 	<br>
-	
-	<a href="/"> 메인페이지로 이동</a><br>
-	
+
+	</section>
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
