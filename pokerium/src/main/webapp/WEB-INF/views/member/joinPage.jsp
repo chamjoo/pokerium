@@ -180,6 +180,12 @@ cursor:pointer;
 <%@include file ="/WEB-INF/views/common/header.jsp" %>
 	<section>
 	<div id="joinDiv">
+	<c:choose>
+		<c:when test="${sessionScope.member != null }">
+			<c:redirect url="/"></c:redirect>
+		</c:when>
+		
+		<c:otherwise>
 		<H1 style="float:left;font-size:36px;">회원가입</H1>
 		<form action="/member/memberJoin" method="post" id="joinForm" onsubmit="return chkValue(this);">
 			
@@ -220,6 +226,8 @@ cursor:pointer;
 				
 	 		</div>
 		</form>
+		</c:otherwise>
+		</c:choose>
 	</div>
 	
 	<br>
