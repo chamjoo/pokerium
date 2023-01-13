@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/img/icon/icon_ball_c.ico">
+<title>포케리움 :: PoKéRíum</title>
 <style>
 section {
 	background-color:#f7f7f7;
