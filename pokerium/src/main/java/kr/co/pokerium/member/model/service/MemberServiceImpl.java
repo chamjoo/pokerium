@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokerium.member.model.dao.MemberDAO;
+import kr.co.pokerium.member.model.vo.MemberAddr;
 import kr.co.pokerium.member.model.vo.MemberInfo;
 
 @Service
@@ -55,9 +56,23 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int selectIdcheck(String miId) {
-			int result = mDAO.selectIdCheck(miId);
 		
-		return result;
+		return mDAO.selectIdCheck(miId);
+		
+	}
+
+	@Override
+	public int selectNicknamecheck(String miNickname) {
+		
+		return mDAO.selectNicknameCheck(miNickname);
+		
+	}
+
+	@Override
+	public int insertMemberAddr(MemberAddr ma) {
+		
+		return mDAO.insertMemberAddr(ma);
+		
 	}
 
 	

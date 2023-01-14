@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.pokerium.member.model.service.MemberService;
+import kr.co.pokerium.member.model.vo.MemberAddr;
 import kr.co.pokerium.member.model.vo.MemberInfo;
 
 @Controller
@@ -65,6 +66,7 @@ public class MemberController {
 	@RequestMapping(value="/member/memberJoin", method = RequestMethod.POST)
 	public ModelAndView memberJoinus(
 							MemberInfo m,
+							MemberAddr ma,
 							HttpServletRequest request,
 							ModelAndView mav
 			) {
@@ -74,12 +76,18 @@ public class MemberController {
 		
 		String miPhone = miPhone1+"-"+miPhone2+"-"+miPhone3;
 		m.setMiPhone(miPhone);
-
+		ma.setMiId(m.getMiId());
+		ma.setMaName(m.getMiName());
+		ma.setMaPhone(miPhone);
+		System.out.println(ma);
 		int result = mService.insertMember(m);
 		
 		if(result>0) {
-			mav.addObject("msg", "회원 가입이 완료되었습니다.");
-			mav.addObject("location", "/");
+			result=mService.insertMemberAddr(ma);
+			if(result>0) {
+				mav.addObject("msg", "회원 가입이 완료되었습니다.");
+				mav.addObject("location", "/");
+			}
 		} else {
 			mav.addObject("msg", "회원 가입 실패하였습니다. 지속적인 문제 발생 시 관리자에게 문의해주세요.");
 			mav.addObject("location", "/member/joinPage");
@@ -194,6 +202,22 @@ public class MemberController {
 		if(miId.length() >= 4) {
 			result = mService.selectIdcheck(miId);
 		}
+		if(result>0) {
+			response.getWriter().print(true); 
+		} else {
+			response.getWriter().print(false);
+		}
+		
+	}
+	
+	@RequestMapping(value="/member/memberNicknameCheck", method = RequestMethod.GET)
+	public void memberNicknameCheckAjax(
+									@RequestParam String miNickname,
+									HttpServletResponse response
+				) throws IOException {
+
+		int result = mService.selectNicknamecheck(miNickname);
+
 		if(result>0) {
 			response.getWriter().print(true); 
 		} else {

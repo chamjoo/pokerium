@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import kr.co.pokerium.member.model.vo.MemberAddr;
 import kr.co.pokerium.member.model.vo.MemberInfo;
 
 @Repository
@@ -52,6 +53,16 @@ public class MemberDAO {
 		
 		return sqlSession.selectOne("member.selectIdCheck", miId) != null ? 1 : 0;
 		
+	}
+
+	public int selectNicknameCheck(String miNickname) {
+		
+		return sqlSession.selectOne("member.selectNicknameCheck", miNickname) != null ? 1 : 0;
+		
+	}
+
+	public int insertMemberAddr(MemberAddr ma) {
+		return sqlSession.insert("member.insertMemberAddr", ma);
 	}
 
 

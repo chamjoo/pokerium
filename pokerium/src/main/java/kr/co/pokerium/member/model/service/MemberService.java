@@ -2,6 +2,7 @@ package kr.co.pokerium.member.model.service;
 
 import java.util.HashMap;
 
+import kr.co.pokerium.member.model.vo.MemberAddr;
 import kr.co.pokerium.member.model.vo.MemberInfo;
 
 public interface MemberService {
@@ -17,6 +18,10 @@ public interface MemberService {
 	int updateMember(HashMap<String, Object> map);
 
 	int selectIdcheck(String miId);
+
+	int selectNicknamecheck(String miNickname);
+
+	int insertMemberAddr(MemberAddr ma);
 
 	
 }

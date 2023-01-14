@@ -6,10 +6,12 @@ import java.sql.Timestamp;
 public class MemberInfo {
 	private int    miNo; 
 	private String miId; 
+	private String miNickname;
 	private String miPwd; 
 	private String miName;
 	private String miBirth;
 	private String miGender;
+	private String miTeam;
 	private String miEmail; 
 	private String miIsmail;
 	private String miPhone; 
@@ -32,6 +34,12 @@ public class MemberInfo {
 	}
 	public void setMiId(String miId) {
 		this.miId = miId;
+	}
+	public String getMiNickname() {
+		return miNickname;
+	}
+	public void setMiNickname(String miNickname) {
+		this.miNickname = miNickname;
 	}
 	public String getMiPwd() {
 		return miPwd;
@@ -56,6 +64,12 @@ public class MemberInfo {
 	}
 	public void setMiGender(String miGender) {
 		this.miGender = miGender;
+	}
+	public String getMiTeam() {
+		return miTeam;
+	}
+	public void setMiTeam(String miTeam) {
+		this.miTeam = miTeam;
 	}
 	public String getMiEmail() {
 		return miEmail;
@@ -123,16 +137,23 @@ public class MemberInfo {
 	public void setMiLastlogin(Timestamp miLastlogin) {
 		this.miLastlogin = miLastlogin;
 	}
-	public MemberInfo(int miNo, String miId, String miPwd, String miName, String miBirth, String miGender,
-			String miEmail, String miIsmail, String miPhone, String miIssns, String miTel, String miIsactive,
-			String miRebank, String miAccount, Timestamp miRegtime, Timestamp miDroptime, Timestamp miLastlogin) {
+	public MemberInfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public MemberInfo(int miNo, String miId, String miNickname, String miPwd, String miName, String miBirth,
+			String miGender, String miTeam, String miEmail, String miIsmail, String miPhone, String miIssns,
+			String miTel, String miIsactive, String miRebank, String miAccount, Timestamp miRegtime,
+			Timestamp miDroptime, Timestamp miLastlogin) {
 		super();
 		this.miNo = miNo;
 		this.miId = miId;
+		this.miNickname = miNickname;
 		this.miPwd = miPwd;
 		this.miName = miName;
 		this.miBirth = miBirth;
 		this.miGender = miGender;
+		this.miTeam = miTeam;
 		this.miEmail = miEmail;
 		this.miIsmail = miIsmail;
 		this.miPhone = miPhone;
@@ -145,19 +166,18 @@ public class MemberInfo {
 		this.miDroptime = miDroptime;
 		this.miLastlogin = miLastlogin;
 	}
-	public MemberInfo() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	@Override
 	public String toString() {
-		return "MemberInfo [miNo=" + miNo + ", miId=" + miId + ", miPwd=" + miPwd + ", miName=" + miName + ", miBirth="
-				+ miBirth + ", miGender=" + miGender + ", miEmail=" + miEmail + ", miIsmail=" + miIsmail + ", miPhone="
-				+ miPhone + ", miIssns=" + miIssns + ", miTel=" + miTel + ", miIsactive=" + miIsactive + ", miRebank="
-				+ miRebank + ", miAccount=" + miAccount + ", miRegtime=" + miRegtime + ", miDroptime=" + miDroptime
-				+ ", miLastlogin=" + miLastlogin + "]";
+		return "MemberInfo [miNo=" + miNo + ", miId=" + miId + ", miNickname=" + miNickname + ", miPwd=" + miPwd
+				+ ", miName=" + miName + ", miBirth=" + miBirth + ", miGender=" + miGender + ", miTeam=" + miTeam
+				+ ", miEmail=" + miEmail + ", miIsmail=" + miIsmail + ", miPhone=" + miPhone + ", miIssns=" + miIssns
+				+ ", miTel=" + miTel + ", miIsactive=" + miIsactive + ", miRebank=" + miRebank + ", miAccount="
+				+ miAccount + ", miRegtime=" + miRegtime + ", miDroptime=" + miDroptime + ", miLastlogin=" + miLastlogin
+				+ "]";
 	}
+
 	
+
 	
 	
 	

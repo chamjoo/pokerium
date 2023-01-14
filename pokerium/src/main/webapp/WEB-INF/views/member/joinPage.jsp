@@ -13,7 +13,8 @@
 <script>
 
 		function chkValue(frm){
-		    var miId = frm.miId.value;      
+		    var miId = frm.miId.value;   
+		    var miNickname = frm.miNickname.value;
 		    var miPwd = frm.miPwd.value;      
 		    var miPwd_re = frm.miPwd_re.value;
 		    var miEmail = frm.miEmail.value; 
@@ -22,14 +23,24 @@
 		    var miPhone1 = frm.miPhone1.value;      
 		    var miPhone2 = frm.miPhone2.value;      
 		    var miPhone3 = frm.miPhone3.value;
+		    var miTeam = frm.miTeam.value;
+		    var maZip = frm.maZip.value;
+		    var maAddr1 = frm.maAddr1.value;
+		    var maAddr2 = frm.maAddr2.value;
 		    
 		    console.log(miId);
 		    if (miId == ""){
 		       	alert("아이디를 입력해주세요.");               frm.miId.focus();   return false;
 		    }
+		    if (miNickname == ""){
+		       	alert("닉네임을 입력해주세요.");               frm.miNickname.focus();   return false;
+		    }
 		    
 		    if (miPwd == ""){
 		       	alert("비밀번호를 입력해주세요.");               frm.miPwd.focus();   return false;
+		    }
+		    if (miPwd.length < 8){
+		       	alert("비밀번호는 8자이상 입력해주세요.");               frm.miPwd.focus();   return false;
 		    }
 		    
 		    if (miPwd_re != miPwd){
@@ -37,6 +48,10 @@
 		    }
 			if (miEmail == "") {
 		  		alert("이메일 주소를 입력해주세요.");					frm.miEmail.focus();     return false;	
+		  	}
+			
+			if (miTeam == "") {
+		  		alert("팀을 선택해주세요.");					frm.miTeam.focus();     return false;	
 		  	}
 		    
 			if (miName == ""){
@@ -58,10 +73,22 @@
 		    if (miPhone3 == "" || miPhone3.length < 4){
 		       	alert("휴대폰 번호를 확인해주세요.");				frm.miPhone3.focus();     return false;
 		    }
+		    
+		    if (maZip == ""){
+		       	alert("주소를 입력해주세요.");				frm.maZip.focus();     return false;
+		    }
+		    if (maAddr1 == ""){
+		       	alert("주소를 입력해주세요.");				frm.maAddr1.focus();     return false;
+		    }
+		    if (maAddr2 == ""){
+		       	alert("주소를 입력해주세요.");				frm.maAddr2.focus();     return false;
+		    }
+		    
 	 		
 		    if (miId.length < 4){
 		       	alert("아이디는 4자이상 입력해주세요.");               frm.miId.focus();   return false;
 		    }
+		   
 		    return true;
 		}
 		
@@ -71,12 +98,20 @@
 					obj.value = "";
 			}
 		}
-		function chkCharCode(event) {
+		function chkId(obj) {
 			  const regExp = /[^0-9a-zA-Z]/g;
-			  const ele = event.target;
+			  const ele = obj.target;
 			  if (regExp.test(ele.value)) {
 			    ele.value = "";
 			    alert('영어,숫자를 조합해 4자이상 입력하세요.');
+			  }
+		};
+		function chkNickname(obj) {
+			  const regExp = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/;
+			  const ele = obj.target;
+			  if (regExp.test(ele.value)) {
+			    ele.value = "";
+			    alert('특수문자는 사용이 불가능합니다.');
 			  }
 		};
 
@@ -96,7 +131,7 @@ section {
 	display:block;
 	margin:0 auto;
 	width:520px;
-	height:900px;
+	height:1700px;
 	padding:50px 100px 100px 100px;
 	line-height:30px;
 	background-color:#ffffff;
@@ -174,17 +209,60 @@ section {
 	cursor:pointer;
 }
 
-#checkId {
+#checkId, #checkNickname {
 	width:130px !important;
 	height:60px;
 	margin:10px;
-	cursor:point;
+	cursor:pointer;
 }
 
-#checkIdDiv {
+#checkIdDiv, #checkNicknameDiv {
 	width:524px;
 	display: flex; justify-content:center;
 	align-items: center;
+}
+
+#teamDiv {
+	width:530px;
+	height:160px;
+	text-align:center;
+	font-weight: bold;                         
+	font-family: "Trebuchet MS", Dotum, Arial;
+}
+.teamImageDiv {
+	display:inline-block;
+	width:120px;
+	height:160px;
+	padding-left:10px;
+	padding-right:10px;
+}
+.teamImage {
+	display:inline-block;
+	width:120px;
+	height:120px;
+}
+
+#findAddr {
+	width:120px;
+	height:60px;
+	margin:10px;
+	cursor:pointer;
+}
+#maZip:focus, #maAddr1:focus{
+	outline:none;
+	
+}
+#maZip { 
+	width:360px !important;
+	height:60px; background-color:#e9ecef;
+}
+#maAddr1 { 
+	background-color:#e9ecef;
+}
+
+#findAddrDiv {
+	width:524px;
+	display: flex; justify-content:center; align-items: center;
 }
 </style>
 
@@ -204,13 +282,22 @@ section {
 			
 			<div>	
 				<div id="checkIdDiv">
-				<input type="text" name="miId" placeholder="아이디를 입력해주세요." onkeyup="chkCharCode(event)" style="width:330px;"/><img src="/resources/img/icon/checkId.png" id="checkId" /><br></div>
-				<H5 style="margin:0;padding:0;">* 영어,숫자를 조합하여 4자이상 입력해주세요.</H5>
+				<input type="text" name="miId" placeholder="아이디를 입력해주세요." onkeyup="chkId(event)" style="width:330px;"/><img src="/resources/img/icon/checkId.png" id="checkId" /><br></div>
+				<H5 style="margin:0;padding:0;">* 아이디는 영어,숫자를 조합하여 4자이상 입력해주세요.</H5>
 				<input type="password" name="miPwd" placeholder="비밀번호" /><br>
-				<H5 style="margin:0;padding:0;">* 영문, 숫자 특수문자를 혼합하여 8~20자의 비밀번호를 입력해주세요.</H5>
-				<input type="password" name="miPwd_re" placeholder="위에 입력한 비밀번호와 동일한 비밀번호를 입력해주세요." /><br>
-				
-				<input type="email" name="miEmail" placeholder="이메일 주소를 입력해주세요.      ex) user@pokerium.co.kr" /> 
+				<H5 style="margin:0;padding:0;">* 비밀번호는 영문, 숫자 특수문자를 혼합하여 8~20자로 입력해주세요.</H5>
+				<input type="password" name="miPwd_re" placeholder="위에 입력한 비밀번호와 동일한 비밀번호를 입력해주세요." /><br><br>
+				<hr style="width:520px;"><br>
+				<div id="checkNicknameDiv">
+				<input type="text" name="miNickname" placeholder="닉네임을 입력해주세요." onkeyup="chkNickname(event)" style="width:330px;"/><img src="/resources/img/icon/checkNickname.png" id="checkNickname" /><br></div>
+				<input type="email" name="miEmail" placeholder="이메일 주소를 입력해주세요.      ex) user@pokerium.co.kr" /> <br><br>
+				<div id="teamDiv">
+					<div class="teamImageDiv"><label><img src="/resources/img/icon/team_valor.png" class="teamImage" /><br><input type="radio" name="miTeam" class="radioTeam"  checked value="R"/>발로</label></div>
+					<div class="teamImageDiv"><label><img src="/resources/img/icon/team_mystic.png" class="teamImage" /><br><input type="radio" name="miTeam" class="radioTeam" value="B" />미스틱</label></div> 
+					<div class="teamImageDiv"><label><img src="/resources/img/icon/team_instinct.png" class="teamImage" /><br><input type="radio" name="miTeam" class="radioTeam" value="Y" />인스팅트</label></div>
+					<br><br><H5 style="margin:0;padding:0;">* 팀을 선택해주세요. 미선택시 발로가 선택됩니다.</H5>
+				</div>
+				<br>
 				<br>
 				<br>
 				<hr style="width:520px;">
@@ -225,17 +312,29 @@ section {
 					</select>
 				</div>
 				<div id="miPhoneDiv">
-				<select class="miPhone" id="miPhone1" name="miPhone1" style="padding:0;">
-					<option value="" selected disabled>- 선 택 -</option>
-					<option value="010">010</option>
-					<option value="011">011</option>
-					<option value="016">016</option>
-					<option value="019">019</option>
-				</select>-
-				<input class="miPhone" type="text" maxlength="4" size="4" id="miPhone2" name="miPhone2" onkeyup="onlyNum(this);"/>-
-				<input class="miPhone" type="text" maxlength="4" size="4" id="miPhone3" name="miPhone3" onkeyup="onlyNum(this);"/>
+					<select class="miPhone" id="miPhone1" name="miPhone1" style="padding:0;">
+						<option value="" selected disabled>- 선 택 -</option>
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="016">016</option>
+						<option value="019">019</option>
+					</select>-
+					<input class="miPhone" type="text" maxlength="4" size="4" id="miPhone2" name="miPhone2" onkeyup="onlyNum(this);"/>-
+					<input class="miPhone" type="text" maxlength="4" size="4" id="miPhone3" name="miPhone3" onkeyup="onlyNum(this);"/>
 				</div>
-				<br><br>
+				<br>
+				<hr style="width:520px;">
+				<br>
+				<div id="memberAddrDiv">
+					<div id="findAddrDiv">
+						<img src="/resources/img/icon/findAddr.png" id="findAddr" onclick="sample6_execDaumPostcode()"/> <input type="text"  id="maZip" name="maZip" placeholder="우편번호를 입력해주세요." readonly/>
+					</div>
+					<input type="text"  id="maAddr1" name="maAddr1" placeholder="기존주소를 입력해주세요." readonly/>
+					<input type="text"  id="maAddr2" name="maAddr2" placeholder="상세주소를 입력해주세요."/>
+				</div>
+				<br>
+				<hr style="width:520px;">
+				<br>
 				<input type="submit" id="submitBtn" value=""/>
 				
 	 		</div>
@@ -273,6 +372,47 @@ section {
 			}
 		});
 	});
+	$('#checkNickname').click(function(){
+
+		var miNickname = $('input[name=miNickname]').val();
+		
+		$.ajax({
+			url : "/member/memberNicknameCheck",
+			data : {"miNickname":miNickname},
+			type : "get",
+			success : function(result){
+				if(result=="true") {
+					alert('[' + miNickname + ']는 사용 불가능한 닉네임 입니다.');
+					$('input[name=miNickname]').focus();
+				} else {
+					alert('[' + miNickname + ']는 사용 가능한 닉네임 입니다.');
+					$('input[name=miNickname]').focus();
+				}
+			},
+			error : function(){
+				console.log("ajax 통신 실패");
+			}
+		});
+	});
 	</script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = '';
+                if (data.userSelectedType === 'R') {
+                    addr = data.roadAddress;
+                } else { 
+                    addr = data.jibunAddress;
+                }
+
+                document.getElementById('maZip').value = data.zonecode;
+                document.getElementById("maAddr1").value = addr; 
+                document.getElementById("maAddr2").focus();
+            }
+        }).open();
+    }
+</script>
 </body>
 </html>

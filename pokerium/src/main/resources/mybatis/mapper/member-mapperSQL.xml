@@ -8,10 +8,12 @@
 		SELECT
 			MI_NO as miNo,
 		    MI_ID as miId,
+		    MI_NICKNAME as miNickname,
 		    MI_PWD as miPwd,
 		    MI_NAME as miName,
 		    MI_BIRTH as miBirth,
 		    MI_GENDER as miGender,
+		    MI_TEAM AS miTeam,
 		    MI_EMAIL as miEmail,
 		    MI_ISMAIL as miIsmail,
 		    MI_PHONE as miPhone,
@@ -45,15 +47,17 @@
   		INSERT INTO 
   			T_MEMBER_INFO	
   			(MI_ID,
+  			 MI_NICKNAME,
   			 MI_PWD, 
   			 MI_EMAIL,
   			 MI_NAME,
   			 MI_GENDER,
+  			 MI_TEAM,
   			 MI_BIRTH,
   			 MI_PHONE 
   			) 
   		VALUES	
-  			(#{miId}, #{miPwd}, #{miEmail}, #{miName}, #{miGender}, #{miBirth}, #{miPhone})
+  			(#{miId}, #{miNickname}, #{miPwd}, #{miEmail}, #{miName}, #{miGender}, #{miTeam}, #{miBirth}, #{miPhone})
   	
   	</insert>
   	
@@ -83,10 +87,12 @@
 		SELECT
 			MI_NO as miNo,
 		    MI_ID as miId,
+		    MI_NICKNAME as miNickname,
 		    MI_PWD as miPwd,
 		    MI_NAME as miName,
 		    MI_BIRTH as miBirth,
 		    MI_GENDER as miGender,
+		    MI_TEAM AS miTeam,
 		    MI_EMAIL as miEmail,
 		    MI_ISMAIL as miIsmail,
 		    MI_PHONE as miPhone,
@@ -104,5 +110,46 @@
 			MI_ID = #{_parameter}
   	</select>
   	
+  	<select id="selectNicknameCheck" resultType="member">
+		SELECT
+			MI_NO as miNo,
+		    MI_ID as miId,
+		    MI_NICKNAME as miNickname,
+		    MI_PWD as miPwd,
+		    MI_NAME as miName,
+		    MI_BIRTH as miBirth,
+		    MI_GENDER as miGender,
+		    MI_TEAM AS miTeam,
+		    MI_EMAIL as miEmail,
+		    MI_ISMAIL as miIsmail,
+		    MI_PHONE as miPhone,
+		    MI_ISSNS as miIssns,
+		    MI_TEL as miTel,
+		    MI_ISACTIVE as miIsactive,
+		    MI_REBANK as miRebank,
+		    MI_ACCOUNT as miAccount,
+		    MI_REGTIME as miRegtime,
+		    MI_DROPTIME as miDroptime,
+		    MI_LASTLOGIN as miLastlogin
+		FROM 
+			T_MEMBER_INFO
+		WHERE
+			MI_NICKNAME = #{_parameter}
+  	</select>
+  	
+  	<insert id="insertMemberAddr" parameterType="memberAddr">
+  		INSERT INTO 
+  			T_MEMBER_ADDR	
+  			(MI_ID,
+  			 MA_NAME,
+  			 MA_PHONE, 
+  			 MA_ZIP,
+  			 MA_ADDR1,
+  			 MA_ADDR2
+  			) 
+  		VALUES	
+  			(#{miId}, #{maName}, #{maPhone}, #{maZip}, #{maAddr1}, #{maAddr2})
+  	
+  	</insert>
   	
 </mapper>
