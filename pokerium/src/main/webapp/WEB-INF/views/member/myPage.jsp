@@ -31,21 +31,21 @@ section {
 }
 
 .h1key {
-display:inline-block;
-width:20%;
-font-size:25px;
-color:#000000;
-font-weight:bold;                       
-font-family:"Trebuchet MS", Dotum, Arial;
+	display:inline-block;
+	width:20%;
+	font-size:25px;
+	color:#000000;
+	font-weight:bold;                       
+	font-family:"Trebuchet MS", Dotum, Arial;
 }
 .h1value {
-display:inline-block;
-width:25%;
-margin-left:10px;
-font-weight: bold;                         
-font-family: "Trebuchet MS", Dotum, Arial;
-font-size:20px;
-color:#929292;
+	display:inline-block;
+	width:25%;
+	margin-left:10px;
+	font-weight: bold;                         
+	font-family: "Trebuchet MS", Dotum, Arial;
+	font-size:20px;
+	color:#929292;
 }
 
 #myPageDiv input[type=text], #myPageDiv input[type=password],#myPageDiv input[type=email] {

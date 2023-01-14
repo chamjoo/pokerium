@@ -15,7 +15,7 @@ section {
 	display:block;
 	margin:0 auto;
 	width:580px;
-	height:500px;
+	height:600px;
 	padding:100px 100px 100px 100px;
 	line-height:30px;
 	text-align: center;

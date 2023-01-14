@@ -166,12 +166,12 @@ section {
 }
 
 #submitBtn {
-background:url(/resources/img/icon/joinSubmit.png);
-background-repeat : no-repeat;
-width:500px;
-height:80px;
-border:0;
-cursor:pointer;
+	background:url(/resources/img/icon/joinSubmit.png);
+	background-repeat : no-repeat;
+	width:500px;
+	height:80px;
+	border:0;
+	cursor:pointer;
 }
 
 #checkId {
