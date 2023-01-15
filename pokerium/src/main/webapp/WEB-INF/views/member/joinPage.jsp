@@ -28,7 +28,7 @@
 		    var maAddr1 = frm.maAddr1.value;
 		    var maAddr2 = frm.maAddr2.value;
 		    
-		    console.log(miId);
+
 		    if (miId == ""){
 		       	alert("아이디를 입력해주세요.");               frm.miId.focus();   return false;
 		    }

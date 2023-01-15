@@ -45,6 +45,33 @@ cursor:pointer;
 }
 
 </style>
+
+<script>
+
+function chkValue(frm){
+    var miId = frm.miId.value;
+    var miPwd = frm.miPwd.value;      
+
+    if (miId == ""){
+       	alert("아이디를 입력해주세요.");               frm.miId.focus();   return false;
+    }
+
+    if (miPwd == ""){
+       	alert("비밀번호를 입력해주세요.");               frm.miPwd.focus();   return false;
+    }
+
+   
+    return true;
+}
+
+function chkId(obj) {
+	  const regExp = /[^0-9a-zA-Z]/g;
+	  const ele = obj.target;
+	  if (regExp.test(ele.value)) {
+	    ele.value = "";
+	  }
+};
+</script>
 </head>
 <body>
 <%@include file ="/WEB-INF/views/common/header.jsp" %>
@@ -58,8 +85,8 @@ cursor:pointer;
 		<c:otherwise>
 			
 			<img src="/resources/img/icon/logo.png" alt="로고" style="height:80px;"/>
-			<form name="loginForm" action="/member/login" method="post">
-				<input type="text" name="miId" placeholder="아이디"/><br>
+			<form name="loginForm" action="/member/login" method="post" onsubmit="return chkValue(this);">
+				<input type="text" name="miId" onkeyup="chkId(event)" placeholder="아이디"/><br>
 				<input type="password" name="miPwd" placeholder="비밀번호"/><br>
 				<br>
 				<input type="submit" id="submitBtn" value=""/>

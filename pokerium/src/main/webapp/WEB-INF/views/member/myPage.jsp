@@ -158,26 +158,38 @@ section {
 
 <script>
 function chkValue(frm){    
+	var miNickname = frm.miNickname.value;
     var miPwd = frm.miPwd.value;      
     var new_miPwd = frm.new_miPwd.value;
     var new_miPwd_re = frm.new_miPwd_re.value;
     var miEmail = frm.miEmail.value; 
 
-
-    if (miEmail == ""){
-       	alert("이메일을 입력해주세요.");               frm.miEmail.focus();   return false;
+    if(confirm("회원정보를 수정하시겠습니까?")){
+    	
+    	if (miNickname == ""){
+	       	alert("닉네임을 입력해주세요.");               frm.miNickname.focus();   return false;
+	    }
+    	
+	    if (miEmail == ""){
+	       	alert("이메일을 입력해주세요.");               frm.miEmail.focus();   return false;
+	    }
+	    
+	    if (miPwd == ""){
+	       	alert("기존 비밀번호를 입력해주세요.");               frm.miPwd.focus();   return false;
+	    }
+	    
+	    if (new_miPwd != "" && new_miPwd.length<8){
+	       	alert("새 비밀번호는 8자이상 입력해주세요.");               frm.new_miPwd.focus();   return false;
+	    }
+	    
+	    if (new_miPwd_re != new_miPwd){
+	       	alert("입력한 비밀번호가 서로 다릅니다. 다시 확인해주세요.");               frm.new_miPwd_re.focus();   return false;
+	    }
+	    
+    	return true;
+    } else {
+    	return false;
     }
-    
-    if (miPwd == ""){
-       	alert("기존 비밀번호를 입력해주세요.");               frm.miPwd.focus();   return false;
-    }
-    
-    
-    if (new_miPwd_re != new_miPwd){
-       	alert("입력한 비밀번호가 서로 다릅니다. 다시 확인해주세요.");               frm.new_miPwd_re.focus();   return false;
-    }
-
-    return true;
 }
 
 	function isDrop() {
@@ -185,6 +197,16 @@ function chkValue(frm){
 			location.href="/member/memberDrop";
 		}
 	}
+	
+	function chkNickname(obj) {
+		  const regExp = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/ ]/;
+		  const ele = obj.target;
+		  var checkMiNickname = document.getElementById('checkMiNickname').value;
+		  if (regExp.test(ele.value)) {
+		    ele.value = checkMiNickname;
+		    alert('특수문자는 사용이 불가능합니다.');
+		  }
+	};
 	
 </script>
 
@@ -206,7 +228,7 @@ function chkValue(frm){
 					
 				
 					<H1 class="h1key">닉네임</H1>
-					<input type="hidden" name="checkMiNickname" value="${sessionScope.member.miNickname }" />
+					<input type="hidden" name="checkMiNickname" id="checkMiNickname" value="${sessionScope.member.miNickname }" onkeyup="chkNickname(event)" />
 					<div style="display:inline-block; width:70%; margin:0px; padding:0px;">
 						<div id="checkNicknameDiv" style="width:100%; margin:0px;padding:0px; "><input type="text" name="miNickname" value="${sessionScope.member.miNickname }" placeholder="닉네임을 입력해주세요." style="margin-left:5px;"onkeyup="chkNickname(event)"/><img src="/resources/img/icon/checkNickname.png" id="checkNickname" />
 						</div>
