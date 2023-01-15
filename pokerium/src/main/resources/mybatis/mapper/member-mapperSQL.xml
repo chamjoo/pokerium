@@ -6,29 +6,32 @@
 	<select id="selectLoginMember" parameterType="member" resultType="member">
 		
 		SELECT
-			MI_NO as miNo,
-		    MI_ID as miId,
-		    MI_NICKNAME as miNickname,
-		    MI_PWD as miPwd,
-		    MI_NAME as miName,
-		    MI_BIRTH as miBirth,
-		    MI_GENDER as miGender,
-		    MI_TEAM AS miTeam,
-		    MI_EMAIL as miEmail,
-		    MI_ISMAIL as miIsmail,
-		    MI_PHONE as miPhone,
-		    MI_ISSNS as miIssns,
-		    MI_TEL as miTel,
-		    MI_ISACTIVE as miIsactive,
-		    MI_REBANK as miRebank,
-		    MI_ACCOUNT as miAccount,
-		    MI_REGTIME as miRegtime,
-		    MI_DROPTIME as miDroptime,
-		    MI_LASTLOGIN as miLastlogin
+			a.MI_NO as miNo,
+		    a.MI_ID as miId,
+		    a.MI_NICKNAME as miNickname,
+		    a.MI_PWD as miPwd,
+		    a.MI_NAME as miName,
+		    a.MI_BIRTH as miBirth,
+		    a.MI_GENDER as miGender,
+		    a.MI_TEAM AS miTeam,
+		    a.MI_EMAIL as miEmail,
+		    a.MI_ISMAIL as miIsmail,
+		    a.MI_PHONE as miPhone,
+		    a.MI_ISSNS as miIssns,
+		    a.MI_TEL as miTel,
+		    a.MI_ISACTIVE as miIsactive,
+		    a.MI_REBANK as miRebank,
+		    a.MI_ACCOUNT as miAccount,
+		    a.MI_REGTIME as miRegtime,
+		    a.MI_DROPTIME as miDroptime,
+		    a.MI_LASTLOGIN as miLastlogin,
+		    b.MA_ZIP as maZip,
+		    b.MA_ADDR1 as maAddr1,
+		    b.MA_ADDR2 as maAddr2
 		FROM 
-			T_MEMBER_INFO
+			T_MEMBER_INFO a, T_MEMBER_ADDR b
 		WHERE
-			MI_ID = #{miId} AND MI_PWD = #{miPwd} AND MI_ISACTIVE = "Y"
+			a.MI_ID = B.MI_ID AND a.MI_ID = #{miId} AND a.MI_PWD = #{miPwd} AND a.MI_ISACTIVE = "Y" AND B.MA_BASIC = "Y"
 
 	</select>
   	
@@ -77,10 +80,23 @@
   		UPDATE 
   			T_MEMBER_INFO 
   		SET 
+  			MI_NICKNAME=#{miNickname},
   			MI_EMAIL=#{miEmail}, 
-  			MI_PWD=#{new_miPwd} 
+  			MI_PWD=#{new_miPwd},
+  			MI_TEAM=#{miTeam} 
   		WHERE 
   			MI_ID=#{miId} AND MI_PWD=#{miPwd}
+  	</update>
+  	
+  	<update id="updateMemberAddr" parameterType="hashmap">
+  		UPDATE 
+  			T_MEMBER_ADDR
+  		SET 
+  			MA_ZIP=#{maZip},
+  			MA_ADDR1=#{maAddr1}, 
+  			MA_ADDR2=#{maAddr2}
+   		WHERE 
+  			MI_ID=#{miId} AND MA_BASIC='Y'
   	</update>
   	
   	<select id="selectIdCheck" resultType="member">

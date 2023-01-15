@@ -145,6 +145,21 @@ header {
 					<c:when test="${sessionScope.member != null }">
 						<li class="li3"><div class="menuDiv1"><a class="menuLink" href="/member/logout"><div class="menuDiv3" ><img src="/resources/img/icon/icon_logout.png"  /></div><H4>로그아웃</H4></a></div></li>
 						<li class="li3"><div class="menuDiv1"><a class="menuLink" href="/member/myPage"><div class="menuDiv3" ><img src="/resources/img/icon/icon_mypage.png"  /></div><H4>마이 페이지</H4></a></div></li>  
+						<li class="li3"><div class="menuDiv1"><a class="menuLink" href=""><div class="menuDiv3" >
+						
+						<c:choose>
+							<c:when test="${sessionScope.member.miTeam=='R' }"><img src="/resources/img/icon/team_valor.png" /></div><H4>${sessionScope.member.miNickname }</H4></a></div></li>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${sessionScope.member.miTeam=='B' }"><img src="/resources/img/icon/team_mystic.png" /></div><H4>${sessionScope.member.miNickname }</H4></a></div></li>
+									</c:when>
+									<c:otherwise>
+										<img src="/resources/img/icon/team_instinct.png" /></div><H4>${sessionScope.member.miNickname }</H4></a></div>
+									</c:otherwise>
+								</c:choose>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					
 					<c:otherwise>

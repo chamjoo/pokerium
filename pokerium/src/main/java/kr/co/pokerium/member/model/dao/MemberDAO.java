@@ -48,6 +48,13 @@ public class MemberDAO {
 		return sqlSession.update("member.updateMember", map);
 		
 	}
+	
+	public int updateMemberAddr(HashMap<String, Object> map) {
+		
+		return sqlSession.update("member.updateMemberAddr", map);
+		
+	}
+
 
 	public int selectIdCheck(String miId) {
 		
@@ -64,6 +71,7 @@ public class MemberDAO {
 	public int insertMemberAddr(MemberAddr ma) {
 		return sqlSession.insert("member.insertMemberAddr", ma);
 	}
+
 
 
 	

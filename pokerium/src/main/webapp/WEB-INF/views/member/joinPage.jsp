@@ -288,9 +288,13 @@ section {
 				<H5 style="margin:0;padding:0;">* 비밀번호는 영문, 숫자 특수문자를 혼합하여 8~20자로 입력해주세요.</H5>
 				<input type="password" name="miPwd_re" placeholder="위에 입력한 비밀번호와 동일한 비밀번호를 입력해주세요." /><br><br>
 				<hr style="width:520px;"><br>
+				
 				<div id="checkNicknameDiv">
-				<input type="text" name="miNickname" placeholder="닉네임을 입력해주세요." onkeyup="chkNickname(event)" style="width:330px;"/><img src="/resources/img/icon/checkNickname.png" id="checkNickname" /><br></div>
+				<input type="text" name="miNickname" placeholder="닉네임을 입력해주세요." onkeyup="chkNickname(event)" style="width:330px;"/><img src="/resources/img/icon/checkNickname.png" id="checkNickname" /><br>
+				</div>
+				
 				<input type="email" name="miEmail" placeholder="이메일 주소를 입력해주세요.      ex) user@pokerium.co.kr" /> <br><br>
+				
 				<div id="teamDiv">
 					<div class="teamImageDiv"><label><img src="/resources/img/icon/team_valor.png" class="teamImage" /><br><input type="radio" name="miTeam" class="radioTeam"  checked value="R"/>발로</label></div>
 					<div class="teamImageDiv"><label><img src="/resources/img/icon/team_mystic.png" class="teamImage" /><br><input type="radio" name="miTeam" class="radioTeam" value="B" />미스틱</label></div> 
@@ -395,24 +399,24 @@ section {
 		});
 	});
 	</script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-    function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var addr = '';
-                if (data.userSelectedType === 'R') {
-                    addr = data.roadAddress;
-                } else { 
-                    addr = data.jibunAddress;
-                }
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+   function sample6_execDaumPostcode() {
+       new daum.Postcode({
+           oncomplete: function(data) {
+               var addr = '';
+               if (data.userSelectedType === 'R') {
+                   addr = data.roadAddress;
+               } else { 
+                   addr = data.jibunAddress;
+               }
 
-                document.getElementById('maZip').value = data.zonecode;
-                document.getElementById("maAddr1").value = addr; 
-                document.getElementById("maAddr2").focus();
-            }
-        }).open();
-    }
+               document.getElementById('maZip').value = data.zonecode;
+               document.getElementById("maAddr1").value = addr; 
+               document.getElementById("maAddr2").focus();
+           }
+       }).open();
+   }
 </script>
 </body>
 </html>

@@ -24,7 +24,7 @@ section {
 	display:block;
 	margin:0 auto;
 	width:1200px;
-	height:1100px;
+	height:1750px;
 	padding:50px 50px 100px 50px;
 	line-height:30px;
 	background-color:#ffffff;
@@ -33,6 +33,7 @@ section {
 .h1key {
 	display:inline-block;
 	width:20%;
+	vertical-align:middle;
 	font-size:25px;
 	color:#000000;
 	font-weight:bold;                       
@@ -57,6 +58,7 @@ section {
 	font-size:20px;
 	padding-left:30px;                        
 	font-family: "Trebuchet MS", Dotum, Arial;
+	font-weight: bold; 
 }
 #myQnA {
 	float:right;
@@ -78,7 +80,76 @@ section {
 	cursor:pointer;
 	margin:0 auto;
 }
+#checkNickname {
+	width:130px !important;
+	height:60px;
+	margin:10px;
+	cursor:pointer;
+}
 
+#checkNicknameDiv {
+	width:100%;
+	display: flex; justify-content:left;
+	align-items: center;  
+	   
+}
+
+#memberAddrDiv {
+	position:absolute;
+	display:inline-block;
+	width:634px;
+	text-align:left;
+	margin:0 auto;
+	padding:0;
+}
+
+#findAddr {
+	width:120px;
+	height:60px;
+	margin:10px;
+	cursor:pointer;
+}
+#maZip:focus, #maAddr1:focus{
+	outline:none;
+	
+}
+#maZip { 
+	width:460px !important;
+	height:60px; background-color:#e9ecef;
+}
+#maAddr1 { 
+	background-color:#e9ecef;
+	width:600px !important;
+}
+#maAddr2 { 
+	width:600px !important;
+}
+
+#findAddrDiv {
+	width:654px;
+	display: flex; justify-content:left; align-items: center;
+}
+#teamDiv {
+	position:absolute;
+	display:inline-block;
+	width:530px;
+	height:160px;
+	text-align:center;
+	font-weight: bold;                         
+	font-family: "Trebuchet MS", Dotum, Arial;
+}
+.teamImageDiv {
+	display:inline-block;
+	width:120px;
+	height:160px;
+	padding-left:10px;
+	padding-right:10px;
+}
+.teamImage {
+	display:inline-block;
+	width:120px;
+	height:120px;
+}
 </style>
 	
 </head>
@@ -118,32 +189,116 @@ function chkValue(frm){
 </script>
 
 	<section>
-	<div id="myPageDiv">
-	<form id="myPageForm" action="/member/memberUpdate" method="post" onsubmit="return chkValue(this);">
-		
-			<div style="padding:20px 0 20px 0; width:100%;">
-			<H1 style="display:inline;font-size:35px;">마이페이지</H1><a href=""><img src="/resources/img/icon/myQnA.png" id="myQnA" /></a></div>
-			<hr>
+		<c:choose>
+		<c:when test="${sessionScope.member == null }">
+			<c:redirect url="/"></c:redirect>
+		</c:when>
+		<c:otherwise>
+			<div id="myPageDiv">
+			<form id="myPageForm" action="/member/memberUpdate" method="post" onsubmit="return chkValue(this);">
+				
+					<div style="padding:20px 0 20px 0; width:100%;">
+					<H1 style="display:inline;font-size:35px;">마이페이지</H1><a href=""><img src="/resources/img/icon/myQnA.png" id="myQnA" /></a></div>
+					<hr>
+					
+					<h1 class="h1key" >아이디</h1> <h1 class="h1value">${sessionScope.member.miId }</h1><br>
+					
+					
+				
+					<H1 class="h1key">닉네임</H1>
+					<input type="hidden" name="checkMiNickname" value="${sessionScope.member.miNickname }" />
+					<div style="display:inline-block; width:70%; margin:0px; padding:0px;">
+						<div id="checkNicknameDiv" style="width:100%; margin:0px;padding:0px; "><input type="text" name="miNickname" value="${sessionScope.member.miNickname }" placeholder="닉네임을 입력해주세요." style="margin-left:5px;"onkeyup="chkNickname(event)"/><img src="/resources/img/icon/checkNickname.png" id="checkNickname" />
+						</div>
+					</div><br>
+					
+					<h1 class="h1key">이메일</h1> <input type="email" name="miEmail" value="${sessionScope.member.miEmail }" style="margin-left:5px;"/><br>
+					<h1 class="h1key">기존 비밀번호</h1><input type="password" name="miPwd" placeholder="기존 비밀번호를 입력해주세요."/><br>
+					<h1 class="h1key">새 비밀번호</h1><input type="password" name="new_miPwd" placeholder="새 비밀번호를 입력해주세요."/><br>
+					<h1 class="h1key">새 비밀번호 확인</h1><input type="password" name="new_miPwd_re" placeholder="새 비밀번호 확인" /><br>
+					<h5 class="h1key"></h5><h5 style="margin-left:10px;padding:0;display:inline; vertical-align:top;">* 새 비밀번호는 변경시에만 입력해주세요.</h5><br>
+					<H1 class="h1key" style="position:relative; margin-bottom:150px;">팀</H1>
+					<div id="teamDiv">
+						<div class="teamImageDiv"><label><img src="/resources/img/icon/team_valor.png" class="teamImage" /><br><input type="radio" name="miTeam" class="radioTeam" <c:choose><c:when test="${sessionScope.member.miTeam=='R'}">checked="checked"</c:when></c:choose> value="R"/>발로</label></div>
+						<div class="teamImageDiv"><label><img src="/resources/img/icon/team_mystic.png" class="teamImage" /><br><input type="radio" name="miTeam" class="radioTeam" <c:choose><c:when test="${sessionScope.member.miTeam=='B'}">checked="checked"</c:when></c:choose> value="B" />미스틱</label></div> 
+						<div class="teamImageDiv"><label><img src="/resources/img/icon/team_instinct.png" class="teamImage" /><br><input type="radio" name="miTeam" class="radioTeam" <c:choose><c:when test="${sessionScope.member.miTeam=='Y'}">checked="checked"</c:when></c:choose> value="Y" />인스팅트</label></div>
+					</div>
+					<br>
+					<hr>
+					<br>
+					<h1 class="h1key">이름</h1><h1 class="h1value">${sessionScope.member.miName }</h1><br>
+					<h1 class="h1key">가입일</h1><h1 class="h1value"><fmt:formatDate value="${sessionScope.member.miRegtime }" pattern="yyyy-MM-dd HH:mm:ss"/></h1><h1 class="h1key">최근 접속일</h1><h1 class="h1value"><fmt:formatDate value="${sessionScope.member.miLastlogin }" pattern="yyyy-MM-dd HH:mm:ss"/></h1><br>
+					<h1 class="h1key">생일</h1><h1 class="h1value">${sessionScope.member.miBirth }</h1><h1 class="h1key">성별</h1><c:choose><c:when test="${sessionScope.member.miGender=='M' }"><h1 class="h1value">남자</h1></c:when><c:otherwise><h1 class="h1value">여자</h1></c:otherwise></c:choose><br><br>
+					<hr><br>
+
+					<h1 class="h1key" style="position:relative; margin-bottom:235px;">주소</h1>
+					<div id="memberAddrDiv">
+						<div id="findAddrDiv">
+							<img src="/resources/img/icon/findAddr.png" id="findAddr" onclick="sample6_execDaumPostcode()"/> <input type="text"  id="maZip" name="maZip" value="${sessionScope.member.maZip }" placeholder="우편번호를 입력해주세요." readonly/>
+						</div>
+						<input type="text"  id="maAddr1" name="maAddr1" value="${sessionScope.member.maAddr1 }" placeholder="기존주소를 입력해주세요." readonly/>
+						<input type="text"  id="maAddr2" name="maAddr2" value="${sessionScope.member.maAddr2 }" placeholder="상세주소를 입력해주세요."/>
+					</div>
+					<hr><br>
+					<br>
+					<img src="/resources/img/icon/memberDrop.png" id="memberDrop" onclick="isDrop();"/><br><br>
+					
+					<input type="submit" id="submitBtn" value=""/>
+					
+			</form><br>
+			</div>
+			</c:otherwise>
+			</c:choose>
 			
-			<h1 class="h1key">아이디</h1> <h1 class="h1value">${sessionScope.member.miId }</h1><br>
-			<h1 class="h1key">이메일</h1> <input type="email" name="miEmail" value="${sessionScope.member.miEmail }" style="margin-left:5px;"/><br>
-			<h1 class="h1key">기존 비밀번호</h1><input type="password" name="miPwd" placeholder="기존 비밀번호를 입력해주세요."/><br>
-			<h1 class="h1key">새 비밀번호</h1><input type="password" name="new_miPwd" placeholder="새 비밀번호를 입력해주세요."/><br>
-			<h1 class="h1key">새 비밀번호 확인</h1><input type="password" name="new_miPwd_re" placeholder="새 비밀번호 확인" /><br>
-			<h5 class="h1key"></h5><h5 style="margin-left:10px;padding:0;display:inline; vertical-align:top;">* 새 비밀번호는 변경시에만 입력해주세요.</h5>
-			<br>
-			<hr>
-			<br>
-			<h1 class="h1key">이름</h1><h1 class="h1value">${sessionScope.member.miName }</h1><br>
-			<h1 class="h1key">가입일</h1><h1 class="h1value"><fmt:formatDate value="${sessionScope.member.miRegtime }" pattern="yyyy-MM-dd HH:mm:ss"/></h1><h1 class="h1key">최근 접속일</h1><h1 class="h1value"><fmt:formatDate value="${sessionScope.member.miLastlogin }" pattern="yyyy-MM-dd HH:mm:ss"/></h1><br>
-			<h1 class="h1key">생일</h1><h1 class="h1value">${sessionScope.member.miBirth }</h1><h1 class="h1key">성별</h1><c:choose><c:when test="${sessionScope.member.miGender=='M' }"><h1 class="h1value">남자</h1></c:when><c:otherwise><h1 class="h1value">여자</h1></c:otherwise></c:choose><br><br>
-			<hr><br>
-			<img src="/resources/img/icon/memberDrop.png" id="memberDrop" onclick="isDrop();"/><br><br>
-			
-			<input type="submit" id="submitBtn" value=""/>
-			
-	</form><br>
-	</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+$('#checkNickname').click(function(){
+
+	var miNickname = $('input[name=miNickname]').val();
+	var checkMiNickname = $('input[name=checkMiNickname]').val();
+	
+	$.ajax({
+		url : "/member/memberNicknameCheck",
+		data : {"miNickname":miNickname, "checkMiNickname":checkMiNickname},
+		type : "get",
+		success : function(result){
+			if(result=="true") {
+				alert('[' + miNickname + ']는 사용 불가능한 닉네임 입니다.');
+				$('input[name=miNickname]').focus();
+			} else if (result=="equals") {
+				
+				alert('[' + miNickname + ']는 현재 닉네임 입니다.');
+				
+			} else {
+				alert('[' + miNickname + ']는 사용 가능한 닉네임 입니다.');
+				$('input[name=miNickname]').focus();
+			}
+		},
+		error : function(){
+			console.log("ajax 통신 실패");
+		}
+	});
+});
+</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+   function sample6_execDaumPostcode() {
+       new daum.Postcode({
+           oncomplete: function(data) {
+               var addr = '';
+               if (data.userSelectedType === 'R') {
+                   addr = data.roadAddress;
+               } else { 
+                   addr = data.jibunAddress;
+               }
+
+               document.getElementById('maZip').value = data.zonecode;
+               document.getElementById("maAddr1").value = addr; 
+               document.getElementById("maAddr2").focus();
+           }
+       }).open();
+   }
+</script>
 	</section>
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>
 </body>

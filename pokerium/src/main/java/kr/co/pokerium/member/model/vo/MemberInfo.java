@@ -23,6 +23,10 @@ public class MemberInfo {
 	private Timestamp miRegtime;
 	private Timestamp miDroptime; 
 	private Timestamp miLastlogin;
+	
+	private String maZip;
+	private String maAddr1;
+	private String maAddr2;
 	public int getMiNo() {
 		return miNo;
 	}
@@ -137,6 +141,24 @@ public class MemberInfo {
 	public void setMiLastlogin(Timestamp miLastlogin) {
 		this.miLastlogin = miLastlogin;
 	}
+	public String getMaZip() {
+		return maZip;
+	}
+	public void setMaZip(String maZip) {
+		this.maZip = maZip;
+	}
+	public String getMaAddr1() {
+		return maAddr1;
+	}
+	public void setMaAddr1(String maAddr1) {
+		this.maAddr1 = maAddr1;
+	}
+	public String getMaAddr2() {
+		return maAddr2;
+	}
+	public void setMaAddr2(String maAddr2) {
+		this.maAddr2 = maAddr2;
+	}
 	public MemberInfo() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -144,7 +166,7 @@ public class MemberInfo {
 	public MemberInfo(int miNo, String miId, String miNickname, String miPwd, String miName, String miBirth,
 			String miGender, String miTeam, String miEmail, String miIsmail, String miPhone, String miIssns,
 			String miTel, String miIsactive, String miRebank, String miAccount, Timestamp miRegtime,
-			Timestamp miDroptime, Timestamp miLastlogin) {
+			Timestamp miDroptime, Timestamp miLastlogin, String maZip, String maAddr1, String maAddr2) {
 		super();
 		this.miNo = miNo;
 		this.miId = miId;
@@ -165,6 +187,9 @@ public class MemberInfo {
 		this.miRegtime = miRegtime;
 		this.miDroptime = miDroptime;
 		this.miLastlogin = miLastlogin;
+		this.maZip = maZip;
+		this.maAddr1 = maAddr1;
+		this.maAddr2 = maAddr2;
 	}
 	@Override
 	public String toString() {
@@ -173,11 +198,10 @@ public class MemberInfo {
 				+ ", miEmail=" + miEmail + ", miIsmail=" + miIsmail + ", miPhone=" + miPhone + ", miIssns=" + miIssns
 				+ ", miTel=" + miTel + ", miIsactive=" + miIsactive + ", miRebank=" + miRebank + ", miAccount="
 				+ miAccount + ", miRegtime=" + miRegtime + ", miDroptime=" + miDroptime + ", miLastlogin=" + miLastlogin
-				+ "]";
+				+ ", maZip=" + maZip + ", maAddr1=" + maAddr1 + ", maAddr2=" + maAddr2 + "]";
 	}
-
 	
-
+	
 	
 	
 	

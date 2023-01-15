@@ -42,7 +42,6 @@ public class MemberController {
 		MemberInfo m = mService.selectLoginMember(member);
 		int result = mService.updateLastlogin(member);
 		
-		
 		if(m!=null && result>0) {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", m);
@@ -150,45 +149,80 @@ public class MemberController {
 	
 	@RequestMapping(value="/member/memberUpdate", method = RequestMethod.POST)
 	public String memberUpdate(
+							@RequestParam String miNickname,
 							@RequestParam String miEmail,
 							@RequestParam String miPwd,
 							@RequestParam String new_miPwd,
+							@RequestParam String miTeam,
+							@RequestParam String maZip,
+							@RequestParam String maAddr1,
+							@RequestParam String maAddr2,
 							@SessionAttribute MemberInfo member,
 							HttpSession session,
+							HttpServletResponse response,
 							Model model
-			)  {
+			) throws IOException {
 
 		
-		int result=0;
+		int result = 0;
+		int checkResult = 0;
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("miId", member.getMiId());
 		map.put("miEmail", miEmail);
 		map.put("miPwd", miPwd);
+		map.put("miNickname", miNickname);
+		map.put("miTeam", miTeam);
+		map.put("maZip", maZip);
+		map.put("maAddr1", maAddr1);
+		map.put("maAddr2", maAddr2);
 		
-		
-		if(new_miPwd == null || new_miPwd == "" || new_miPwd.equals("") ) {
-			map.put("new_miPwd", miPwd);
+		if(!miNickname.equals(member.getMiNickname())) {
 			
-			result = mService.updateMember(map);
-		} else {
-			map.put("new_miPwd", new_miPwd);
-			result = mService.updateMember(map);
-			
+			checkResult = mService.selectNicknamecheck(miNickname);
 		}
-
-		if(result>0) {
-			session.invalidate();
-			model.addAttribute("msg", "회원정보 수정 성공. 다시 로그인해주세요.");
-			model.addAttribute("location", "/");
 			
-		} else {
+		if(checkResult>0) {
 			
-			model.addAttribute("msg", "기존 비밀번호를 다르게 입력하셨습니다. 확인해주세요.");
+			model.addAttribute("msg", "닉네임을 확인해주세요.");
 			model.addAttribute("location", "/member/myPage");
+			
+		} else {
+			
+			if(new_miPwd == null || new_miPwd == "" || new_miPwd.equals("") ) {
+				map.put("new_miPwd", miPwd);
+				
+				result = mService.updateMember(map);
+				
+			} else {
+				
+				map.put("new_miPwd", new_miPwd);
+				result = mService.updateMember(map);
+				
+			}
+		
+			if(result>0) {
+				result = mService.updateMemberAddr(map);
+				
+				if(result>0) {
+					session.invalidate();
+					model.addAttribute("msg", "회원정보 수정 성공. 다시 로그인해주세요.");
+					model.addAttribute("location", "/");
+				} else {
+					
+					model.addAttribute("msg", "회원정보 수정에 실패하였습니다. 지속적인 문제 발생시 관리자에게 문의해주세요.");
+					model.addAttribute("location", "member/myPage");
+					
+				}
+				
+			} else {
+				
+				model.addAttribute("msg", "기존 비밀번호를 다르게 입력하셨습니다. 확인해주세요.");
+				model.addAttribute("location", "/member/myPage");
+			}
+			
 		}
-	
-	
+		
 	return "common/msg";
 	
 	}
@@ -213,17 +247,29 @@ public class MemberController {
 	@RequestMapping(value="/member/memberNicknameCheck", method = RequestMethod.GET)
 	public void memberNicknameCheckAjax(
 									@RequestParam String miNickname,
+									@RequestParam String checkMiNickname,
 									HttpServletResponse response
 				) throws IOException {
+		int result = 0;
 
-		int result = mService.selectNicknamecheck(miNickname);
+		if(miNickname.equals(checkMiNickname)) {
+			
+			response.getWriter().print("equals");
 
-		if(result>0) {
-			response.getWriter().print(true); 
-		} else {
-			response.getWriter().print(false);
-		}
 		
+		} else {
+			
+			result = mService.selectNicknamecheck(miNickname);
+			
+			if(result>0) {
+				response.getWriter().print(true); 
+
+			} else {
+				response.getWriter().print(false);
+
+			}
+		}
+
 	}
 	
 }

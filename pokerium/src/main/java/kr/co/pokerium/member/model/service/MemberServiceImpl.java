@@ -53,6 +53,13 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.updateMember(map);
 		
 	}
+	
+	@Override
+	public int updateMemberAddr(HashMap<String, Object> map) {
+			
+		return mDAO.updateMemberAddr(map);
+		
+	}
 
 	@Override
 	public int selectIdcheck(String miId) {
@@ -74,6 +81,8 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.insertMemberAddr(ma);
 		
 	}
+
+
 
 	
 	
