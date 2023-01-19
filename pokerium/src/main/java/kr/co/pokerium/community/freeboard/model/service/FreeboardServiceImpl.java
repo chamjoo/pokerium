@@ -54,5 +54,12 @@ public class FreeboardServiceImpl implements FreeboardService {
 		
 	}
 
+	@Override
+	public int insertFbi(HashMap<String, Object> map) {
+		
+		return fbDAO.insertFBI(map);
+		
+	}
+
 	
 }

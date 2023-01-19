@@ -18,4 +18,6 @@ public interface FreeboardService {
 
 	int fbiRecordAllCount();
 
+	int insertFbi(HashMap<String, Object> map);
+
 }

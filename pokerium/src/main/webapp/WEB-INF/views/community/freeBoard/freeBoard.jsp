@@ -4,6 +4,8 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
      
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,14 +51,21 @@ section h1 {
 	<c:choose>
 		<c:when test="${!requestScope.fbi.isEmpty() }">
 			<c:forEach items="${requestScope.fbi }" var="fbi" varStatus="i">
+			<c:set var="fbiRegDate"><fmt:formatDate value="${fbi.fbiRegtime }" pattern="yyyy-MM-dd" /></c:set>
 				<div>
 					<h1>${fbi.fbiIdx }</h1>
-					<h1>${fbi.fbiTitle }</h1>
+					<a href="/community/freeboard/view?no=${fbi.fbiIdx }"><h1>${fbi.fbiTitle }</h1></a>
 					<h1>${fbi.miNickname }</h1>
-					<h1><fmt:formatDate value="${fbi.fbiRegtime }" pattern="HH:mm:ss"/></h1>
+					<c:choose>
+						<c:when test="${sysDate.equals(fbiRegDate) }">
+							<h1><fmt:formatDate value="${fbi.fbiRegtime }" pattern="HH:mm:ss"/></h1>
+						</c:when>
+						<c:otherwise>
+							<h1><fmt:formatDate value="${fbi.fbiRegtime}" pattern="yyyy-MM-dd"/></h1>
+						</c:otherwise>
+					</c:choose>
 					<h1>${fbi.fbiReadcnt }</h1>
 				</div>
-			
 			</c:forEach>
 			
 				
@@ -79,7 +88,11 @@ section h1 {
 			</select>
 			<input type="text" name="keyword" />
 			<input type="submit" value="검색" />
-			<a href="freeboard/write" >글쓰기</a>
+			<c:choose>
+				<c:when test="${sessionScope.member != null }">
+					<a href="/community/freeboard/write" >글쓰기</a>
+				</c:when>
+			</c:choose>
 		</form>
 	</section>
 	

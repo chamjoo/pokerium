@@ -77,5 +77,14 @@
 	
 	</select>
 	
-
+	
+	<insert id="insertFbi" parameterType="hashmap" >
+		
+		INSERT INTO 
+			T_FREEBOARD_INFO
+				(MI_ID, FBI_TITLE, FBI_CONTENT)
+		VALUES
+				(#{member.miId}, #{fbi.fbiTitle}, #{fbi.fbiContent})
+	</insert>
+	
 </mapper>

@@ -98,6 +98,12 @@ public class FreeboardDAO {
 		return sqlSession.selectOne("freeboard.fbiRecordAllCount");
 		
 	}
+
+	public int insertFBI(HashMap<String, Object> map) {
+		
+		return sqlSession.insert("freeboard.insertFbi", map);
+		
+	}
 	
 	
 	
