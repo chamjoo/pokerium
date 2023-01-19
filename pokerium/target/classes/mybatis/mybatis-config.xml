@@ -7,6 +7,8 @@
 	<typeAliases>
 		<typeAlias type="kr.co.pokerium.member.model.vo.MemberInfo" alias="member"/>
 		<typeAlias type="kr.co.pokerium.member.model.vo.MemberAddr" alias="memberAddr"/>
+		<typeAlias type="kr.co.pokerium.community.freeboard.model.vo.FreeboardInfo" alias="freeboard"/>
+		<typeAlias type="kr.co.pokerium.community.freeboard.model.vo.FreeboardReply" alias="freeboardReply"/>
 	</typeAliases>
 
 

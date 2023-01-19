@@ -83,6 +83,7 @@ header {
 
 #topMenu ul li .menuDiv1 {
 	display:block;
+	width:150px;
 	height:120px;
 	vertical-align: middle; 
 	
@@ -113,6 +114,9 @@ header {
 .menuDiv2, .li2 {
 	width:150px;
 }
+#menu2 .menuDiv1, #menu2 .menuDiv3, #menu2 .li3, #menu2 h4, #menu2 .menuLink{
+	width:100px !important;
+}
 
 .li3 {
 	width:90px;
@@ -142,13 +146,13 @@ function isLogout() {
 
 </script>
 	<header>
-		<nav id="topMenu" ">
+		<nav id="topMenu" >
 			<ul id="menu1">
 				<li class="li1"><a class="menuLink" href="/"><div class="logoDiv"><img src="/resources/img/icon/logo.png" alt="로고" /></div></a></li>
 				<li class="li2"><div class="menuDiv1"><a class="menuLink" href=""><div class="menuDiv2" ><img src="/resources/img/icon/icon_news.png"  /></div><H4>소식</H4></a></li></div>
 				<li class="li2"><div class="menuDiv1"><a class="menuLink" href=""><div class="menuDiv2" ><img src="/resources/img/icon/pokedex.png"  /></div><H4>포켓몬 도감</H4></a></div></li>
 				<li class="li2"><div class="menuDiv1"><a class="menuLink" href=""><div class="menuDiv2" ><img src="/resources/img/icon/icon_ball_c.png"  /></div><H4>상품</H4></a></div></li>
-				<li class="li2" style="border-right:1px solid #ebebeb;"><div class="menuDiv1"><a class="menuLink" href="" ><div class="menuDiv2" ><img src="/resources/img/icon/community.png"  /></div><H4>커뮤니티</H4></a></div></li>
+				<li class="li2" style="border-right:1px solid #ebebeb;"><div class="menuDiv1"><a class="menuLink" href="/community/freeboard" ><div class="menuDiv2" ><img src="/resources/img/icon/community.png"  /></div><H4>커뮤니티</H4></a></div></li>
 			</ul>
 			<ul id="menu2">
 				<li class="li3"><div class="menuDiv1"><a class="menuLink" href=""><div class="menuDiv3" ><img src="/resources/img/icon/icon_search.png"  /></div><H4>통합검색</H4></a></div></li>
@@ -156,7 +160,7 @@ function isLogout() {
 					<c:when test="${sessionScope.member != null }">
 						<li class="li3" ><div class="menuDiv1" ><a class="menuLink" onclick="isLogout();" style="cursor:pointer;"><div class="menuDiv3" ><img src="/resources/img/icon/icon_logout.png"  /></div><H4>로그아웃</H4></a></div></li>
 						<li class="li3"><div class="menuDiv1"><a class="menuLink" href="/member/myPage"><div class="menuDiv3" ><img src="/resources/img/icon/icon_mypage.png"  /></div><H4>마이 페이지</H4></a></div></li>  
-						<li class="li3" style="width:130px;"><div class="menuDiv1" ><a class="menuLink" href=""><div class="menuDiv3" >
+						<li class="li3" style="margin:0 15px 0 15px;"><div class="menuDiv1" ><a class="menuLink" href=""><div class="menuDiv3" >
 						
 						<c:choose>
 							<c:when test="${sessionScope.member.miTeam=='R' }"><img src="/resources/img/icon/team_valor.png" /></div><H4>${sessionScope.member.miNickname }</H4></a></div></li>

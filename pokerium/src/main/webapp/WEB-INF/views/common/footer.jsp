@@ -12,7 +12,7 @@ footer {
 	background-color:black;
 	max-width:100%;
 	width:100%;
-	height:450px;
+	height:650px;
 	margin:0;
 }
 #footerDiv {
@@ -28,7 +28,7 @@ footer a {
 		list-style: none;    
 		float: left;               
 		line-height: 20px; 
-		height:70px;        
+		height:100px;        
 		vertical-align:middle;
 		text-align:center;
 		list-style: none;
@@ -37,6 +37,28 @@ footer a {
 		
 }
 
+#footerMenu #f_menu2 li {
+		list-style: none;    
+		float: left;               
+		line-height: 20px; 
+		height:150px;        
+		vertical-align:middle;
+		text-align:center;
+		list-style: none;
+		font-size:16px;                  
+		font-family: "Trebuchet MS", Dotum, Arial;
+}
+#footerMenu #f_menu3 li {
+		list-style: none;    
+		float: left;               
+		line-height: 20px; 
+		height:150px;        
+		vertical-align:middle;
+		text-align:center;
+		list-style: none;
+		font-size:16px;                  
+		font-family: "Trebuchet MS", Dotum, Arial;
+}
 
 </style>
 </head>
@@ -46,24 +68,24 @@ footer a {
 	<div id="footerDiv">
 		 
 	<ul id="f_menu1" style="display:inline-block; width:97%;">
-		<li class="f_li1" style="width:20%;"><a class="f_menuLink" href="/"><img src="/resources/img/icon/footer_logo.png" alt="로고" style="display:inline-block;margin:0;" /></a></li> 
+		<li class="f_li1" style="width:20%;"><a class="f_menuLink" href="/"><br><img src="/resources/img/icon/footer_logo.png" alt="로고" style="display:inline-block;margin:0;" /></a></li> 
 		<li class="f_li1" style="width:20%;"><a class="f_menuLink" href="">포트폴리오 간단소개<br><br>포켓몬을 좋아하는 신입개발자 둘이서 <br>개발하는 전반적인 웹 쇼핑몰</a></li>
 		<li class="f_li1" style="width:20%;"><a class="f_menuLink" href="">개발 기간<br><br>2023.01.08 ~ 진행중</a></li>
-		<li class="f_li1" style="width:20%;"><a class="f_menuLink" href="">개발 환경<br>MySQL<br>Springframework 5.0.6, maven 4.0.0,<br> mybatis 3.3.0, mybatis-spring 1.2.2,<br> jstl 1.2, aspectjweaver 1.8.8</a></li>
+		<li class="f_li1" style="width:20%;"><a class="f_menuLink" href="">개발 환경<br><br>MySQL<br>Springframework 5.0.6, maven 4.0.0,<br> mybatis 3.3.0, mybatis-spring 1.2.2,<br> jstl 1.2, aspectjweaver 1.8.8</a></li>
 	</ul>
 	<hr>
 	<ul id="f_menu2" style="display:inline-block; width:97%;">
-		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">이름 1</a></li>
-		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">연락처 1</a></li>
-		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">이메일 1</a></li>
-		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">기능구현1</a></li>
+		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">이름</a></li>
+		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">연락처</a></li>
+		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">이메일</a></li>
+		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">기능구현</a></li>
 	</ul>
 	<hr>
 	<ul id="f_menu3" style="display:inline-block; width:97%;">
-		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">이름 2</a></li>
-		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">연락처 2</a></li>
-		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">이메일 2</a></li>
-		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">기능구현 2</a></li>
+		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">이름</a></li>
+		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">연락처</a></li>
+		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">이메일</a></li>
+		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">기능구현</a></li>
 	</ul>
 	<hr>
 	<h5 style="color:white; float:right; margin-right:30px;">* 해당 포트폴리오는 상업목적이 아닌 면접 시 기업제출용으로 만들어졌습니다.</h5>

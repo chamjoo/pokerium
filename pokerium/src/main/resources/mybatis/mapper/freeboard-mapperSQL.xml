@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="freeboard">
+
+	<select id="selectAllList" parameterType="hashmap" resultType="freeboard">
+		SELECT 
+			a.NUM				AS		num				,
+			a.FBI_IDX 			AS 		fbiIdx			,
+			a.MI_ID 			AS		miId			,
+			a.FBI_TITLE			AS		fbiTitle		,
+			a.FBI_CONTENT 		AS		fbiContent		,
+			a.FBI_ISVIEW		AS		fbiIsview		,
+			a.FBI_REGTIME		AS		fbiRegtime		,
+			a.FBI_UPDATETIME	AS		fbiUpdatetime	,
+			a.FBI_DELETETIME 	AS		fbiDeletetime	,
+			b.MI_NICKNAME 		AS 		miNickname						
+		FROM
+			(SELECT 
+				ROW_NUMBER() OVER(ORDER BY fbi_idx DESC) AS NUM, page_a.* 
+			FROM 
+				T_FREEBOARD_INFO page_a ,T_MEMBER_INFO page_b	
+			WHERE
+				page_a.MI_ID = page_b.MI_ID 
+				<if test="keyword != null or !keyword.equals('')" >
+					<if test="type.equals('title')">
+					AND
+						page_a.FBI_TITLE LIKE CONCAT('%', #{keyword}, '%') 
+					</if>
+					<if test="type.equals('id')">
+					AND
+						page_b.MI_NICKNAME LIKE CONCAT('%', #{keyword}, '%') 
+					</if>
+				</if>
+				) a, T_MEMBER_INFO b	
+		WHERE
+			a.MI_ID = b.MI_ID 
+		AND 
+			a.FBI_ISVIEW = 'Y'
+		AND						 
+			NUM BETWEEN ${startPage} AND ${endPage} 	
+		ORDER BY 
+			a.fbi_idx
+		DESC;
+	</select>
+
+	<select id="selectTotalCount" parameterType="hashmap" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM
+			T_FREEBOARD_INFO a, T_MEMBER_INFO b
+		WHERE 	
+			a.MI_ID = b.MI_ID 
+		AND 
+			a.FBI_ISVIEW = 'Y'
+			
+		<if test="keyword != null or !keyword.equals('')" >
+			<if test="type.equals('title')">
+			AND
+				a.FBI_TITLE LIKE CONCAT('%', #{keyword}, '%') 
+			</if>
+			<if test="type.equals('id')">
+			AND
+				b.MI_NICKNAME LIKE CONCAT('%', #{keyword}, '%') 
+			</if>
+		</if>
+	
+	</select>
+	
+
+</mapper>
