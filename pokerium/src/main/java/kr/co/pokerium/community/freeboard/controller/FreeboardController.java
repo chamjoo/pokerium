@@ -34,6 +34,8 @@ public class FreeboardController {
 		int endPage = pageNo * recordCountPerPage;
 		int naviCountPerPage = 5;
 		
+		
+				
 		HashMap<String, Object> map = new HashMap<String, Object>(); 
 		map.put("type", type);
 		map.put("keyword", keyword);
@@ -43,13 +45,20 @@ public class FreeboardController {
 		map.put("pageNo", pageNo);
 		map.put("recordCountPerPage", recordCountPerPage);
 		
+		int selectRecordAllCount = fbService.selectRecordAllCount(map); 
+		int fbiRecordAllCount = fbService.fbiRecordAllCount();
+		
+		map.put("selectRecordAllCount", selectRecordAllCount);
+		map.put("fbiRecordAllCount", fbiRecordAllCount);
+		
+		
 		String pageNavi = fbService.getPageNavi(map);
 		ArrayList<FreeboardInfo> fbi = fbService.freeboardList(map);
 		
 		mav.addObject("pageNavi", pageNavi);
 		mav.addObject("keyword", keyword);
 		mav.addObject("fbi", fbi);
-		mav.setViewName("community/freeBoard");
+		mav.setViewName("community/freeBoard/freeBoard");
 		
 		return mav;
 		

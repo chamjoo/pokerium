@@ -21,19 +21,30 @@ public class FreeboardDAO {
 	private SqlSessionTemplate sqlSession;
 
 	public ArrayList<FreeboardInfo> freeboardList(HashMap<String, Object> map) {
-
+		// 자유게시판 목록(첫 화면 : 전체목록, + 페이징처리 및 검색필터 (쿼리문))
+		
 		return new ArrayList<FreeboardInfo> (sqlSession.selectList("freeboard.selectAllList", map));
 		
 		
 	}
 
 	public String getPageNavi(HashMap<String, Object> map) {
+		// 자유게시판 목록에 페이징네비게이션 처리
 		
-			int recordTotalCount = sqlSession.selectOne("freeboard.selectTotalCount", map);
-			int pageTotalCount = (int)Math.ceil((double)recordTotalCount/(int)map.get("recordCountPerPage"));
-			int startNavi = (((int)map.get("pageNo") - 1) / (int)map.get("naviCountPerPage") * (int)map.get("naviCountPerPage") + 1);
+			int pageNo = (int)map.get("pageNo");
+			String type = (String)map.get("type");
+			String keyword = (String)map.get("keyword");
+					
+		
+			int selectRecordAllCount = (int)map.get("selectRecordAllCount");
+			int recordCountPerPage = (int)map.get("recordCountPerPage");
+			int naviCountPerPage = (int)map.get("naviCountPerPage");
 			
-			int endNavi = startNavi + (int)map.get("naviCountPerPage") - 1;
+			
+			int pageTotalCount = (int)Math.ceil((double)selectRecordAllCount/ recordCountPerPage );
+			int startNavi = ((pageNo - 1) / naviCountPerPage * naviCountPerPage + 1);
+			
+			int endNavi = startNavi + naviCountPerPage - 1;
 			
 			
 			if(endNavi > pageTotalCount) {
@@ -45,7 +56,7 @@ public class FreeboardDAO {
 				if(map.get("keyword").equals("")) {
 					sb.append("<a href='/community/freeboard?pageNo=" + (startNavi - 1) + "'>< </a>");
 				} else {
-					sb.append("<a href='/community/freeboard?pageNo=" + (startNavi - 1) +"&type="+map.get("type")+"&keyword="+map.get("keyword")+"'>< </a>");
+					sb.append("<a href='/community/freeboard?pageNo=" + (startNavi - 1) +"&type="+ type +"&keyword="+ keyword +"'>< </a>");
 				}
 			}
 			for (int i = startNavi; i <= endNavi; i++) {
@@ -54,13 +65,13 @@ public class FreeboardDAO {
 					if(map.get("keyword").equals("")) {
 						sb.append("<a href='/community/freeboard?pageNo=" + i + "'><B>" + i + "</B></a> ");
 					} else {
-						sb.append("<a href='/community/freeboard?pageNo=" + i +"&type="+map.get("type")+"&keyword="+map.get("keyword")+"'><B>" + i + "</B></a> ");
+						sb.append("<a href='/community/freeboard?pageNo=" + i + "&type="+ type +"&keyword="+ keyword +"'><B>" + i + "</B></a> ");
 					}
 				} else {
 					if(map.get("keyword").equals("")) {
 						sb.append("<a href='/community/freeboard?pageNo=" + i + "'>" + i + "</a> ");
 					} else {
-						sb.append("<a href='/community/freeboard?pageNo=" + i +"&type="+map.get("type")+"&keyword="+map.get("keyword")+"'>" + i + "</a> ");
+						sb.append("<a href='/community/freeboard?pageNo=" + i + "&type="+ type +"&keyword="+ keyword +"'>" + i + "</a> ");
 					}
 				}
 			}
@@ -68,10 +79,24 @@ public class FreeboardDAO {
 				if(map.get("keyword").equals("")) {
 					sb.append("<a href='/community/freeboard?pageNo=" + (endNavi + 1) + "'>></a>");
 				} else {
-					sb.append("<a href='/community/freeboard?pageNo=" + (endNavi + 1) +"&type="+map.get("type")+"&keyword="+map.get("keyword")+"'>></a>");
+					sb.append("<a href='/community/freeboard?pageNo=" + (endNavi + 1) + "&type="+ type +"&keyword="+ keyword +"'>></a>");
 				}
 			}
 			return sb.toString();
+	}
+
+	public int selectRecordAllCount(HashMap<String, Object> map) {
+		// 검색된 레코드 개수
+		
+			return sqlSession.selectOne("freeboard.selectRecordAllCount", map);
+		
+	}
+
+	public int fbiRecordAllCount() {
+		// 자유게시판 전체 레코드 개수
+		
+		return sqlSession.selectOne("freeboard.fbiRecordAllCount");
+		
 	}
 	
 	

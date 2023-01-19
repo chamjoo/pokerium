@@ -14,4 +14,8 @@ public interface FreeboardService {
 
 	String getPageNavi(HashMap<String, Object> map);
 
+	int selectRecordAllCount(HashMap<String, Object> map);
+
+	int fbiRecordAllCount();
+
 }

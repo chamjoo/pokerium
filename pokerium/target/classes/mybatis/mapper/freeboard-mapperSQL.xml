@@ -43,7 +43,7 @@
 		DESC;
 	</select>
 
-	<select id="selectTotalCount" parameterType="hashmap" resultType="int">
+	<select id="selectRecordAllCount" parameterType="hashmap" resultType="int">
 		SELECT 
 			COUNT(*)
 		FROM
@@ -63,6 +63,17 @@
 				b.MI_NICKNAME LIKE CONCAT('%', #{keyword}, '%') 
 			</if>
 		</if>
+	
+	</select>
+	
+	<select id="fbiRecordAllCount"  resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM
+			T_FREEBOARD_INFO a
+		WHERE 	
+			a.FBI_ISVIEW = 'Y'
+			
 	
 	</select>
 	

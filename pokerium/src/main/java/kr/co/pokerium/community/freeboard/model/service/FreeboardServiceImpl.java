@@ -40,5 +40,19 @@ public class FreeboardServiceImpl implements FreeboardService {
 	
 	}
 
+	@Override
+	public int selectRecordAllCount(HashMap<String, Object> map) {
+		
+		return fbDAO.selectRecordAllCount(map);
+		
+	}
+
+	@Override
+	public int fbiRecordAllCount() {
+		
+		return fbDAO.fbiRecordAllCount();
+		
+	}
+
 	
 }
