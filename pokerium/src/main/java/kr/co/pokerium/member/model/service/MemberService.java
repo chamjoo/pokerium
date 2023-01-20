@@ -9,7 +9,7 @@ public interface MemberService {
 
 	MemberInfo selectLoginMember(MemberInfo member);
 	
-	int insertMember(MemberInfo m);
+	int insertMember(MemberInfo m, MemberAddr ma);
 
 	int updateLastlogin(MemberInfo member);
 

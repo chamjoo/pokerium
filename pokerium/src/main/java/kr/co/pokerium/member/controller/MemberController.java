@@ -78,15 +78,12 @@ public class MemberController {
 		ma.setMiId(m.getMiId());
 		ma.setMaName(m.getMiName());
 		ma.setMaPhone(miPhone);
-		System.out.println(ma);
-		int result = mService.insertMember(m);
 		
-		if(result>0) {
-			result=mService.insertMemberAddr(ma);
-			if(result>0) {
+		int result = mService.insertMember(m, ma);
+		
+		if(result==2) {
 				mav.addObject("msg", "회원 가입이 완료되었습니다.");
 				mav.addObject("location", "/");
-			}
 		} else {
 			mav.addObject("msg", "회원 가입 실패하였습니다. 지속적인 문제 발생 시 관리자에게 문의해주세요.");
 			mav.addObject("location", "/member/joinPage");
@@ -201,19 +198,12 @@ public class MemberController {
 				
 			}
 		
-			if(result>0) {
-				result = mService.updateMemberAddr(map);
+			if(result==2) {
 				
-				if(result>0) {
 					session.invalidate();
 					model.addAttribute("msg", "회원정보 수정 성공. 다시 로그인해주세요.");
 					model.addAttribute("location", "/");
-				} else {
-					
-					model.addAttribute("msg", "회원정보 수정에 실패하였습니다. 지속적인 문제 발생시 관리자에게 문의해주세요.");
-					model.addAttribute("location", "member/myPage");
-					
-				}
+				
 				
 			} else {
 				
@@ -247,27 +237,28 @@ public class MemberController {
 	@RequestMapping(value="/member/memberNicknameCheck", method = RequestMethod.GET)
 	public void memberNicknameCheckAjax(
 									@RequestParam String miNickname,
-									@RequestParam String checkMiNickname,
+									@RequestParam(defaultValue="'") String checkMiNickname,
 									HttpServletResponse response
 				) throws IOException {
 		int result = 0;
-
-		if(miNickname.equals(checkMiNickname)) {
-			
-			response.getWriter().print("equals");
-
 		
-		} else {
-			
-			result = mService.selectNicknamecheck(miNickname);
-			
-			if(result>0) {
-				response.getWriter().print(true); 
-
+		if(!miNickname.equals("")) {
+			if(miNickname.equals(checkMiNickname)) {
+				
+				response.getWriter().print("equals");
+	
 			} else {
-				response.getWriter().print(false);
-
+				
+				result = mService.selectNicknamecheck(miNickname);
+				
+				if(result>0) {
+					response.getWriter().print(true);
+				} else {
+					response.getWriter().print(false);
+				}
 			}
+		} else {
+			response.getWriter().print(true);
 		}
 
 	}

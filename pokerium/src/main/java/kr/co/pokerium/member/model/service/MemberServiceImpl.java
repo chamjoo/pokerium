@@ -33,10 +33,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int insertMember(MemberInfo m) {
+	public int insertMember(MemberInfo m, MemberAddr ma) {
 		
-		return mDAO.insertMember(m);
+		int resultA = mDAO.insertMember(m);
+		int resultB = mDAO.insertMemberAddr(ma);
+		int result = resultA + resultB;
 		
+		return result;
 		
 	}
 
@@ -50,8 +53,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updateMember(HashMap<String, Object> map) {
-		return mDAO.updateMember(map);
 		
+		int resultA = mDAO.updateMember(map);
+		int resultB = mDAO.updateMemberAddr(map);
+		int result = resultA + resultB;
+		
+		return result;
 	}
 	
 	@Override
