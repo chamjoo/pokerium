@@ -20,4 +20,12 @@ public interface FreeboardService {
 
 	int insertFbi(HashMap<String, Object> map);
 
+	FreeboardInfo selectFbiView(String no);
+
+	int updateFbiReadcnt(String no);
+
+	int updateFbi(FreeboardInfo fbi);
+
+	int deleteFbi(FreeboardInfo checkFbi);
+
 }

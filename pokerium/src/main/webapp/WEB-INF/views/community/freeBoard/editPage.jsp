@@ -61,7 +61,7 @@ section input[type=text], section input:focus[type=text] {
 	font-size:24px;
 	color:#000000;
     text-align:left;  
-    background-color:#FFFFF0;           
+    background-color:#FAFFFA;           
    
 }
 
@@ -117,7 +117,7 @@ section input[type=text], section input:focus[type=text] {
 	font-size:18px;
 	font-weight:bold;                       
 	font-family:"Trebuchet MS", Dotum, Arial;
-	background-color:#FFFFF0; 
+	background-color:#FAFFFA; 
 }
 #fbiContent:focus {
 	outline:none;
@@ -174,7 +174,7 @@ function chkValue(frm){
 	var fbiTitle = frm.fbiTitle.value;
     var fbiContent = frm.fbiContent.value;      
 
-    if(confirm("게시물을 등록하시겠습니까?")){
+    if(confirm("게시물을 수정하시겠습니까?")){
     	
     	if (fbiTitle == ""){
 	       	alert("제목을 입력해주세요.");               frm.fbiTitle.focus();   return false;
@@ -199,17 +199,26 @@ function chkValue(frm){
 		<div id="fbViewTop">
 			<h1 id="freeBoard">자유게시판</h1>
 		</div>
-		<form action="/community/freeboard/insertFbi" method="post" onsubmit="return chkValue(this);">
+		<form action="/community/freeboard/view/editFbi" method="post" onsubmit="return chkValue(this);">
 
 		<div>
 			<div id="fbViewHeader">
-				<h1 id="fbViewHeaderH1">제목</h1><input type="text" id="fbiTitle" name="fbiTitle" placeholder="제목을 입력하세요." />
+				<h1 id="fbViewHeaderH1">제목</h1><input type="text" id="fbiTitle" name="fbiTitle" value="${requestScope.fbi.fbiTitle }" />
 			</div>
-
-
+			<div id="fbViewInfo"><h1 class="fbiKey">글번호</h1><h1 class="fbiValue">${requestScope.fbi.fbiIdx }</h1>
+			<input type="hidden" name="fbiIdx" value="${requestScope.fbi.fbiIdx }" />
+			<h1 class="fbiKey">닉네임</h1><h1 class="fbiValue">${requestScope.fbi.miNickname }</h1>
+			<h1 class="fbiKey">조회수</h1><h1 class="fbiValue">${requestScope.fbi.fbiReadcnt }</h1>
+			<h1 class="fbiKey">작성일시</h1><h1 class="fbiValue"><fmt:formatDate value="${fbi.fbiRegtime}" pattern="yyyy-MM-dd hh:mm:ss"/></h1>
+			<c:choose>
+				<c:when test="${requestScope.fbi.fbiUpdatetime != null}">
+					<h1 class="fbiKey">수정일시</h1><h1 class="fbiValue"><fmt:formatDate value="${fbi.fbiUpdatetime}" pattern="yyyy-MM-dd hh:mm:ss"/></h1>
+				</c:when>
+			</c:choose>
+			</div>
 			<h1 id="contentH1" >내용</h1>
 			
-			<div id="fbViewContent"><textarea id="fbiContent" name="fbiContent" placeholder="내용을 입력하세요."></textarea></div>
+			<div id="fbViewContent"><textarea id="fbiContent" name="fbiContent" >${requestScope.fbi.fbiContent }</textarea></div>
 		
 		</div><br>
 		<div id="btnDiv">

@@ -24,10 +24,7 @@ public class FreeboardServiceImpl implements FreeboardService {
 		
 		return fbDAO.freeboardList(map);
 		
-		
-		
-		
-		
+
 	}
 
 	@Override
@@ -58,6 +55,34 @@ public class FreeboardServiceImpl implements FreeboardService {
 	public int insertFbi(HashMap<String, Object> map) {
 		
 		return fbDAO.insertFBI(map);
+		
+	}
+
+	@Override
+	public FreeboardInfo selectFbiView(String no) {
+		
+		return fbDAO.selectFbiView(no);
+		
+	}
+
+	@Override
+	public int updateFbiReadcnt(String no) {
+		
+		return fbDAO.updateFbiReadcnt(no);
+		
+	}
+
+	@Override
+	public int updateFbi(FreeboardInfo fbi) {
+
+		return fbDAO.updateFbi(fbi);
+		
+	}
+
+	@Override
+	public int deleteFbi(FreeboardInfo checkFbi) {
+		
+		return fbDAO.deleteFbi(checkFbi);
 		
 	}
 

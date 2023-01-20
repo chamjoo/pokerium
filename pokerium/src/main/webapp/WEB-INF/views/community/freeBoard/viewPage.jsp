@@ -45,8 +45,8 @@ section input[type=text], section input:focus[type=text] {
 }
 
 #fbViewHeader {
-	border-top:2px solid #000000;
-	border-bottom:5px double #000000;
+	border-top:2px solid #ebebeb;
+	border-bottom:5px double #ebebeb;
 	width:1250px;
 	margin:0px;      
     padding:10px 0px 10px 50px;   
@@ -54,15 +54,13 @@ section input[type=text], section input:focus[type=text] {
 	font-family:"Trebuchet MS", Dotum, Arial;
 }
 #fbiTitle { 
-
 	width:850px;
 	margin-left : 50px;
 	padding-left : 50px;
 	font-size:24px;
 	color:#000000;
-    text-align:left;  
-    background-color:#FFFFF0;           
-   
+    text-align:left;            
+    background-color:#FAFAFA;  
 }
 
 #fbViewHeader h1 {
@@ -70,8 +68,8 @@ section input[type=text], section input:focus[type=text] {
 }
 
 #fbViewInfo {
-	border-top:2px solid #000000;
-	border-bottom:2px solid #000000;
+	border-top:2px solid #ebebeb;
+	border-bottom:2px solid #ebebeb;
 	width:1300px;
 	height:20px;
 	margin:-1px;
@@ -93,7 +91,7 @@ section input[type=text], section input:focus[type=text] {
 .fbiKey {
 	font-size:14px;
 	padding:0 10px 0 20px;
-	border-left:2px solid #000000;
+	border-left:2px solid #ebebeb;
 }
 .fbiValue {
 	font-size:18px !important;
@@ -111,13 +109,13 @@ section input[type=text], section input:focus[type=text] {
 	padding:80px 100px 20px 100px;
 	width:900px;
 	height:360px;
-	border:2px solid #000000;
+	border:2px solid #ebebeb;
 	resize:none;
 	overflow:visible;
 	font-size:18px;
 	font-weight:bold;                       
 	font-family:"Trebuchet MS", Dotum, Arial;
-	background-color:#FFFFF0; 
+	background-color:#FAFAFA;  
 }
 #fbiContent:focus {
 	outline:none;
@@ -134,7 +132,7 @@ section input[type=text], section input:focus[type=text] {
 }
 #fbViewHeaderH1 {
 	display: inline-block; 
-	border-right:2px solid #000000;
+	border-right:2px solid #ebebeb; 
 	padding-right:30px; 
 	font-size:20px; 
 	width:15%; 
@@ -145,50 +143,40 @@ section input[type=text], section input:focus[type=text] {
 
 #submitBtn {
 	display:inline-block;
-	background:url(/resources/img/icon/btn_edit.png);
+	background:url(/resources/img/icon/icon_edit.png);
 	background-repeat : no-repeat;
-	width:260px;
-	height:80px;
+	width:63px;
+	height:30px;
 	border:0;
 	cursor:pointer;
 	margin:0 auto;
 }
-#cancelBtn {
+#listBtn {
 	display:inline-block;
-	width:260px;
-	height:80px;
+	width:63px;
+	height:30px;
 	border:0;
 	cursor:pointer;
 	margin:0 auto;
 }
 #btnDiv {
 	width:1200px;
-	height:80px;
+	height:50px;
 	padding:20px 100px 20px 0;
-	text-align:center;
+	text-align:right;
 }
 
 </style>
+
 <script>
-function chkValue(frm){    
-	var fbiTitle = frm.fbiTitle.value;
-    var fbiContent = frm.fbiContent.value;      
 
-    if(confirm("게시물을 등록하시겠습니까?")){
-    	
-    	if (fbiTitle == ""){
-	       	alert("제목을 입력해주세요.");               frm.fbiTitle.focus();   return false;
-	    }
-    	
-	    if (fbiContent == ""){
-	       	alert("내용을 입력해주세요.");               frm.fbiContent.focus();   return false;
-	    }    
-    	return true;
-    } else {
-    	return false;
-    }
+function isDelete() {
+	var fbiIdx = document.getElementById("fbiIdx").value;
+		console.log(fbiIdx);
+		if(confirm("게시물을 삭제하시겠습니까?\n삭제한 게시물은 영구적으로 되돌릴수 없습니다.")){
+			location.href="/community/freeboard/view/delete?no="+fbiIdx;
+		}
 }
-
 </script>
 </head>
 <body>
@@ -199,24 +187,43 @@ function chkValue(frm){
 		<div id="fbViewTop">
 			<h1 id="freeBoard">자유게시판</h1>
 		</div>
-		<form action="/community/freeboard/insertFbi" method="post" onsubmit="return chkValue(this);">
+		<form action="/community/freeboard/view/edit?no=${requestScope.fbi.fbiIdx} " method="post">
 
 		<div>
 			<div id="fbViewHeader">
-				<h1 id="fbViewHeaderH1">제목</h1><input type="text" id="fbiTitle" name="fbiTitle" placeholder="제목을 입력하세요." />
+				<h1 id="fbViewHeaderH1">제목</h1><input type="text" id="fbiTitle" name="fbiTitle" value="${requestScope.fbi.fbiTitle }" readonly />
 			</div>
-
-
+			<div id="fbViewInfo"><h1 class="fbiKey">글번호</h1><h1 class="fbiValue">${requestScope.fbi.fbiIdx }</h1>
+			<input type="hidden" name="fbiIdx" id="fbiIdx" value="${requestScope.fbi.fbiIdx }"/>
+			<h1 class="fbiKey">닉네임</h1><h1 class="fbiValue">${requestScope.fbi.miNickname }</h1>
+			<h1 class="fbiKey">조회수</h1><h1 class="fbiValue">${requestScope.fbi.fbiReadcnt }</h1>
+			<h1 class="fbiKey">작성일시</h1><h1 class="fbiValue"><fmt:formatDate value="${fbi.fbiRegtime}" pattern="yyyy-MM-dd hh:mm:ss"/></h1>
+			<c:choose>
+				<c:when test="${requestScope.fbi.fbiUpdatetime != null}">
+					<h1 class="fbiKey">수정일시</h1><h1 class="fbiValue"><fmt:formatDate value="${fbi.fbiUpdatetime}" pattern="yyyy-MM-dd hh:mm:ss"/></h1>
+				</c:when>
+			</c:choose>
+			</div>
 			<h1 id="contentH1" >내용</h1>
 			
-			<div id="fbViewContent"><textarea id="fbiContent" name="fbiContent" placeholder="내용을 입력하세요."></textarea></div>
+			<div id="fbViewContent"><textarea id="fbiContent" name="fbiContent" readonly>${requestScope.fbi.fbiContent }</textarea></div>
 		
 		</div><br>
 		<div id="btnDiv">
-			<input type="submit" id="submitBtn" value=""/>
-			<img src="/resources/img/icon/btn_cancel.png" id="cancelBtn" onclick="history.back();" />
+			<c:choose>
+				<c:when test="${requestScope.fbi.miId==sessionScope.member.miId}">
+					<img src="/resources/img/icon/icon_delete.png" id="deleteBtn" onclick="isDelete();"/>
+					<input type="submit" id="submitBtn" value=""/>
+				</c:when>
+			</c:choose>
+			<img src="/resources/img/icon/icon_list.png" id="listBtn" onclick="history.back();" />
 		</div>
 	</form>
+	
+	<div id="fbViewReplyDiv">
+		<h1>댓글관련</h1>
+	
+	</div>
 	
 	</div>
 	</section>

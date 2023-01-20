@@ -104,6 +104,30 @@ public class FreeboardDAO {
 		return sqlSession.insert("freeboard.insertFbi", map);
 		
 	}
+
+	public FreeboardInfo selectFbiView(String no) {
+
+		return sqlSession.selectOne("freeboard.selectFbiView", no);
+		
+	}
+
+	public int updateFbiReadcnt(String no) {
+
+		return sqlSession.update("freeboard.updateFbiReadcnt", no);
+		
+	}
+
+	public int updateFbi(FreeboardInfo fbi) {
+		
+		return sqlSession.update("freeboard.updateFbi", fbi);
+		
+	}
+
+	public int deleteFbi(FreeboardInfo checkFbi) {
+		
+		return sqlSession.update("freeboard.deleteFbi", checkFbi);
+		
+	}
 	
 	
 	

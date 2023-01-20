@@ -71,10 +71,18 @@ section {
 }
 
 #submitBtn {
-	display:block;
-	background:url(/resources/img/icon/edit.png);
+	display:inline-block;
+	background:url(/resources/img/icon/btn_edit.png);
 	background-repeat : no-repeat;
-	width:500px;
+	width:260px;
+	height:80px;
+	border:0;
+	cursor:pointer;
+	margin:0 auto;
+}
+#cancelBtn {
+	display:inline-block;
+	width:260px;
 	height:80px;
 	border:0;
 	cursor:pointer;
@@ -149,6 +157,10 @@ section {
 	display:inline-block;
 	width:120px;
 	height:120px;
+}
+#btnDiv {
+	width:1200px;
+	text-align:center;
 }
 </style>
 	
@@ -264,8 +276,10 @@ function chkValue(frm){
 					<hr><br>
 					<br>
 					<img src="/resources/img/icon/memberDrop.png" id="memberDrop" onclick="isDrop();"/><br><br>
-					
+					<div id="btnDiv">
 					<input type="submit" id="submitBtn" value=""/>
+					<img src="/resources/img/icon/btn_cancel.png" id="cancelBtn" onclick="history.back();" />
+					</div>
 					
 			</form><br>
 			</div>

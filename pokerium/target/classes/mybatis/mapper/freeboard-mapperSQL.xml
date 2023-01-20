@@ -9,6 +9,7 @@
 			a.MI_ID 			AS		miId			,
 			a.FBI_TITLE			AS		fbiTitle		,
 			a.FBI_CONTENT 		AS		fbiContent		,
+			a.FBI_READCNT		AS		fbiReadcnt		,
 			a.FBI_ISVIEW		AS		fbiIsview		,
 			a.FBI_REGTIME		AS		fbiRegtime		,
 			a.FBI_UPDATETIME	AS		fbiUpdatetime	,
@@ -87,4 +88,65 @@
 				(#{member.miId}, #{fbi.fbiTitle}, #{fbi.fbiContent})
 	</insert>
 	
+	<select id="selectFbiView"  resultType="freeboard">
+	
+		SELECT 
+			a.FBI_IDX 			AS 		fbiIdx			,
+			a.MI_ID 			AS		miId			,
+			a.FBI_TITLE			AS		fbiTitle		,
+			a.FBI_CONTENT 		AS		fbiContent		,
+			a.FBI_READCNT		AS		fbiReadcnt		,
+			a.FBI_ISVIEW		AS		fbiIsview		,
+			a.FBI_REGTIME		AS		fbiRegtime		,
+			a.FBI_UPDATETIME	AS		fbiUpdatetime	,
+			a.FBI_DELETETIME 	AS		fbiDeletetime	,
+			b.MI_NICKNAME 		AS 		miNickname		
+		FROM
+			T_FREEBOARD_INFO a, T_MEMBER_INFO b
+		WHERE 	
+			a.MI_ID = B.MI_ID 
+		AND
+			a.FBI_IDX = #{_parameter}
+			
+	</select>
+	
+	<update id="updateFbiReadcnt" parameterType="string">
+		
+		UPDATE 
+			T_FREEBOARD_INFO
+		SET
+			FBI_READCNT = FBI_READCNT + 1
+		WHERE 
+			FBI_IDX = #{_parameter}
+			
+	</update>
+	
+	<update id="updateFbi" parameterType="freeboard">
+		
+		UPDATE 
+			T_FREEBOARD_INFO
+		SET
+			FBI_TITLE = #{fbiTitle},
+			FBI_CONTENT = #{fbiContent},
+			FBI_UPDATETIME = NOW()
+		WHERE 
+			FBI_IDX = #{fbiIdx}
+		AND	
+			MI_ID = #{miId}
+			
+	</update>
+	
+		<update id="deleteFbi" parameterType="freeboard">
+		
+		UPDATE 
+			T_FREEBOARD_INFO
+		SET
+			FBI_ISVIEW = 'N',
+			FBI_DELETETIME = NOW()
+		WHERE 
+			FBI_IDX = #{fbiIdx}
+		AND	
+			MI_ID = #{miId}
+			
+	</update>
 </mapper>

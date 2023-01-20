@@ -26,9 +26,9 @@ public class FreeboardController {
 	public ModelAndView freeboardList( 	@RequestParam(value="type", defaultValue="") String type,
 										@RequestParam(value="keyword", defaultValue="") String keyword,
 										@RequestParam(value="pageNo", defaultValue="1") int pageNo,
-										@RequestParam(value="recordCountPerPage", defaultValue="5") int recordCountPerPage,
+										@RequestParam(value="recordCountPerPage", defaultValue="10") int recordCountPerPage,
 										ModelAndView mav	) {
-		
+			// 자유게시판 목록 페이지
 		
 		int startPage = pageNo * recordCountPerPage - (recordCountPerPage - 1);
 		int endPage = pageNo * recordCountPerPage;
@@ -55,10 +55,11 @@ public class FreeboardController {
 		String pageNavi = fbService.getPageNavi(map);
 		ArrayList<FreeboardInfo> fbi = fbService.freeboardList(map);
 		
+		mav.addObject("map", map);
 		mav.addObject("pageNavi", pageNavi);
 		mav.addObject("keyword", keyword);
 		mav.addObject("fbi", fbi);
-		mav.setViewName("community/freeBoard/freeBoard");
+		mav.setViewName("/community/freeBoard/freeBoard");
 		
 		return mav;
 		
@@ -66,15 +67,17 @@ public class FreeboardController {
 	
 	@RequestMapping(value="/community/freeboard/write", method = RequestMethod.GET)
 	public String freeboardWritePage() {
+		// 자유게시판 게시물 작성 페이지
 		
-		return "community/freeBoard/writePage";
+		return "/community/freeBoard/writePage";
 		
 	}
 	
 	@RequestMapping(value="/community/freeboard/insertFbi",method = RequestMethod.POST)
 	public ModelAndView insertFbi(	@SessionAttribute MemberInfo member,
-							FreeboardInfo fbi,
-							ModelAndView mav						) {
+									FreeboardInfo fbi,
+									ModelAndView mav						) {
+			// 자유게시판 게시물 작성 메소드
 		
 			String fbiContent = fbi.getFbiContent().replace("\r\n", "<br>");
 			fbi.setFbiContent(fbiContent);
@@ -93,7 +96,7 @@ public class FreeboardController {
 					mav.addObject("location", "/community/freeboard");
 				} else {
 					
-					mav.addObject("msg", "게시물이 작성에 실패하였습니다.\n지속적인 오류가 발생한다면 관리자에게 문의해주세요");
+					mav.addObject("msg", "게시물 작성에 실패하였습니다.\n지속적인 오류가 발생한다면 관리자에게 문의해주세요");
 					mav.addObject("location", "/community/freeboard");
 					
 				}
@@ -109,11 +112,126 @@ public class FreeboardController {
 			return mav;
 	}
 	
-	@RequestMapping(value="/community/freeboard/write", method = RequestMethod.GET)
-	public String freeboardViewPage() {
+	@RequestMapping(value="/community/freeboard/view", method = RequestMethod.GET)
+	public ModelAndView freeboardViewPage(	@RequestParam String no,
+											ModelAndView mav			) {
+			// 자유게시판 게시물 상세정보 페이지 + 조회수 증가
+			
+			int readCnt = fbService.updateFbiReadcnt(no);
+			FreeboardInfo fbi = fbService.selectFbiView(no);
+			
+			String fbiContent = fbi.getFbiContent().replace("<br>", "&#10;");
+			fbi.setFbiContent(fbiContent);
+			
+			mav.addObject("fbi", fbi);
+			mav.setViewName("/community/freeBoard/viewPage");
 		
-		return "community/freeBoard/writePage";
+		return mav;
 		
 	}
+	
+	@RequestMapping(value="/community/freeboard/view/edit", method = RequestMethod.POST)
+	public ModelAndView freeboardEditPage(	@RequestParam String no,
+									@SessionAttribute MemberInfo member,
+									ModelAndView mav				) {
+		
+		// 자유게시판 수정페이지 이동
+		
+		
+		FreeboardInfo fbi = fbService.selectFbiView(no);
+		String fbiContent = fbi.getFbiContent().replace("<br>", "&#10;");
+		fbi.setFbiContent(fbiContent);
+		
+		if(fbi.getMiId().equals(member.getMiId())) {
+			
+			mav.addObject("fbi", fbi);
+			mav.setViewName("/community/freeBoard/editPage");
+
+		} else {
+			mav.addObject("msg", "잘못된 경로로 들어오셨습니다.");
+			mav.addObject("location", "/");
+			mav.setViewName("/common/msg");
+			
+		}
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping(value="/community/freeboard/view/editFbi", method = RequestMethod.POST)
+	public ModelAndView updateFbi( 	FreeboardInfo fbi,
+							@SessionAttribute MemberInfo member,
+							ModelAndView mav
+			) {
+		
+			// 자유게시판 수정 메소드
+		
+			String fbiContent = fbi.getFbiContent().replace("\r\n", "<br>");
+			fbi.setFbiContent(fbiContent);
+			
+			FreeboardInfo checkFbi = fbService.selectFbiView(Integer.toString(fbi.getFbiIdx()));
+			
+			if(checkFbi.getMiId().equals(member.getMiId())) {
+				fbi.setMiId(member.getMiId());
+				int result = fbService.updateFbi(fbi);
+				
+				if(result>0) {
+					
+					mav.addObject("msg", "게시물이 수정되었습니다.");
+					mav.addObject("location", "/community/freeboard/view?no=" + fbi.getFbiIdx());
+					mav.setViewName("/common/msg");
+					
+				} else {
+					mav.addObject("msg", "게시물 수정에 실패하였습니다.\n지속적인 오류가 발생한다면 관리자에게 문의해주세요");
+					mav.addObject("location", "/community/freeboard");
+					mav.setViewName("/common/msg");
+				}
+			} else {
+				mav.addObject("msg", "잘못된 경로로 들어오셨습니다.");
+				mav.addObject("location", "/");
+				mav.setViewName("/common/msg");
+			}
+			
+			return mav;
+		
+		
+	}
+	
+	@RequestMapping(value="/community/freeboard/view/delete", method = RequestMethod.GET)
+	public ModelAndView deleteFbi(	@RequestParam String no,
+							@SessionAttribute MemberInfo member,
+							ModelAndView mav					) {
+		
+		//	게시물을 삭제하는 메소드
+		
+		FreeboardInfo checkFbi = fbService.selectFbiView(no);
+		
+		if(checkFbi.getMiId().equals(member.getMiId())) {
+			
+			int result = fbService.deleteFbi(checkFbi);
+			
+			if(result>0) {
+				mav.addObject("msg", "게시물이 삭제되었습니다.");
+				mav.addObject("location", "/community/freeboard");
+				mav.setViewName("/common/msg");
+				
+			} else {
+				mav.addObject("msg", "게시물 삭제에 실패하였습니다.\n지속적인 오류가 발생한다면 관리자에게 문의해주세요");
+				mav.addObject("location", "/community/freeboard/view?no="+no);
+				mav.setViewName("/common/msg");
+			}
+
+		} else {
+			mav.addObject("msg", "잘못된 경로로 들어오셨습니다.");
+			mav.addObject("location", "/");
+			mav.setViewName("/common/msg");
+			
+		}
+		
+		return mav;
+		
+		
+	}
+	
 	
 }
