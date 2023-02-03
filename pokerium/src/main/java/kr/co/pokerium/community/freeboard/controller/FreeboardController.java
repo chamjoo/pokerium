@@ -1,7 +1,10 @@
 package kr.co.pokerium.community.freeboard.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +31,8 @@ public class FreeboardController {
 										@RequestParam(value="pageNo", defaultValue="1") int pageNo,
 										@RequestParam(value="recordCountPerPage", defaultValue="10") int recordCountPerPage,
 										ModelAndView mav	) {
-			// 자유게시판 목록 페이지
+	// 자유게시판 목록 페이지
+		
 		
 		int startPage = pageNo * recordCountPerPage - (recordCountPerPage - 1);
 		int endPage = pageNo * recordCountPerPage;
@@ -45,8 +49,8 @@ public class FreeboardController {
 		map.put("pageNo", pageNo);
 		map.put("recordCountPerPage", recordCountPerPage);
 		
-		int selectRecordAllCount = fbService.selectRecordAllCount(map); 
-		int fbiRecordAllCount = fbService.fbiRecordAllCount();
+		int selectRecordAllCount = fbService.selectRecordAllCount(map); 	// 조건을 통해 조회된 게시물 수
+		int fbiRecordAllCount = fbService.fbiRecordAllCount();				// 자유게시판 총 게시물 수
 		
 		map.put("selectRecordAllCount", selectRecordAllCount);
 		map.put("fbiRecordAllCount", fbiRecordAllCount);
@@ -233,5 +237,32 @@ public class FreeboardController {
 		
 	}
 	
+	@RequestMapping(value="/community/freeboard/view/insertComment", method = RequestMethod.POST)
+	public void insertCommentAjax(	@RequestParam String fbrComment,
+									@RequestParam String fbiIdx,
+									@SessionAttribute MemberInfo member,
+									HttpServletResponse response
+																		) throws IOException {
+		// 자유게시판 댓글달기 메소드(ajax)
+		
+		String miId = member.getMiId();
+		int result = 0;
+		fbrComment = fbrComment.replace("\r\n", "<br>");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fbrComment", fbrComment);
+		map.put("fbiIdx", fbiIdx);
+		map.put("miId", miId);
+		
+		result = fbService.insertCommentAjax(map);
+		
+		if(result>0) {
+			response.getWriter().print(true); 
+		} else {
+			response.getWriter().print(false);
+		}
+		
+		
+	}
 	
 }

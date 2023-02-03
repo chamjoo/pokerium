@@ -157,11 +157,15 @@ function isLogout() {
 			<ul id="menu2">
 				<li class="li3"><div class="menuDiv1"><a class="menuLink" href=""><div class="menuDiv3" ><img src="/resources/img/icon/icon_search.png"  /></div><H4>통합검색</H4></a></div></li>
 				<c:choose>
+
 					<c:when test="${sessionScope.member != null }">
+					<!-- 로그인되어있는 상태일 경우 -->
 						<li class="li3" ><div class="menuDiv1" ><a class="menuLink" onclick="isLogout();" style="cursor:pointer;"><div class="menuDiv3" ><img src="/resources/img/icon/icon_logout.png"  /></div><H4>로그아웃</H4></a></div></li>
 						<li class="li3"><div class="menuDiv1"><a class="menuLink" href="/member/myPage"><div class="menuDiv3" ><img src="/resources/img/icon/icon_mypage.png"  /></div><H4>마이 페이지</H4></a></div></li>  
 						<li class="li3" style="margin:0 15px 0 15px;"><div class="menuDiv1" ><a class="menuLink" href=""><div class="menuDiv3" >
 						
+						
+						<!-- 팀 표시(발로,미스틱,인스틴트 중 자기팀) -->
 						<c:choose>
 							<c:when test="${sessionScope.member.miTeam=='R' }"><img src="/resources/img/icon/team_valor.png" /></div><H4>${sessionScope.member.miNickname }</H4></a></div></li>
 							</c:when>
@@ -178,6 +182,7 @@ function isLogout() {
 					</c:when>
 					
 					<c:otherwise>
+					<!-- 비로그인상태일 경우 -->
 						<li class="li3"><div class="menuDiv1"><a class="menuLink" href="/member/loginPage"><div class="menuDiv3" ><img src="/resources/img/icon/icon_mypage.png" /></div><H4>로그인</H4></a></div></li>
 					</c:otherwise>
 				</c:choose>

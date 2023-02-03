@@ -100,32 +100,38 @@ public class FreeboardDAO {
 	}
 
 	public int insertFBI(HashMap<String, Object> map) {
-		
+		// 자유게시판 글 작성
 		return sqlSession.insert("freeboard.insertFbi", map);
 		
 	}
 
 	public FreeboardInfo selectFbiView(String no) {
-
+		// 게시물 상세정보
 		return sqlSession.selectOne("freeboard.selectFbiView", no);
 		
 	}
 
 	public int updateFbiReadcnt(String no) {
-
+		// 게시물 조회수 증가
 		return sqlSession.update("freeboard.updateFbiReadcnt", no);
 		
 	}
 
 	public int updateFbi(FreeboardInfo fbi) {
-		
+		// 게시물 수정
 		return sqlSession.update("freeboard.updateFbi", fbi);
 		
 	}
 
 	public int deleteFbi(FreeboardInfo checkFbi) {
-		
+		// 게시물 삭제 
 		return sqlSession.update("freeboard.deleteFbi", checkFbi);
+		
+	}
+
+	public int insertCommentAjax(HashMap<String, Object> map) {
+		// 게시물 댓글작성
+		return sqlSession.insert("freeboard.insertCommentAjax", map);
 		
 	}
 	

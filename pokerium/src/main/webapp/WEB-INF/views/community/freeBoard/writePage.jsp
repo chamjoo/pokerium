@@ -145,7 +145,7 @@ section input[type=text], section input:focus[type=text] {
 
 #submitBtn {
 	display:inline-block;
-	background:url(/resources/img/icon/btn_edit.png);
+	background:url(/resources/img/icon/btn_insert.png);
 	background-repeat : no-repeat;
 	width:260px;
 	height:80px;

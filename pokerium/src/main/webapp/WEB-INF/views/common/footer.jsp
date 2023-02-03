@@ -75,17 +75,17 @@ footer a {
 	</ul>
 	<hr>
 	<ul id="f_menu2" style="display:inline-block; width:97%;">
-		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">이름</a></li>
-		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">연락처</a></li>
-		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">이메일</a></li>
-		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">기능구현</a></li>
+		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">이름<br><br><br><br>배준호</a></li>
+		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">연락처<br><br><br><br>010-3353-0047</a></li>
+		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">이메일<br><br><br><br>bj_ho@naver.com</a></li>
+		<li class="f_li2" style="width:20%;"><a class="f_menuLink" href="">기능구현<br><br>- 메인페이지<br>- 회원관련<br>(회원가입/정보수정/탈퇴/로그인/로그아웃)<br>- 자유게시판관련<br>(목록조회/검색/페이징/글쓰기/글수정/글삭제)<br>- 자유게시판 댓글,대댓글기능 (개발예정)</a></li>
 	</ul>
 	<hr>
 	<ul id="f_menu3" style="display:inline-block; width:97%;">
-		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">이름</a></li>
-		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">연락처</a></li>
-		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">이메일</a></li>
-		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">기능구현</a></li>
+		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">이름<br><br><br><br>박창주</a></li>
+		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">연락처<br><br><br><br>010-5298-4345</a></li>
+		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">이메일<br><br><br><br>kycjq@naver.com</a></li>
+		<li class="f_li3" style="width:20%;"><a class="f_menuLink" href="">기능구현<br><br><br>- 쇼핑몰(개발예정)<br>- 자랑게시판(개발예정)<br>- 포켓몬도감(개발예정)</a></li>
 	</ul>
 	<hr>
 	<h5 style="color:white; float:right; margin-right:30px;">* 해당 포트폴리오는 상업목적이 아닌 면접 시 기업제출용으로 만들어졌습니다.</h5>

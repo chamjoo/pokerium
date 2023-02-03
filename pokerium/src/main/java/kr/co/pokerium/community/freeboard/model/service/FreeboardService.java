@@ -28,4 +28,6 @@ public interface FreeboardService {
 
 	int deleteFbi(FreeboardInfo checkFbi);
 
+	int insertCommentAjax(HashMap<String, Object> map);
+
 }

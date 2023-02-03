@@ -128,6 +128,8 @@ $(document).ready(function() {
 	<%@include file ="/WEB-INF/views/common/header.jsp" %>
 	
 	<section>
+	
+<!--  이미지 슬라이드 시작 -->
 		<div class="d_imgSlide" style="text-align:center;">
 			<div class="d_imgSlides">
 				<a href="" class="slide" id="slide-1"><img src="/resources/img/slides/slide-1.png" width="100%" height="500" /></a>
@@ -142,10 +144,16 @@ $(document).ready(function() {
 			</div>
 			<div class="d_slideshow-indicator"></div>
 		</div>
+<!--  이미지 슬라이드 종료 -->
+	
 		<br>
-		<div style="width:100%;height:600px;">
+		
+		
+		<div style="width:100%;height:70px; text-align:center;">
 			<H1>소식</H1>	
-		</div>
+		</div> 
+
+
 	</section>
 	
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>

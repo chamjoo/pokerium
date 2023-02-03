@@ -223,6 +223,7 @@ function chkValue(frm){
 </script>
 
 	<section>
+	
 		<c:choose>
 		<c:when test="${sessionScope.member == null }">
 			<c:redirect url="/"></c:redirect>

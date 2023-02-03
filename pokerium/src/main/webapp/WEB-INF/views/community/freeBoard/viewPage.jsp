@@ -166,6 +166,62 @@ section input[type=text], section input:focus[type=text] {
 	text-align:right;
 }
 
+#fbViewInsertReplyDiv {
+	padding:0px 100px 50px 100px; 
+	width:1100px;
+	height:60px;
+	
+}
+#fbrComment {
+	margin:0;
+	padding:20px 20px 20px 20px;
+	width:750px;
+	height:40px;
+	border:2px solid #ebebeb;
+	resize:none;
+	overflow:visible;
+	font-size:16px;
+	font-weight:bold;                       
+	font-family:"Trebuchet MS", Dotum, Arial;
+	background-color:white;  
+}
+#fbrComment:focus {
+	border:2px solid black;
+}
+
+#fbrCommentFalse {
+margin:0;
+	padding:20px 100px 20px 100px;
+	width:900px;
+	height:40px;
+	border:2px solid #ebebeb;
+	resize:none;
+	overflow:visible;
+	font-size:20px;
+	font-weight:bold;                       
+	font-family:"Trebuchet MS", Dotum, Arial;
+	text-align:center;
+}
+#commentH1 {
+	width:1100px;
+	margin:0;
+	padding:20px;
+	display:block;
+	text-align:left;
+	font-size:18px;
+	font-weight:bold;                       
+	font-family:"Trebuchet MS", Dotum, Arial;
+}
+#insertCommentBtn {
+	cursor:pointer;
+}
+
+#fbViewReplyDiv {
+	padding:0px 100px 50px 100px; 
+	width:1100px;
+	height:60px;
+	
+}
 </style>
 
 <script>
@@ -177,6 +233,7 @@ function isDelete() {
 			location.href="/community/freeboard/view/delete?no="+fbiIdx;
 		}
 }
+
 </script>
 </head>
 <body>
@@ -219,14 +276,61 @@ function isDelete() {
 			<img src="/resources/img/icon/icon_list.png" id="listBtn" onclick="history.back();" />
 		</div>
 	</form>
-	
-	<div id="fbViewReplyDiv">
-		<h1>댓글관련</h1>
+	<hr style="border:1px solid #ebebeb;">
+	<form>
+	<div id="fbViewInsertReplyDiv">
+	<h1 id="commentH1" >댓글 달기</h1>
+		<c:choose>
+			<c:when test="${sessionScope.member!=null }">	
+				<input type="hidden" name="fbiIdx" id="fbiIdx" value="${requestScope.fbi.fbiIdx }"/>
+				<textarea id="fbrComment"></textarea>
+				<img src="/resources/img/icon/btn_insertComment.png" id="insertCommentBtn" />
+			</c:when>
+			<c:otherwise>
+				<textarea id="fbrCommentFalse" placeholder="로그인 후 이용이 가능합니다." disabled="disabled"></textarea>
+			</c:otherwise>
+		</c:choose>
 	
 	</div>
+	<br><br><br><br>
+	<div id="fbViewReplyDiv">
+		<h1 id="commentH1" >댓글</h1>
 	
+	</div>
+	</form>
 	</div>
 	</section>
+	
+	
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+$('#insertCommentBtn').click(function(){
+
+	var fbrComment = document.getElementById("fbrComment").value;
+	var fbiIdx = $('input[name=fbiIdx]').val();
+
+	if(confirm("댓글을 등록하시겠습니까?")){
+
+		$.ajax({
+			url : "/community/freeboard/view/insertComment",
+			data : {"fbrComment":fbrComment, "fbiIdx":fbiIdx},
+			type : "POST",
+			success : function(result){
+				if(result=="true") {
+					document.getElementById("fbrComment").value = "";
+					alert('댓글이 등록되었습니다.');
+					
+				} else {
+					alert('댓글등록에 실패하였습니다. 지속적인 오류발생시 관리자에게 문의해주세요.');
+				}
+			},
+			error : function(){
+				console.log("ajax 통신 실패");
+			}
+		});
+	}
+});
+</script>
 	
 	
 	<%@include file ="/WEB-INF/views/common/footer.jsp" %>

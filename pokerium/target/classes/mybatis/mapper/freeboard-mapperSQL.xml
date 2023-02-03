@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="freeboard">
 
+
 	<select id="selectAllList" parameterType="hashmap" resultType="freeboard">
 		SELECT 
 			a.NUM				AS		num				,
@@ -85,7 +86,7 @@
 			T_FREEBOARD_INFO
 				(MI_ID, FBI_TITLE, FBI_CONTENT)
 		VALUES
-				(#{member.miId}, #{fbi.fbiTitle}, #{fbi.fbiContent})
+				(#{member.miId}, TRIM(#{fbi.fbiTitle}), TRIM(#{fbi.fbiContent}))
 	</insert>
 	
 	<select id="selectFbiView"  resultType="freeboard">
@@ -126,8 +127,8 @@
 		UPDATE 
 			T_FREEBOARD_INFO
 		SET
-			FBI_TITLE = #{fbiTitle},
-			FBI_CONTENT = #{fbiContent},
+			FBI_TITLE = TRIM(#{fbiTitle}),
+			FBI_CONTENT = TRIM(#{fbiContent}),
 			FBI_UPDATETIME = NOW()
 		WHERE 
 			FBI_IDX = #{fbiIdx}
@@ -149,4 +150,16 @@
 			MI_ID = #{miId}
 			
 	</update>
+	
+	<insert id="insertCommentAjax" parameterType="hashmap" >
+		
+		INSERT INTO 
+			T_FREEBOARD_REPLY
+				(FBI_IDX, FBR_IDX, MI_ID, FBR_COMMENT)
+		VALUES
+				(#{fbiIdx}	, 
+				(SELECT IFNULL(MAX(FBR_IDX)+1 , 1) AS FBR_IDX FROM T_FREEBOARD_REPLY AS REPLY WHERE FBI_IDX=#{fbiIdx})	, 
+				#{miId}	,
+				TRIM(#{fbrComment}))
+	</insert>
 </mapper>

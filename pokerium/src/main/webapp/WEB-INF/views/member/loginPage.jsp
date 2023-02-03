@@ -83,7 +83,6 @@ function chkId(obj) {
 		</c:when>
 		
 		<c:otherwise>
-			
 			<img src="/resources/img/icon/logo.png" alt="로고" style="height:80px;"/>
 			<form name="loginForm" action="/member/login" method="post" onsubmit="return chkValue(this);">
 				<input type="text" name="miId" onkeyup="chkId(event)" placeholder="아이디"/><br>
