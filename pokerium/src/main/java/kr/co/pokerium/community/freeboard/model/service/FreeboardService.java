@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Service;
 
 import kr.co.pokerium.community.freeboard.model.vo.FreeboardInfo;
+import kr.co.pokerium.community.freeboard.model.vo.FreeboardReply;
 
 @Service
 public interface FreeboardService {
@@ -29,5 +30,11 @@ public interface FreeboardService {
 	int deleteFbi(FreeboardInfo checkFbi);
 
 	int insertCommentAjax(HashMap<String, Object> map);
+
+	ArrayList<FreeboardReply> selectFreeboardReply(String no);
+
+	int updateCommentAjax(HashMap<String, Object> map);
+
+	int deleteCommentAjax(HashMap<String, Object> map);
 
 }

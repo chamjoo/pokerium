@@ -219,8 +219,77 @@ margin:0;
 #fbViewReplyDiv {
 	padding:0px 100px 50px 100px; 
 	width:1100px;
-	height:60px;
+	height:auto;
 	
+}
+#ReplyDiv {
+	width:1050px;
+	height:120px;
+	border-bottom:1px solid black;
+	padding:25px;
+	position:relative
+}
+#ReplyInfoDiv {
+	display:flex;
+	width:600px;
+	font-size:16px;
+	position:absolute; 
+	font-family:"Trebuchet MS", Dotum, Arial;
+	top:5px;
+	left:180px;
+	
+}
+.ReplyInfoDiv h3 {
+	margin:20px 0 0 0;
+}
+.ReplyOptionDiv {
+	display:flex;
+	width:220px;
+	font-size:16px;
+	position:absolute; 
+	font-family:"Trebuchet MS", Dotum, Arial;
+	top:5px;
+	left:900px;
+	
+}
+.ReplyInfoValue { 
+	font-size:18px;
+	padding-right:20px;
+}
+.ReplyOption {
+	font-size:18px;
+	padding-right:20px;
+	cursor:pointer;
+}
+#ReplyCommentDiv {
+	position:absolute;
+	height:auto;
+	top:60px;
+	left:180px;
+}
+.ReplyComment {
+	width:700px;
+	height:90px;
+	font-size:16px;
+	border:none;
+	resize:none;
+	font-size:16px;                      
+	font-family:"Trebuchet MS", Dotum, Arial;
+}
+.ReplyComment:focus {
+	outline:none;
+}
+.ReplyOption2Div {
+	position:absolute;
+	display:none;
+	top:50px;
+	left:900px;
+}
+.ReplyOption2 {
+	font-family:"Trebuchet MS", Dotum, Arial;
+	font-size:18px;
+	padding-right:20px;
+	cursor:pointer;
 }
 </style>
 
@@ -234,6 +303,20 @@ function isDelete() {
 		}
 }
 
+function updateCommentConfirm(idx) {
+		document.getElementById("ReplyOptionDiv"+idx).style.display='none';
+		document.getElementById("fbrComment"+idx).readOnly=false;
+		document.getElementById("fbrComment"+idx).style.border="2px solid #ebebeb";
+		document.getElementById("fbrComment"+idx).focus();		
+		document.getElementById("ReplyOption2Div"+idx).style.display='block';
+}
+
+function cancelComment(idx) {
+		document.getElementById("ReplyOptionDiv"+idx).style.display='flex';
+		document.getElementById("fbrComment"+idx).readOnly=true;
+		document.getElementById("fbrComment"+idx).style.border="none";
+		document.getElementById("ReplyOption2Div"+idx).style.display='none';
+}
 </script>
 </head>
 <body>
@@ -254,10 +337,10 @@ function isDelete() {
 			<input type="hidden" name="fbiIdx" id="fbiIdx" value="${requestScope.fbi.fbiIdx }"/>
 			<h1 class="fbiKey">닉네임</h1><h1 class="fbiValue">${requestScope.fbi.miNickname }</h1>
 			<h1 class="fbiKey">조회수</h1><h1 class="fbiValue">${requestScope.fbi.fbiReadcnt }</h1>
-			<h1 class="fbiKey">작성일시</h1><h1 class="fbiValue"><fmt:formatDate value="${fbi.fbiRegtime}" pattern="yyyy-MM-dd hh:mm:ss"/></h1>
+			<h1 class="fbiKey">작성일시</h1><h1 class="fbiValue"><fmt:formatDate value="${fbi.fbiRegtime}" pattern="yyyy-MM-dd HH:mm:ss"/></h1>
 			<c:choose>
 				<c:when test="${requestScope.fbi.fbiUpdatetime != null}">
-					<h1 class="fbiKey">수정일시</h1><h1 class="fbiValue"><fmt:formatDate value="${fbi.fbiUpdatetime}" pattern="yyyy-MM-dd hh:mm:ss"/></h1>
+					<h1 class="fbiKey">수정일시</h1><h1 class="fbiValue"><fmt:formatDate value="${fbi.fbiUpdatetime}" pattern="yyyy-MM-dd HH:mm:ss"/></h1>
 				</c:when>
 			</c:choose>
 			</div>
@@ -283,18 +366,84 @@ function isDelete() {
 		<c:choose>
 			<c:when test="${sessionScope.member!=null }">	
 				<input type="hidden" name="fbiIdx" id="fbiIdx" value="${requestScope.fbi.fbiIdx }"/>
-				<textarea id="fbrComment"></textarea>
+				<textarea id="fbrComment" cols="20" rows="5"></textarea>
 				<img src="/resources/img/icon/btn_insertComment.png" id="insertCommentBtn" />
 			</c:when>
 			<c:otherwise>
 				<textarea id="fbrCommentFalse" placeholder="로그인 후 이용이 가능합니다." disabled="disabled"></textarea>
 			</c:otherwise>
 		</c:choose>
-	
 	</div>
 	<br><br><br><br>
 	<div id="fbViewReplyDiv">
-		<h1 id="commentH1" >댓글</h1>
+		<h1 id="commentH1" >댓글 (${requestScope.fbrCount })</h1>	
+		<c:choose>
+			<c:when test="${!requestScope.fbr.isEmpty() }">
+				<c:forEach items="${requestScope.fbr }" var="fbr" varStatus="i">
+				<c:set var="fbrRegDate"><fmt:formatDate value="${fbr.fbrRegtime }" pattern="yyyy-MM-dd" /></c:set>
+					<div id="ReplyDiv">
+					<c:choose>
+					<c:when test="${fbr.fbrIsview=='Y'}">
+						<div style="display:inline-block; vertical-align:bottom;">
+						<input type="hidden" name="fbrIdx" id="fbrIdx${fbr.fbrIdx}" value="${fbr.fbrIdx}" />
+						<input type="hidden" name="miId" id="miId${fbr.fbrIdx}" value="${fbr.miId}" />
+							<c:choose>
+								<c:when test="${fbr.miTeam=='R'}">
+									<img src="/resources/img/icon/team_valor.png"  width="120px" height="120px"/>
+								</c:when>
+							</c:choose>
+							<c:choose>
+								<c:when test="${fbr.miTeam=='B'}">
+									<img src="/resources/img/icon/team_mystic.png" width="120px" height="120px" />
+								</c:when>
+							</c:choose>
+							<c:choose>
+								<c:when test="${fbr.miTeam=='Y'}">
+									<img src="/resources/img/icon/team_instinct.png" width="120px" height="120px" />
+								</c:when> 
+							</c:choose>   
+						</div>
+						<div id="ReplyInfoDiv">	
+							<h3 class="ReplyInfoValue">${fbr.miNickname}</h3> 
+							<h3 class="ReplyInfoValue" style="color:gray;"><fmt:formatDate value="${fbr.fbrRegtime }" pattern="yyyy-MM-dd HH:mm:ss"/></h3>
+							<c:choose>
+								<c:when test="${fbr.fbrUpdatetime!=null}" >
+									<h3 class="ReplyInfoValue" style="color:gray;">(수정됨)</h3>
+								</c:when>
+							</c:choose>
+						</div>
+						<div class="ReplyOptionDiv" id="ReplyOptionDiv${fbr.fbrIdx}">
+						<c:choose>
+							<c:when test="${sessionScope.member!=null }">
+							<h3 class="ReplyOption" id="insertReComment${fbr.fbrIdx}" ><a>답글달기</a></h3>
+							</c:when>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fbr.miId eq sessionScope.member.miId}">
+							<h3 class="ReplyOption" id="updateComment${fbr.fbrIdx}" onclick="updateCommentConfirm(${fbr.fbrIdx});">수정</h3>
+							<h3 class="ReplyOption" id="deleteComment${fbr.fbrIdx}" onclick="deleteComment(${fbr.fbrIdx});">삭제</h3>
+							</c:when>
+						</c:choose>
+						</div>
+						<div class="ReplyOption2Div" id="ReplyOption2Div${fbr.fbrIdx}">
+							<h3 class="ReplyOption2" id="updateBtn${fbr.fbrIdx}" style="display:inline-block;" onclick="updateComment(${fbr.fbrIdx});" >수정하기</h3>
+							<h3 class="ReplyOption2" id="cancelBtn${fbr.fbrIdx}" style="display:inline-block;" onclick="cancelComment(${fbr.fbrIdx});" >취소</h3>
+						</div>
+						<div id="ReplyCommentDiv">
+							<textarea class="ReplyComment" id="fbrComment${fbr.fbrIdx}" name="fbrComment${fbr.fbrIdx}" rows="10"  readonly="readonly">${fbr.fbrComment}</textarea>
+						</div>	
+					</c:when>
+					<c:otherwise>
+						<h1 style="display:block;width:300px; margin:35px 400px;">댓글이 삭제되었습니다.</h1>
+					</c:otherwise>
+					</c:choose>
+					</div>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<H1 style="margin:auto 0;">등록된 댓글이 없습니다.</H1>
+			</c:otherwise>
+		</c:choose>
 	
 	</div>
 	</form>
@@ -319,7 +468,7 @@ $('#insertCommentBtn').click(function(){
 				if(result=="true") {
 					document.getElementById("fbrComment").value = "";
 					alert('댓글이 등록되었습니다.');
-					
+					location.reload();
 				} else {
 					alert('댓글등록에 실패하였습니다. 지속적인 오류발생시 관리자에게 문의해주세요.');
 				}
@@ -330,6 +479,59 @@ $('#insertCommentBtn').click(function(){
 		});
 	}
 });
+
+function updateComment(idx) {
+
+	var fbrComment = document.getElementById("fbrComment"+idx).value;
+	var miId = document.getElementById("miId"+idx).value;
+	var fbiIdx = $('input[name=fbiIdx]').val();
+	var fbrIdx = idx;
+	if(confirm("댓글을 수정하시겠습니까?")){
+		$.ajax({
+			url : "/community/freeboard/view/updateComment",
+			data : {"fbrComment":fbrComment, "fbiIdx":fbiIdx, "fbrIdx":fbrIdx, "miId":miId},
+			type : "POST",
+			success : function(result){
+				if(result=="true") {
+					document.getElementById("fbrComment").value = "";
+					alert('댓글이 수정되었습니다.');
+					location.reload();
+				} else {
+					alert('댓글수정에 실패하였습니다. 지속적인 오류발생시 관리자에게 문의해주세요.');
+				}
+			},
+			error : function(){
+				console.log("ajax 통신 실패");
+			}
+		});
+	}
+}
+
+function deleteComment(idx) {
+
+	var miId = document.getElementById("miId"+idx).value;
+	var fbiIdx = $('input[name=fbiIdx]').val();
+	var fbrIdx = idx;
+	if(confirm("댓글을 삭제하시겠습니까?")){
+		$.ajax({
+			url : "/community/freeboard/view/deleteComment",
+			data : {"fbiIdx":fbiIdx, "fbrIdx":fbrIdx, "miId":miId},
+			type : "POST",
+			success : function(result){
+				if(result=="true") {
+					document.getElementById("fbrComment").value = "";
+					alert('댓글이 삭제되었습니다.');
+					location.reload();
+				} else {
+					alert('댓글삭제에 실패하였습니다. 지속적인 오류발생시 관리자에게 문의해주세요.');
+				}
+			},
+			error : function(){
+				console.log("ajax 통신 실패");
+			}
+		});
+	}
+}
 </script>
 	
 	

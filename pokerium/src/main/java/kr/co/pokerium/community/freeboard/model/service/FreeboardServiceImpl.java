@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.pokerium.community.freeboard.model.dao.FreeboardDAO;
 import kr.co.pokerium.community.freeboard.model.vo.FreeboardInfo;
+import kr.co.pokerium.community.freeboard.model.vo.FreeboardReply;
 
 
 @Service
@@ -89,6 +90,26 @@ public class FreeboardServiceImpl implements FreeboardService {
 		// 게시물에 댓글작성 메소드
 		return fbDAO.insertCommentAjax(map);
 		
+	}
+
+	@Override
+	public ArrayList<FreeboardReply> selectFreeboardReply(String no) {
+
+		return new ArrayList<FreeboardReply> (fbDAO.selectFreeboardReply(no));
+		
+	}
+
+	@Override
+	public int updateCommentAjax(HashMap<String, Object> map) {
+		// 게시물에 댓글수정 메소드
+		return fbDAO.updateCommentAjax(map);
+		
+	}
+
+	@Override
+	public int deleteCommentAjax(HashMap<String, Object> map) {
+		// 게시물 에 댓글삭제 메소드
+		return fbDAO.deleteCommentAjax(map);
 	}
 
 	

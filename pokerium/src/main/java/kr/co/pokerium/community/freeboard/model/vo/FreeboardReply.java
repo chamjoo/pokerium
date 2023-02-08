@@ -15,6 +15,11 @@ public class FreeboardReply {
 	private Timestamp	fbrRegtime;
 	private Timestamp	fbrUpdatetime;
 	private Timestamp	fbrDeletetime;
+	
+	private String miNickname;
+	private String miTeam;
+	
+
 	public int getFbiIdx() {
 		return fbiIdx;
 	}
@@ -75,12 +80,28 @@ public class FreeboardReply {
 	public void setFbrDeletetime(Timestamp fbrDeletetime) {
 		this.fbrDeletetime = fbrDeletetime;
 	}
-	public FreeboardReply() {
-		super();
-		// TODO Auto-generated constructor stub
+	public String getMiNickname() {
+		return miNickname;
+	}
+	public void setMiNickname(String miNickname) {
+		this.miNickname = miNickname;
+	}
+	public String getMiTeam() {
+		return miTeam;
+	}
+	public void setMiTeam(String miTeam) {
+		this.miTeam = miTeam;
+	}
+	@Override
+	public String toString() {
+		return "FreeboardReply [fbiIdx=" + fbiIdx + ", fbrIdx=" + fbrIdx + ", fbrStep=" + fbrStep + ", fbrLevel="
+				+ fbrLevel + ", miId=" + miId + ", fbrComment=" + fbrComment + ", fbrIsview=" + fbrIsview
+				+ ", fbrRegtime=" + fbrRegtime + ", fbrUpdatetime=" + fbrUpdatetime + ", fbrDeletetime=" + fbrDeletetime
+				+ ", miNickname=" + miNickname + ", miTeam=" + miTeam + "]";
 	}
 	public FreeboardReply(int fbiIdx, int fbrIdx, int fbrStep, int fbrLevel, String miId, String fbrComment,
-			String fbrIsview, Timestamp fbrRegtime, Timestamp fbrUpdatetime, Timestamp fbrDeletetime) {
+			String fbrIsview, Timestamp fbrRegtime, Timestamp fbrUpdatetime, Timestamp fbrDeletetime, String miNickname,
+			String miTeam) {
 		super();
 		this.fbiIdx = fbiIdx;
 		this.fbrIdx = fbrIdx;
@@ -92,13 +113,12 @@ public class FreeboardReply {
 		this.fbrRegtime = fbrRegtime;
 		this.fbrUpdatetime = fbrUpdatetime;
 		this.fbrDeletetime = fbrDeletetime;
+		this.miNickname = miNickname;
+		this.miTeam = miTeam;
 	}
-	@Override
-	public String toString() {
-		return "FreeboardReply [fbiIdx=" + fbiIdx + ", fbrIdx=" + fbrIdx + ", fbrStep=" + fbrStep + ", fbrLevel="
-				+ fbrLevel + ", miId=" + miId + ", fbrComment=" + fbrComment + ", fbrIsview=" + fbrIsview
-				+ ", fbrRegtime=" + fbrRegtime + ", fbrUpdatetime=" + fbrUpdatetime + ", fbrDeletetime=" + fbrDeletetime
-				+ "]";
+	public FreeboardReply() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	

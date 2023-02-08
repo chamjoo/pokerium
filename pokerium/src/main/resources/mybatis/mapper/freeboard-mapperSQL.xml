@@ -137,7 +137,7 @@
 			
 	</update>
 	
-		<update id="deleteFbi" parameterType="freeboard">
+	<update id="deleteFbi" parameterType="freeboard">
 		
 		UPDATE 
 			T_FREEBOARD_INFO
@@ -151,6 +151,8 @@
 			
 	</update>
 	
+	
+	<!-- 자유게시판 댓글달기 -->
 	<insert id="insertCommentAjax" parameterType="hashmap" >
 		
 		INSERT INTO 
@@ -162,4 +164,65 @@
 				#{miId}	,
 				TRIM(#{fbrComment}))
 	</insert>
+	
+	
+	<select id="selectFreeboardReply" parameterType="String" resultType="freeboardReply">
+		SELECT 
+						A.FBI_IDX AS fbiIdx,
+						A.FBR_IDX AS fbrIdx,
+						A.FBR_STEP AS fbrStep,
+						A.FBR_LEVEL AS fbrLevel,
+						A.MI_ID AS miId,
+						A.FBR_COMMENT AS fbrComment,
+						A.FBR_ISVIEW AS fbrIsview,
+						A.FBR_ISSECRET AS fbrIssecret,
+						A.FBR_REGTIME AS fbrRegtime,
+						A.FBR_UPDATETIME AS fbrUpdatetime,
+						A.FBR_DELETETIME AS fbrDeletetime,
+						B.MI_NICKNAME AS miNickname, 
+						B.MI_TEAM AS miTeam	 
+		FROM
+						T_FREEBOARD_REPLY A
+		INNER JOIN 
+						T_MEMBER_INFO B 
+		ON 
+						A.MI_ID = B.MI_ID 
+		AND 
+						A.FBI_IDX = #{no}
+						
+	</select>
+	
+	<!-- 자유게시판 댓글수정 -->
+	<update id="updateCommentAjax" parameterType="hashmap" >
+		
+		UPDATE 
+			T_FREEBOARD_REPLY
+		SET 
+			FBR_COMMENT		=	TRIM(#{fbrComment}),
+			FBR_UPDATETIME	=	NOW()
+		WHERE
+			FBI_IDX			=	#{fbiIdx}
+		AND
+			FBR_IDX			=	#{fbrIdx}
+		AND
+			MI_ID			=	#{miId}
+			
+	</update>
+	
+	<!-- 자유게시판 댓글삭제 -->
+	<update id="deleteCommentAjax" parameterType="hashmap" >
+		
+		UPDATE 
+			T_FREEBOARD_REPLY
+		SET 
+			FBR_ISVIEW		=	"N",
+			FBR_DELETETIME	=	NOW()
+		WHERE
+			FBI_IDX			=	#{fbiIdx}
+		AND
+			FBR_IDX			=	#{fbrIdx}
+		AND
+			MI_ID			=	#{miId}
+			
+	</update>
 </mapper>

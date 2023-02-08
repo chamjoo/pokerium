@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import kr.co.pokerium.community.freeboard.model.vo.FreeboardInfo;
+import kr.co.pokerium.community.freeboard.model.vo.FreeboardReply;
 
 
 @Repository
@@ -132,6 +133,24 @@ public class FreeboardDAO {
 	public int insertCommentAjax(HashMap<String, Object> map) {
 		// 게시물 댓글작성
 		return sqlSession.insert("freeboard.insertCommentAjax", map);
+		
+	}
+
+	public ArrayList<FreeboardReply> selectFreeboardReply(String no) {
+		
+		return new ArrayList<FreeboardReply> (sqlSession.selectList("freeboard.selectFreeboardReply", no));
+		
+	}
+
+	public int updateCommentAjax(HashMap<String, Object> map) {
+		// 게시물에 댓글수정 메소드
+		return sqlSession.update("freeboard.updateCommentAjax", map);
+		
+	}
+
+	public int deleteCommentAjax(HashMap<String, Object> map) {
+		// 게시물에 댓글삭제 메소드
+		return sqlSession.update("freeboard.deleteCommentAjax", map);
 		
 	}
 	

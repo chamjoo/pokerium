@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.pokerium.community.freeboard.model.service.FreeboardService;
 import kr.co.pokerium.community.freeboard.model.vo.FreeboardInfo;
+import kr.co.pokerium.community.freeboard.model.vo.FreeboardReply;
 import kr.co.pokerium.member.model.vo.MemberInfo;
 
 @Controller
@@ -127,7 +128,12 @@ public class FreeboardController {
 			String fbiContent = fbi.getFbiContent().replace("<br>", "&#10;");
 			fbi.setFbiContent(fbiContent);
 			
+			ArrayList<FreeboardReply> fbr = fbService.selectFreeboardReply(no);
+			String fbrCount = Integer.toString(fbr.size());
+			
 			mav.addObject("fbi", fbi);
+			mav.addObject("fbr", fbr);
+			mav.addObject("fbrCount", fbrCount);
 			mav.setViewName("/community/freeBoard/viewPage");
 		
 		return mav;
@@ -247,10 +253,10 @@ public class FreeboardController {
 		
 		String miId = member.getMiId();
 		int result = 0;
-		fbrComment = fbrComment.replace("\r\n", "<br>");
+		String fbrComment_re = fbrComment.replace("\r\n", "<br>");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("fbrComment", fbrComment);
+		map.put("fbrComment", fbrComment_re);
 		map.put("fbiIdx", fbiIdx);
 		map.put("miId", miId);
 		
@@ -261,6 +267,74 @@ public class FreeboardController {
 		} else {
 			response.getWriter().print(false);
 		}
+		
+		
+	}
+	
+	@RequestMapping(value="/community/freeboard/view/updateComment" ,method = RequestMethod.POST)
+	public void updateCommentAjax(	@RequestParam String fbrComment,
+									@RequestParam String fbiIdx,
+									@RequestParam String fbrIdx,
+									@RequestParam String miId,
+									@SessionAttribute MemberInfo member,
+									HttpServletResponse response
+																) throws IOException {
+		
+		// 자유게시판 댓글수정 메소드(ajax)
+				int result = 0;
+				
+				if(miId.equals(member.getMiId())) {
+					miId = member.getMiId();
+					
+					String fbrComment_re = fbrComment.replace("\r\n", "<br>");
+					
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("fbrComment", fbrComment_re);
+					map.put("fbiIdx", fbiIdx);
+					map.put("fbrIdx", fbrIdx);
+					map.put("miId", miId);
+
+					result = fbService.updateCommentAjax(map);
+					}
+				
+				if(result>0) {
+					response.getWriter().print(true); 
+				} else {
+					response.getWriter().print(false);
+				}
+		
+		
+	}
+	
+	@RequestMapping(value="/community/freeboard/view/deleteComment", method = RequestMethod.POST)
+	public void deleteCommentAjax(
+									@RequestParam String fbiIdx,
+									@RequestParam String fbrIdx,
+									@RequestParam String miId,
+									@SessionAttribute MemberInfo member,
+									HttpServletResponse response
+																) throws IOException {
+		// 자유게시판 댓글삭제 메소드(ajax)
+			int result = 0;
+			
+			if(miId.equals(member.getMiId())) {
+				miId = member.getMiId();
+				
+				
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("fbiIdx", fbiIdx);
+				map.put("fbrIdx", fbrIdx);
+				map.put("miId", miId);
+				
+				result = fbService.deleteCommentAjax(map);
+				}
+			
+			if(result>0) {
+				response.getWriter().print(true); 
+			} else {
+				response.getWriter().print(false);
+			}
+
 		
 		
 	}
