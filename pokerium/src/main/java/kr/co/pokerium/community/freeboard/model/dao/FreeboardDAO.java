@@ -153,6 +153,17 @@ public class FreeboardDAO {
 		return sqlSession.update("freeboard.deleteCommentAjax", map);
 		
 	}
+
+	public int insertReCommentAjax(HashMap<String, Object> map) {
+		// 게시물에 대댓글등록 메소드
+		return sqlSession.insert("freeboard.insertReCommentAjax", map);
+	}
+
+	public int updateReCommentFbrStep(HashMap<String, Object> map) {
+		return sqlSession.update("freeboard.updateReCommentFbrStep", map);
+		
+	}
+
 	
 	
 	
