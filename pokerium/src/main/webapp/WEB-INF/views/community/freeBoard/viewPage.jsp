@@ -176,7 +176,7 @@ section input[type=text], section input:focus[type=text] {
 	margin:0;
 	padding:20px 20px 20px 20px;
 	width:750px;
-	height:40px;
+	height:42px;
 	border:2px solid #ebebeb;
 	resize:none;
 	overflow:visible;
@@ -222,12 +222,18 @@ margin:0;
 	height:auto;
 	
 }
-#ReplyDiv {
-	width:1050px;
+#fbrCommentDiv {
+	width:1100px;
 	height:120px;
-	border-bottom:1px solid black;
 	padding:25px;
 	position:relative
+}
+
+.ReplyDiv {
+	display:inline-block;
+	width:900px;
+	height:120px;
+	position:absolute;
 }
 #ReplyInfoDiv {
 	display:flex;
@@ -249,7 +255,7 @@ margin:0;
 	position:absolute; 
 	font-family:"Trebuchet MS", Dotum, Arial;
 	top:5px;
-	left:900px;
+	left:750px;
 	
 }
 .ReplyInfoValue { 
@@ -268,8 +274,8 @@ margin:0;
 	left:180px;
 }
 .ReplyComment {
-	width:700px;
-	height:90px;
+	width:450px;
+	height:80px;
 	font-size:16px;
 	border:none;
 	resize:none;
@@ -283,13 +289,45 @@ margin:0;
 	position:absolute;
 	display:none;
 	top:50px;
-	left:900px;
+	left:650px;
 }
 .ReplyOption2 {
 	font-family:"Trebuchet MS", Dotum, Arial;
 	font-size:18px;
 	padding-right:20px;
 	cursor:pointer;
+}
+.reCommentDiv {
+	width:1050px;
+	height:120px;
+	border-bottom:1px solid black;
+	padding:25px;
+	position:relative;
+	display:none;
+}
+.reComment {
+	margin:0;
+	padding:20px 20px 20px 20px;
+	width:650px;
+	height:78px;
+	border:2px solid #ebebeb;
+	resize:none;
+	overflow:visible;
+	font-size:16px;
+	font-weight:bold;                       
+	font-family:"Trebuchet MS", Dotum, Arial;
+	background-color:white;  
+}
+.reCommentOption {
+	font-family:"Trebuchet MS", Dotum, Arial;
+	font-size:18px;
+	padding-right:20px;
+	cursor:pointer;
+}
+#reCommentOptionDiv {
+	position:absolute;
+	top:50px;
+	left:900px;
 }
 </style>
 
@@ -303,20 +341,32 @@ function isDelete() {
 		}
 }
 
-function updateCommentConfirm(idx) {
-		document.getElementById("ReplyOptionDiv"+idx).style.display='none';
-		document.getElementById("fbrComment"+idx).readOnly=false;
-		document.getElementById("fbrComment"+idx).style.border="2px solid #ebebeb";
-		document.getElementById("fbrComment"+idx).focus();		
-		document.getElementById("ReplyOption2Div"+idx).style.display='block';
+function updateCommentView(idx,step,level) {
+		document.getElementById("ReplyOptionDiv"+idx+"_"+step+"_"+level).style.display='none';
+		document.getElementById("fbrComment"+idx+"_"+step+"_"+level).readOnly=false;
+		document.getElementById("fbrComment"+idx+"_"+step+"_"+level).style.border="2px solid #ebebeb";
+		document.getElementById("fbrComment"+idx+"_"+step+"_"+level).focus();		
+		document.getElementById("ReplyOption2Div"+idx+"_"+step+"_"+level).style.display='block';
 }
 
-function cancelComment(idx) {
-		document.getElementById("ReplyOptionDiv"+idx).style.display='flex';
-		document.getElementById("fbrComment"+idx).readOnly=true;
-		document.getElementById("fbrComment"+idx).style.border="none";
-		document.getElementById("ReplyOption2Div"+idx).style.display='none';
+function cancelComment(idx,step,level) {
+		document.getElementById("ReplyOptionDiv"+idx+"_"+step+"_"+level).style.display='flex';
+		document.getElementById("fbrComment"+idx+"_"+step+"_"+level).readOnly=true;
+		document.getElementById("fbrComment"+idx+"_"+step+"_"+level).style.border="none";
+		document.getElementById("ReplyOption2Div"+idx+"_"+step+"_"+level).style.display='none';
 }
+
+function insertReCommentView(idx,step,level) {
+	document.getElementById("ReplyDiv"+idx+"_"+step+"_"+level).style.border='none';
+	document.getElementById("ReplyOptionDiv"+idx+"_"+step+"_"+level).style.display='none';
+	document.getElementById("reCommentDiv"+idx+"_"+step+"_"+level).style.display='block';
+}
+
+function cancelReCommentBtn(idx,step,level) {
+	document.getElementById("ReplyOptionDiv"+idx+"_"+step+"_"+level).style.display='flex';
+	document.getElementById("reCommentDiv"+idx+"_"+step+"_"+level).style.display='none';
+}
+
 </script>
 </head>
 <body>
@@ -381,12 +431,21 @@ function cancelComment(idx) {
 			<c:when test="${!requestScope.fbr.isEmpty() }">
 				<c:forEach items="${requestScope.fbr }" var="fbr" varStatus="i">
 				<c:set var="fbrRegDate"><fmt:formatDate value="${fbr.fbrRegtime }" pattern="yyyy-MM-dd" /></c:set>
-					<div id="ReplyDiv">
+				<c:set var="margin">${fbr.fbrLevel*50-50 }</c:set>
+				<div id="fbrCommentDiv" style="border-bottom:1px solid black;">
+				<c:choose>
+					<c:when test="${fbr.fbrLevel>0}">
+					<img src="/resources/img/icon/recomment.png" width="100px" height="120px" style="margin-left:${margin}px;"/>
+					</c:when>
+				</c:choose>
+					<div class="ReplyDiv" id="ReplyDiv${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }">
 					<c:choose>
 					<c:when test="${fbr.fbrIsview=='Y'}">
 						<div style="display:inline-block; vertical-align:bottom;">
-						<input type="hidden" name="fbrIdx" id="fbrIdx${fbr.fbrIdx}" value="${fbr.fbrIdx}" />
-						<input type="hidden" name="miId" id="miId${fbr.fbrIdx}" value="${fbr.miId}" />
+						<input type="hidden" name="fbrIdx" id="fbrIdx${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" value="${fbr.fbrIdx}" />
+						<input type="hidden" name="miId" id="miId${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" value="${fbr.miId}" />
+						<input type="hidden" name="fbrParent" id="fbrParent${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" value="${fbr.fbrParent}" />
+						<input type="hidden" name="fbrNum" id="fbrNum${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" value="${fbr.fbrNum}" />
 							<c:choose>
 								<c:when test="${fbr.miTeam=='R'}">
 									<img src="/resources/img/icon/team_valor.png"  width="120px" height="120px"/>
@@ -412,32 +471,43 @@ function cancelComment(idx) {
 								</c:when>
 							</c:choose>
 						</div>
-						<div class="ReplyOptionDiv" id="ReplyOptionDiv${fbr.fbrIdx}">
+						<div class="ReplyOptionDiv" id="ReplyOptionDiv${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }">
 						<c:choose>
 							<c:when test="${sessionScope.member!=null }">
-							<h3 class="ReplyOption" id="insertReComment${fbr.fbrIdx}" ><a>답글달기</a></h3>
+							<h3 class="ReplyOption" id="insertReComment${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" onclick="insertReCommentView(${fbr.fbrIdx}, ${fbr.fbrStep}, ${fbr.fbrLevel }, ${fbr.fbrParent }, ${fbr.fbrNum });" >답글달기</h3>
 							</c:when>
 						</c:choose>
 						<c:choose>
 							<c:when test="${fbr.miId eq sessionScope.member.miId}">
-							<h3 class="ReplyOption" id="updateComment${fbr.fbrIdx}" onclick="updateCommentConfirm(${fbr.fbrIdx});">수정</h3>
-							<h3 class="ReplyOption" id="deleteComment${fbr.fbrIdx}" onclick="deleteComment(${fbr.fbrIdx});">삭제</h3>
+							<h3 class="ReplyOption" id="updateComment${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" onclick="updateCommentView(${fbr.fbrIdx},${fbr.fbrStep},${fbr.fbrLevel });">수정</h3>
+							<h3 class="ReplyOption" id="deleteComment${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" onclick="deleteComment(${fbr.fbrIdx},${fbr.fbrStep},${fbr.fbrLevel });">삭제</h3>
 							</c:when>
 						</c:choose>
 						</div>
-						<div class="ReplyOption2Div" id="ReplyOption2Div${fbr.fbrIdx}">
-							<h3 class="ReplyOption2" id="updateBtn${fbr.fbrIdx}" style="display:inline-block;" onclick="updateComment(${fbr.fbrIdx});" >수정하기</h3>
-							<h3 class="ReplyOption2" id="cancelBtn${fbr.fbrIdx}" style="display:inline-block;" onclick="cancelComment(${fbr.fbrIdx});" >취소</h3>
+						<div class="ReplyOption2Div" id="ReplyOption2Div${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }">
+							<h3 class="ReplyOption2" id="updateBtn${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" style="display:inline-block;" onclick="updateComment(${fbr.fbrIdx},${fbr.fbrStep},${fbr.fbrLevel });" >수정하기</h3>
+							<h3 class="ReplyOption2" id="cancelBtn${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" style="display:inline-block;" onclick="cancelComment(${fbr.fbrIdx},${fbr.fbrStep},${fbr.fbrLevel });" >취소</h3>
 						</div>
 						<div id="ReplyCommentDiv">
-							<textarea class="ReplyComment" id="fbrComment${fbr.fbrIdx}" name="fbrComment${fbr.fbrIdx}" rows="10"  readonly="readonly">${fbr.fbrComment}</textarea>
-						</div>	
+							<textarea class="ReplyComment" id="fbrComment${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" name="fbrComment${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" rows="10"  readonly="readonly">${fbr.fbrComment}</textarea>
+						</div>
+						
 					</c:when>
 					<c:otherwise>
 						<h1 style="display:block;width:300px; margin:35px 400px;">댓글이 삭제되었습니다.</h1>
 					</c:otherwise>
 					</c:choose>
 					</div>
+					</div>
+					<div class="reCommentDiv" id="reCommentDiv${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }">
+						<img src="/resources/img/icon/recomment.png" width="100px" height="120px" />
+						<textarea class="reComment" id="reComment${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" name="reComment${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" rows="10"  ></textarea>
+						<div id="reCommentOptionDiv">
+							<h3 class="reCommentOption" id="insertReCommentBtn${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" style="display:inline-block;" onclick="insertReComment('${fbr.fbrIdx}','${fbr.fbrStep}','${fbr.fbrLevel }');" >등록하기</h3>
+							<h3 class="reCommentOption" id="cancelReCommentBtn${fbr.fbrIdx}_${fbr.fbrStep}_${fbr.fbrLevel }" style="display:inline-block;" onclick="cancelReCommentBtn(${fbr.fbrIdx},${fbr.fbrStep},${fbr.fbrLevel });" >취소</h3>
+						</div>
+					</div>
+				
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -480,16 +550,18 @@ $('#insertCommentBtn').click(function(){
 	}
 });
 
-function updateComment(idx) {
+function updateComment(idx,step,level) {
 
-	var fbrComment = document.getElementById("fbrComment"+idx).value;
-	var miId = document.getElementById("miId"+idx).value;
+	var fbrComment = document.getElementById("fbrComment"+idx+"_"+step+"_"+level).value;
+	var miId = document.getElementById("miId"+idx+"_"+step+"_"+level).value;
 	var fbiIdx = $('input[name=fbiIdx]').val();
 	var fbrIdx = idx;
+	var fbrStep = step;
+	var fbrLevel = level;
 	if(confirm("댓글을 수정하시겠습니까?")){
 		$.ajax({
 			url : "/community/freeboard/view/updateComment",
-			data : {"fbrComment":fbrComment, "fbiIdx":fbiIdx, "fbrIdx":fbrIdx, "miId":miId},
+			data : {"fbrComment":fbrComment, "fbiIdx":fbiIdx, "fbrIdx":fbrIdx, "miId":miId, "fbrStep":fbrStep, "fbrLevel":fbrLevel},
 			type : "POST",
 			success : function(result){
 				if(result=="true") {
@@ -507,15 +579,17 @@ function updateComment(idx) {
 	}
 }
 
-function deleteComment(idx) {
+function deleteComment(idx,step,level) {
 
-	var miId = document.getElementById("miId"+idx).value;
+	var miId = document.getElementById("miId"+idx+"_"+step+"_"+level).value;
 	var fbiIdx = $('input[name=fbiIdx]').val();
 	var fbrIdx = idx;
+	var fbrStep = step;
+	var fbrLevel = level;
 	if(confirm("댓글을 삭제하시겠습니까?")){
 		$.ajax({
 			url : "/community/freeboard/view/deleteComment",
-			data : {"fbiIdx":fbiIdx, "fbrIdx":fbrIdx, "miId":miId},
+			data : {"fbiIdx":fbiIdx, "fbrIdx":fbrIdx, "miId":miId, "fbrStep":fbrStep, "fbrLevel":fbrLevel},
 			type : "POST",
 			success : function(result){
 				if(result=="true") {
@@ -532,6 +606,40 @@ function deleteComment(idx) {
 		});
 	}
 }
+
+function insertReComment(idx,step,level,parent,num) {
+
+	var fbrComment = document.getElementById("reComment"+idx+"_"+step+"_"+level).value;
+	var fbiIdx = $('input[name=fbiIdx]').val();
+	var fbrIdx = idx;
+	var fbrStep = step;
+	var fbrLevel = level;
+	var fbrParent = document.getElementById("fbrParent"+idx+"_"+step+"_"+level).value;
+	var fbrNum = document.getElementById("fbrNum"+idx+"_"+step+"_"+level).value;
+
+	console.log(fbrParent);
+	console.log(fbrNum);
+	if(confirm("답글을 등록하시겠습니까?")){
+		$.ajax({
+			url : "/community/freeboard/view/insertReComment",
+			data : {"fbrComment":fbrComment, "fbiIdx":fbiIdx, "fbrIdx":fbrIdx, "fbrStep":fbrStep, "fbrLevel":fbrLevel, "fbrParent":fbrParent, "fbrNum":fbrNum},
+			type : "POST",
+			success : function(result){
+				if(result=="true") {
+					document.getElementById("fbrComment").value = "";
+					alert('답글이 등록되었습니다.');
+					location.reload();
+				} else {
+					alert('답글등록에 실패하였습니다. 지속적인 오류발생시 관리자에게 문의해주세요.');
+				}
+			},
+			error : function(){
+				console.log("ajax 통신 실패");
+			}
+		});
+	} 
+}
+
 </script>
 	
 	

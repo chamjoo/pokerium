@@ -37,4 +37,6 @@ public interface FreeboardService {
 
 	int deleteCommentAjax(HashMap<String, Object> map);
 
+	int insertReCommentAjax(HashMap<String, Object> map);
+
 }

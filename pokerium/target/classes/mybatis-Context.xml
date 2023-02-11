@@ -46,7 +46,7 @@
 <!--  AOP 처리를 위한 Transaction advisor 설정 -->
 <aop:config>
 	<aop:pointcut expression="execution(* kr.co.pokerium.member.model.service.MemberServiceImpl.*(..))" id="txPointCut"/>
-	
+	<aop:pointcut expression="execution(* kr.co.pokerium.community.freeboard.model.service.FreeboardServiceImpl.*(..))" id="txPointCut"/>
 	<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
 
 </aop:config>
