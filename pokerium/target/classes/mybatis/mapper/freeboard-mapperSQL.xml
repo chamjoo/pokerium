@@ -169,11 +169,9 @@
 	<select id="selectFreeboardReply" parameterType="String" resultType="freeboardReply">
 		SELECT 
 						A.FBI_IDX AS fbiIdx,
-						A.FBR_NUM AS fbrNum,
 						A.FBR_IDX AS fbrIdx,
 						A.FBR_STEP AS fbrStep,
 						A.FBR_LEVEL AS fbrLevel,
-						A.FBR_PARENT AS fbrParent,
 						A.MI_ID AS miId,
 						A.FBR_COMMENT AS fbrComment,
 						A.FBR_ISVIEW AS fbrIsview,
@@ -192,12 +190,6 @@
 		AND 
 						A.FBI_IDX = #{no}
 						
-		ORDER BY 
-						A.FBR_IDX 
-		ASC,
-						A.FBR_STEP
-		ASC
-						
 	</select>
 	
 	<!-- 자유게시판 댓글수정 -->
@@ -212,10 +204,6 @@
 			FBI_IDX			=	#{fbiIdx}
 		AND
 			FBR_IDX			=	#{fbrIdx}
-		AND
-			FBR_STEP		= 	#{fbrStep}
-		AND
-			FBR_LEVEL		= 	#{fbrLevel}
 		AND
 			MI_ID			=	#{miId}
 			
@@ -234,46 +222,7 @@
 		AND
 			FBR_IDX			=	#{fbrIdx}
 		AND
-			FBR_STEP		= 	#{fbrStep}
-		AND
-			FBR_LEVEL		= 	#{fbrLevel}
-		AND
 			MI_ID			=	#{miId}
 			
 	</update>
-	
-	<!-- 자유게시판 대댓글 등록 메소드 -->
-	<insert id="insertReCommentAjax" parameterType="hashmap" >
-		
-		INSERT INTO 
-			T_FREEBOARD_REPLY
-				(FBI_IDX, FBR_IDX, FBR_STEP, FBR_LEVEL, FBR_PARENT, MI_ID, FBR_COMMENT)
-		VALUES
-				(
-				#{fbiIdx}	, 
-				#{fbrIdx}	,
-				IF(#{fbrParent}=0,	(SELECT FBR_STEP FROM (SELECT IFNULL(MAX(B.FBR_STEP)+1,(#{fbrStep}+1)) AS FBR_STEP FROM T_FREEBOARD_REPLY B WHERE B.FBI_IDX=#{fbiIdx} AND B.FBR_IDX=#{fbrIdx} AND B.FBR_PARENT = #{fbrNum})AS C), (SELECT FBR_STEP FROM (SELECT IFNULL(MAX(B.FBR_STEP)+1,#{fbrStep}+1) AS FBR_STEP FROM T_FREEBOARD_REPLY B WHERE B.FBI_IDX=#{fbiIdx} AND B.FBR_IDX=#{fbrIdx} AND B.FBR_PARENT = #{fbrNum}) AS C )) ,
-				(#{fbrLevel} + 1) , 
-				#{fbrNum}	,
-				#{miId}	,
-				TRIM(#{fbrComment}))
-	</insert>
-	<update id="updateReCommentFbrStep" parameterType="hashmap" >
-		
-		UPDATE 
-			T_FREEBOARD_REPLY
-		SET 
-			FBR_STEP		=	FBR_STEP + 1
-		WHERE
-			FBI_IDX			=	#{fbiIdx}
-		AND
-			FBR_IDX			=	#{fbrIdx}
-		AND 
-			FBR_STEP 		!= 0
-		AND
-			FBR_STEP 		>=  IF(#{fbrParent}=0,	(SELECT FBR_STEP FROM (SELECT IFNULL(MAX(B.FBR_STEP)+1,(#{fbrStep}+1)) AS FBR_STEP FROM T_FREEBOARD_REPLY B WHERE B.FBI_IDX=#{fbiIdx} AND B.FBR_IDX=#{fbrIdx} AND B.FBR_PARENT = #{fbrNum})AS C), (SELECT FBR_STEP FROM (SELECT IFNULL(MAX(B.FBR_STEP)+1,#{fbrStep}+1) AS FBR_STEP FROM T_FREEBOARD_REPLY B WHERE B.FBI_IDX=#{fbiIdx} AND B.FBR_IDX=#{fbrIdx} AND B.FBR_PARENT = #{fbrNum}) AS C )) 
-
-	</update>
-	
-
 </mapper>

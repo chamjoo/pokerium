@@ -112,21 +112,5 @@ public class FreeboardServiceImpl implements FreeboardService {
 		return fbDAO.deleteCommentAjax(map);
 	}
 
-	@Override
-	public int insertReCommentAjax(HashMap<String, Object> map) {
-		// 게시물에 대댓글 등록 메소드
-		int result = 0;
-		int resultA = 0;
-		int resultC = 0;
-			if(!(map.get("fbrLevel")).equals("0")) {
-				resultA = fbDAO.updateReCommentFbrStep(map);
-			}
-			int resultB = fbDAO.insertReCommentAjax(map);
-				
-		result = resultA + resultB + resultC;
-		return  result;
-		
-	}
-
 	
 }

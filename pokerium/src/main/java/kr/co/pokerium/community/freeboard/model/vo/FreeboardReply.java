@@ -6,11 +6,9 @@ public class FreeboardReply {
 
 	// 자유게시판 댓글
 	private int 		fbiIdx;
-	private int 		fbrNum;
 	private int 		fbrIdx;
 	private int 		fbrStep;
 	private int 		fbrLevel;
-	private int 		fbrParent;
 	private String   	miId;
 	private String		fbrComment;
 	private String		fbrIsview;
@@ -94,36 +92,21 @@ public class FreeboardReply {
 	public void setMiTeam(String miTeam) {
 		this.miTeam = miTeam;
 	}
-	public int getFbrParent() {
-		return fbrParent;
-	}
-	public void setFbrParent(int fbrParent) {
-		this.fbrParent = fbrParent;
-	}
-	public int getFbrNum() {
-		return fbrNum;
-	}
-	public void setFbrNum(int fbrNum) {
-		this.fbrNum = fbrNum;
-	}
 	@Override
 	public String toString() {
-		return "FreeboardReply [fbiIdx=" + fbiIdx + ", fbrNum=" + fbrNum + ", fbrIdx=" + fbrIdx + ", fbrStep=" + fbrStep
-				+ ", fbrLevel=" + fbrLevel + ", fbrParent=" + fbrParent + ", miId=" + miId + ", fbrComment="
-				+ fbrComment + ", fbrIsview=" + fbrIsview + ", fbrRegtime=" + fbrRegtime + ", fbrUpdatetime="
-				+ fbrUpdatetime + ", fbrDeletetime=" + fbrDeletetime + ", miNickname=" + miNickname + ", miTeam="
-				+ miTeam + "]";
+		return "FreeboardReply [fbiIdx=" + fbiIdx + ", fbrIdx=" + fbrIdx + ", fbrStep=" + fbrStep + ", fbrLevel="
+				+ fbrLevel + ", miId=" + miId + ", fbrComment=" + fbrComment + ", fbrIsview=" + fbrIsview
+				+ ", fbrRegtime=" + fbrRegtime + ", fbrUpdatetime=" + fbrUpdatetime + ", fbrDeletetime=" + fbrDeletetime
+				+ ", miNickname=" + miNickname + ", miTeam=" + miTeam + "]";
 	}
-	public FreeboardReply(int fbiIdx, int fbrNum, int fbrIdx, int fbrStep, int fbrLevel, int fbrParent, String miId,
-			String fbrComment, String fbrIsview, Timestamp fbrRegtime, Timestamp fbrUpdatetime, Timestamp fbrDeletetime,
-			String miNickname, String miTeam) {
+	public FreeboardReply(int fbiIdx, int fbrIdx, int fbrStep, int fbrLevel, String miId, String fbrComment,
+			String fbrIsview, Timestamp fbrRegtime, Timestamp fbrUpdatetime, Timestamp fbrDeletetime, String miNickname,
+			String miTeam) {
 		super();
 		this.fbiIdx = fbiIdx;
-		this.fbrNum = fbrNum;
 		this.fbrIdx = fbrIdx;
 		this.fbrStep = fbrStep;
 		this.fbrLevel = fbrLevel;
-		this.fbrParent = fbrParent;
 		this.miId = miId;
 		this.fbrComment = fbrComment;
 		this.fbrIsview = fbrIsview;
@@ -137,7 +120,6 @@ public class FreeboardReply {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	
 }

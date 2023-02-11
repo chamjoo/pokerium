@@ -131,7 +131,6 @@ public class FreeboardController {
 			ArrayList<FreeboardReply> fbr = fbService.selectFreeboardReply(no);
 			String fbrCount = Integer.toString(fbr.size());
 			
-			
 			mav.addObject("fbi", fbi);
 			mav.addObject("fbr", fbr);
 			mav.addObject("fbrCount", fbrCount);
@@ -277,8 +276,6 @@ public class FreeboardController {
 									@RequestParam String fbiIdx,
 									@RequestParam String fbrIdx,
 									@RequestParam String miId,
-									@RequestParam String fbrStep,
-									@RequestParam String fbrLevel,
 									@SessionAttribute MemberInfo member,
 									HttpServletResponse response
 																) throws IOException {
@@ -296,8 +293,6 @@ public class FreeboardController {
 					map.put("fbiIdx", fbiIdx);
 					map.put("fbrIdx", fbrIdx);
 					map.put("miId", miId);
-					map.put("fbrStep", fbrStep);
-					map.put("fbrLevel", fbrLevel);
 
 					result = fbService.updateCommentAjax(map);
 					}
@@ -316,14 +311,12 @@ public class FreeboardController {
 									@RequestParam String fbiIdx,
 									@RequestParam String fbrIdx,
 									@RequestParam String miId,
-									@RequestParam String fbrStep,
-									@RequestParam String fbrLevel,
 									@SessionAttribute MemberInfo member,
 									HttpServletResponse response
 																) throws IOException {
 		// 자유게시판 댓글삭제 메소드(ajax)
 			int result = 0;
-
+			
 			if(miId.equals(member.getMiId())) {
 				miId = member.getMiId();
 				
@@ -332,8 +325,6 @@ public class FreeboardController {
 				map.put("fbiIdx", fbiIdx);
 				map.put("fbrIdx", fbrIdx);
 				map.put("miId", miId);
-				map.put("fbrStep", fbrStep);
-				map.put("fbrLevel", fbrLevel);
 				
 				result = fbService.deleteCommentAjax(map);
 				}
@@ -343,46 +334,6 @@ public class FreeboardController {
 			} else {
 				response.getWriter().print(false);
 			}
-		
-	}
-	
-	@RequestMapping(value="/community/freeboard/view/insertReComment", method = RequestMethod.POST)
-	public void insertReCommentAjax(	@RequestParam String fbrComment,
-									@RequestParam String fbiIdx,
-									@RequestParam String fbrIdx,
-									@RequestParam String fbrStep,
-									@RequestParam String fbrLevel,
-									@RequestParam String fbrParent,
-									@RequestParam String fbrNum,
-									@SessionAttribute MemberInfo member,
-									HttpServletResponse response) throws IOException {
-			
-		// 대댓글 등록 메소드
-			
-		int result = 0;
-		
-		String miId = member.getMiId();
-		
-		String fbrComment_re = fbrComment.replace("\r\n", "<br>");
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("fbrComment", fbrComment_re);
-		map.put("fbiIdx", fbiIdx);
-		map.put("fbrIdx", fbrIdx);
-		map.put("miId", miId);
-		map.put("fbrStep", fbrStep);
-		map.put("fbrLevel", fbrLevel);
-		map.put("fbrParent", fbrParent);
-		map.put("fbrNum", fbrNum);
-
-		result = fbService.insertReCommentAjax(map);
-
-		if(result>0) {
-			response.getWriter().print(true); 
-		} else {
-			response.getWriter().print(false);
-		}
-
 
 		
 		
