@@ -3,14 +3,12 @@
 
 
 <details>
-  <summary>프로젝트 소개 자세히보기</summary>
-
-<h3>1. 아이템 선정</h3>
+  <summary><h3>1. 아이템 선정</h3></summary
 <p>웹의 기본이되는 CRUD게시판과 쇼핑몰을 개발후 기능을 하나씩 추가해 나가는 식으로 진행.<p>
+</details>
 
-<br>
-
-<h3>2. 개요</h3>
+<details>
+  <summary><h3>2. 개요</h3></summary>
 
 - 프로젝트 명칭 : 포케리움(PoKéRíum)
 - 개발인원 : 2명 (박창주, 배준호)
@@ -19,7 +17,7 @@
   - 사용자 - 회원가입 및 로그인, 회원 정보 수정, 유효성 검사 및 중복 검사, Aop를 통해 비밀번호 암호화
   - 마이페이지 - 회원정보 확인 및 수정, 장바구니, 구매내역
   - 게시판 - CRUD 기능, 조회수, 페이징 및 검색 처리
-  - 댓글 및 대댓글 - CRUD 기능 (추후 기능추가 예정)
+  - 댓글 및 무한답글(대댓글) - CRUD 기능 
   - 쇼핑몰 - 상품목록, 검색, 상품 상세페이지, 장바구니, 구매
   - 도감 - 포켓몬목록, 포켓몬상세정보
 - 개발 언어 : Java 1.8
@@ -27,12 +25,14 @@
 - 데이터베이스 : MySQL
 - 형상관리 툴 : GitHub
 - 간단 소개 : 포켓몬을 좋아하는 신입개발자 둘이서 개발하는 전반적인 웹 쇼핑몰
+</details> 
   
-  <br>
-  
-<h3>3. 요구사항 분석</h3>
+<details>
+  <summary><h3>3. 요구사항 분석</h3></summary>
 
   **1. 회원 가입 페이지**
+  
+
 
 - **유효성 검사**
     - 한 개의 칸이라도 공백 혹은 빈칸이 있는지 확인하고 있다면, "OOO를 입력해주세요."라는 메시지 출력
@@ -78,20 +78,26 @@
 - 전체 게시물/조회된 게시물 수 카운트하여 출력
 - 게시글 등록이나 수정시 제목과 내용에 공백으로 작성 불가
 
-**5. 커뮤니티 - 자유게시판 댓글(미구현 - 추후 개발예정)**
+**5. 커뮤니티 - 자유게시판 댓글 및 무한답글(대댓글)**
+
+- 로그인하지 않은 상태 일 경우 답글달기 버튼 미출력
+- 답글이 달릴경우 부모댓글로부터 들여쓰기
+- 최신답글일수록 아래에 출력
 
 **6. 쇼핑몰 (미구현 - 추후 개발예정)**
 
 **7. 포켓몬 도감 (미구현 - 추후 개발예정)**
-  
-  <br>
-  
-  
-<h3>4. DB설계</h3>
+
+</details>  
+
+<details>
+  <summary><h3>4. DB설계</h3></summary>
  
- ![image](https://user-images.githubusercontent.com/87980087/216053423-53448b25-64ab-42d7-974b-62cd922a93ce.png)
+![image](https://user-images.githubusercontent.com/87980087/218303330-5ec06c64-bef2-4cab-a729-67a124506de5.png)
+
   
   <br>
+  
   
   ![image](https://user-images.githubusercontent.com/87980087/216067006-06a1a103-bc11-4410-ad9f-f52e0c0f8147.png)
   
@@ -99,9 +105,10 @@
   
    ![image](https://user-images.githubusercontent.com/87980087/216067418-5840e6ee-2306-4d0d-9034-f0bc0915dcf6.png)
   
-  <br>
-  
-  <h3>5. API설계</h3>
+ </details>
+ 
+ <details>
+  <summary> <h3>5. API설계</h3></summary>
   
   ![image](https://user-images.githubusercontent.com/87980087/216059855-fb2306a2-afed-49f4-bd48-d310e630ca59.png)
 
@@ -110,9 +117,10 @@
   
   ![image](https://user-images.githubusercontent.com/87980087/216059941-63ee16a2-aac7-448a-9fc2-f62a78f34e1f.png)
 
-<br>
+</details>
 
-  <h3>6. 화면결과물</h3>
+  <details>
+  <summary><h3>6. 화면결과물</h3></summary>
   
   **1. 메인 페이지**
   
@@ -219,17 +227,21 @@
 
 <p align="center">게시물을 수정한적이 있을경우 수정일시가 표출된다.</p>
 
-<p align="center">(개발예정)</p>
+![image](https://user-images.githubusercontent.com/87980087/218304890-5d93881c-9c27-4480-953e-bca97475d8da.png)
 
-<p align="center">-댓글 및 대댓글 기능</p>
+<p align="center">비로그인 상태일시 댓글 및 답글을 등록할수 없음</p>
 
 <br><br>
+
+![image](https://user-images.githubusercontent.com/87980087/218304959-4ab0369d-a881-434e-be03-2b3805c4564c.png)
+
+<p align="center">댓글 등록시 화면에 표출, 답글시 부모댓글에 들여쓰기가 됨 </p>
+
+<br>
+</details>
 
 <h3>7. 개발내용</h3>
 - Github 코드 링크
     
  [https://github.com/chamjoo/pokerium](https://github.com/chamjoo/pokerium)
 
-
-
-</details>
